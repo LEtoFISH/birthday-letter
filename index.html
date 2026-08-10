@@ -15,7 +15,8 @@
             background: #fef2f7;
             font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
             overflow-x: hidden;
-            cursor: none;
+            /* 恢复原生鼠标 */
+            cursor: default;
         }
         @media (max-width: 768px) {
             body {
@@ -110,20 +111,20 @@
                 margin-bottom: 24px;
             }
         }
-        /* 鱼形文字核心样式：等宽字体，保留空格换行 */
+        /* 横向鱼形文字：等宽字体，居中，保留空格 */
         .fish-text {
             font-family: "SimSun", Consolas, monospace;
-            font-size: 13px;
-            line-height: 1.4;
+            font-size: 12px;
+            line-height: 1.5;
             color: #444;
             white-space: pre;
             text-align: center;
             overflow-x: auto;
-            padding: 10px 0;
+            padding: 15px 0;
         }
         @media (max-width: 600px) {
             .fish-text {
-                font-size: 10px;
+                font-size: 9.5px;
             }
         }
         .sign {
@@ -197,31 +198,49 @@
     <div class="letter-wrap" id="letterBox">
         <div class="letter-card">
             <h1>致我珍贵的鱼</h1>
-            <!-- 文字排版拼成小鱼轮廓，内容全部是你原文 -->
+
+            <!-- 横向鱼形文字排版：鱼头朝右，鱼尾在左 -->
             <pre class="fish-text">
-                      不知不觉间又陪你走过了一整年
-                很开心我的生命里有你的出现。友谊的
-            开始太过久远，已经回忆不起最初相识的
-           时刻了。但我印象里仍有那个喜欢玩抓喜房
-          的“讨厌猫の鱼”。
-        我们这么多年的相处中，有过快乐，也有过
-       争执，但是对彼此来说，都算是真挚。我也带你
-      认识了很多新朋友，鹿子、gv、猪仔还有那个神秘
-     的群主。他们心中一定都有你这位特别讨喜的朋友。
-    对于即将升上高一的你来说，环境的变更可能会
-   使你无所适从，但别给自己太大压力，把它当作一种
-  新的体验就好，你的性格一定会使你很快适应新的
+                        生日快乐，我的好朋友❤️
+                      陪你碎碎念念，也陪你岁岁年年
+                    我一定一直都在你身边，无论未来发生什么
+                  当你回头时，
+                愿你所求皆如愿，所行皆坦途
+              真心祝你天天开心、永远安康
+            虽然我不太会说华丽的话，但
+          从依赖到独立的过程
+         从无知到成熟、
+        所谓成长就是一个
+       更加稳重
+      变得更加成熟、
+     我相信你会因此反思
+    但人无完人，
+   也做过错一些事，
+  纵使你有很多不足，
  同学和环境。
-纵使你有很多不足，也做过错一些事，但人无完人，
-我相信你会因此反思变得更加成熟、更加稳重。所谓
-成长就是一个从无知到成熟、从依赖到独立的过程。
-虽然我不太会说华丽的话，但真心祝你天天开心、
-永远安康，愿你所求皆如愿，所行皆坦途。当你回头
-时，我一定一直都在你身边，无论未来发生什么，我都
-陪你碎碎念念，也陪你岁岁年年。你在我心中，永远
-都是一位特别的朋友
-生日快乐，我的好朋友❤️
+ 新的体验就好，你的性格一定会使你很快适应新的
+  把它当作一种
+   但别给自己太大压力，
+    环境的变更可能会
+     对于即将升上高一的你来说，
+      他们心中一定都有你这位特别讨喜的朋友。
+       的群主。
+        鹿子、gv、猪仔还有那个神秘
+         我也带你认识了很多新朋友，
+          但是对彼此来说，都算是真挚。
+           有过快乐，也有过争执，
+            我们这么多年的相处中，
+             的“讨厌猫の鱼”。
+              仍有那个喜欢玩抓喜房
+               但我印象里
+                最初相识的时刻了。
+                 已经回忆不起
+                  友谊的开始太过久远，
+                   有你的出现。
+                    很开心我的生命里
+                     又陪你走过了一整年
             </pre>
+
             <div class="sign">
                 <p>山药</p>
                 <p>2026.08.12</p>
@@ -231,7 +250,8 @@
 
     <audio id="bgMusic" loop preload="auto">
         <source src="./music/夏天的风.mp3" type="audio/mpeg">
-    
+    </audio>
+
     <button class="audio-btn" id="musicCtrl">🎵</button>
 
     <script>
@@ -269,6 +289,7 @@
             }
         }
 
+        // ===================== 全屏爱心粒子 =====================
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -336,6 +357,7 @@
         }
         animate();
 
+        // ===================== 电脑端小鱼拖尾 + 保留原生鼠标 =====================
         if(isPC){
             const trailCanvas = document.getElementById('mouseTrailCanvas');
             const trailCtx = trailCanvas.getContext('2d');
@@ -344,25 +366,58 @@
 
             let mouseX = 0, mouseY = 0;
             const trailPoints = [];
-            const maxTrail = 35;
+            const maxTrail = 32;
             const colors = ['#ff8fb3','#e86c9c','#ffc0cb','#f8a8c8','#ff7aa2'];
 
             window.addEventListener('mousemove', (e)=>{
                 mouseX = e.clientX;
                 mouseY = e.clientY;
-                trailPoints.push({x:mouseX, y:mouseY, color:colors[Math.floor(Math.random()*colors.length)]});
+                trailPoints.push({
+                    x: mouseX,
+                    y: mouseY,
+                    color: colors[Math.floor(Math.random()*colors.length)],
+                    size: Math.random() * 6 + 3
+                });
                 if(trailPoints.length > maxTrail) trailPoints.shift();
             })
 
+            function drawLittleFish(ctx, x, y, size, rotate, alpha, fillColor) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(rotate);
+                ctx.globalAlpha = alpha;
+                ctx.fillStyle = fillColor;
+
+                // 鱼身
+                ctx.beginPath();
+                ctx.ellipse(-size/3, 0, size, size/2, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                // 鱼尾
+                ctx.beginPath();
+                ctx.moveTo(-size, -size/2);
+                ctx.lineTo(-size*1.6, 0);
+                ctx.lineTo(-size, size/2);
+                ctx.closePath();
+                ctx.fill();
+
+                // 鱼眼
+                ctx.fillStyle = "#fff";
+                ctx.beginPath();
+                ctx.arc(size/2, -size/6, size/6, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
             function drawTrail(){
                 trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
-                trailPoints.forEach((point, index)=>{
-                    const alpha = index / trailPoints.length;
-                    trailCtx.beginPath();
-                    trailCtx.arc(point.x, point.y, 4, 0, Math.PI*2);
-                    trailCtx.fillStyle = point.color + Math.floor(alpha*255).toString(16).padStart(2,'0');
-                    trailCtx.fill();
-                })
+                for(let i = 0; i < trailPoints.length; i++){
+                    const point = trailPoints[i];
+                    const alpha = i / trailPoints.length;
+                    const rotate = Math.sin(Date.now() / 600 + i) * 0.4;
+                    drawLittleFish(trailCtx, point.x, point.y, point.size, rotate, alpha, point.color);
+                }
                 requestAnimationFrame(drawTrail);
             }
             drawTrail();
