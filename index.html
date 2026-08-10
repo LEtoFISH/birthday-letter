@@ -15,7 +15,6 @@
             background: #fef2f7;
             font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
             overflow-x: hidden;
-            /* 恢复原生鼠标 */
             cursor: default;
         }
         @media (max-width: 768px) {
@@ -111,20 +110,71 @@
                 margin-bottom: 24px;
             }
         }
-        /* 横向鱼形文字：等宽字体，居中，保留空格 */
-        .fish-text {
+        /* 外层容器 承载原文+湖面+镜像文字 */
+        .fish-wrap {
+            position: relative;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        /* 上方原文鱼形文字 */
+        .fish-top {
             font-family: "SimSun", Consolas, monospace;
             font-size: 12px;
-            line-height: 1.5;
+            line-height: 1.45;
             color: #444;
             white-space: pre;
             text-align: center;
-            overflow-x: auto;
-            padding: 15px 0;
         }
         @media (max-width: 600px) {
-            .fish-text {
-                font-size: 9.5px;
+            .fish-top {
+                font-size: 9.2px;
+            }
+        }
+        /* 湖面波纹分割层 镜像媒介 */
+        .lake-wave {
+            width: 100%;
+            height: 28px;
+            margin: 8px 0;
+            background: linear-gradient(90deg, rgba(135,206,235,0.15), rgba(173,216,230,0.4), rgba(135,206,235,0.15));
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+        }
+        /* 湖面动态波纹动画 */
+        .lake-wave::after {
+            content: "";
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 200%;
+            height: 100%;
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent 0,
+                transparent 30px,
+                rgba(255,255,255,0.35) 30px,
+                rgba(255,255,255,0.35) 60px
+            );
+            animation: waveMove 3.5s linear infinite;
+        }
+        @keyframes waveMove {
+            0% {transform: translateX(0);}
+            100% {transform: translateX(50%);}
+        }
+        /* 下方镜像翻转文字 */
+        .fish-bottom {
+            font-family: "SimSun", Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            color: #89a8b8;
+            white-space: pre;
+            text-align: center;
+            transform: scaleY(-1);
+            opacity: 0.65;
+        }
+        @media (max-width: 600px) {
+            .fish-bottom {
+                font-size: 9.2px;
             }
         }
         .sign {
@@ -198,49 +248,28 @@
     <div class="letter-wrap" id="letterBox">
         <div class="letter-card">
             <h1>致我珍贵的鱼</h1>
-
-            <!-- 横向鱼形文字排版：鱼头朝右，鱼尾在左 -->
-            <pre class="fish-text">
-                        生日快乐，我的好朋友❤️
-                      陪你碎碎念念，也陪你岁岁年年
-                    我一定一直都在你身边，无论未来发生什么
-                  当你回头时，
-                愿你所求皆如愿，所行皆坦途
-              真心祝你天天开心、永远安康
-            虽然我不太会说华丽的话，但
-          从依赖到独立的过程
-         从无知到成熟、
-        所谓成长就是一个
-       更加稳重
-      变得更加成熟、
-     我相信你会因此反思
-    但人无完人，
-   也做过错一些事，
-  纵使你有很多不足，
- 同学和环境。
- 新的体验就好，你的性格一定会使你很快适应新的
-  把它当作一种
-   但别给自己太大压力，
-    环境的变更可能会
-     对于即将升上高一的你来说，
-      他们心中一定都有你这位特别讨喜的朋友。
-       的群主。
-        鹿子、gv、猪仔还有那个神秘
-         我也带你认识了很多新朋友，
-          但是对彼此来说，都算是真挚。
-           有过快乐，也有过争执，
-            我们这么多年的相处中，
-             的“讨厌猫の鱼”。
-              仍有那个喜欢玩抓喜房
-               但我印象里
-                最初相识的时刻了。
-                 已经回忆不起
-                  友谊的开始太过久远，
-                   有你的出现。
-                    很开心我的生命里
-                     又陪你走过了一整年
-            </pre>
-
+            <div class="fish-wrap">
+<pre class="fish-top">
+                        不知不觉间又陪你走过了一整年的春夏秋冬，很开心我的生命里有你的出现。
+                    友谊的开始太过久远，已经回忆不起最初相识的时刻了。但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
+                  我们这么多年的相处中，有过快乐，也有过争执，但我很开心我们能够真心相待。
+                在那之后，我带你认识了很多新朋友，鹿子、gv、猪仔还有那个神秘的群主。他们心中一定都有你这位特别讨喜的朋友。
+              对于即将升上高一的你来说，环境的变更可能会使你无所适从，但别给自己太大压力，把它当作一种新的体验就好，你的性格一定会使你很快适应新的同学和环境。
+            纵使你有很多不足，也做过错一些事，但人无完人，我相信你会因此反思变得更加成熟、更加稳重。所谓成长就是一个从无知到成熟、从依赖到独立的过程。
+          虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友。生日快乐，我的好朋友。
+</pre>
+                <!-- 湖面波纹镜像媒介 -->
+                <div class="lake-wave"></div>
+<pre class="fish-bottom">
+                        不知不觉间又陪你走过了一整年的春夏秋冬，很开心我的生命里有你的出现。
+                    友谊的开始太过久远，已经回忆不起最初相识的时刻了。但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
+                  我们这么多年的相处中，有过快乐，也有过争执，但我很开心我们能够真心相待。
+                在那之后，我带你认识了很多新朋友，鹿子、gv、猪仔还有那个神秘的群主。他们心中一定都有你这位特别讨喜的朋友。
+              对于即将升上高一的你来说，环境的变更可能会使你无所适从，但别给自己太大压力，把它当作一种新的体验就好，你的性格一定会使你很快适应新的同学和环境。
+            纵使你有很多不足，也做过错一些事，但人无完人，我相信你会因此反思变得更加成熟、更加稳重。所谓成长就是一个从无知到成熟、从依赖到独立的过程。
+          虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友。生日快乐，我的好朋友。
+</pre>
+            </div>
             <div class="sign">
                 <p>山药</p>
                 <p>2026.08.12</p>
@@ -250,7 +279,7 @@
 
     <audio id="bgMusic" loop preload="auto">
         <source src="./music/夏天的风.mp3" type="audio/mpeg">
-    </audio>
+    
 
     <button class="audio-btn" id="musicCtrl">🎵</button>
 
@@ -289,7 +318,6 @@
             }
         }
 
-        // ===================== 全屏爱心粒子 =====================
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -357,7 +385,6 @@
         }
         animate();
 
-        // ===================== 电脑端小鱼拖尾 + 保留原生鼠标 =====================
         if(isPC){
             const trailCanvas = document.getElementById('mouseTrailCanvas');
             const trailCtx = trailCanvas.getContext('2d');
@@ -387,26 +414,19 @@
                 ctx.rotate(rotate);
                 ctx.globalAlpha = alpha;
                 ctx.fillStyle = fillColor;
-
-                // 鱼身
                 ctx.beginPath();
                 ctx.ellipse(-size/3, 0, size, size/2, 0, 0, Math.PI*2);
                 ctx.fill();
-
-                // 鱼尾
                 ctx.beginPath();
                 ctx.moveTo(-size, -size/2);
                 ctx.lineTo(-size*1.6, 0);
                 ctx.lineTo(-size, size/2);
                 ctx.closePath();
                 ctx.fill();
-
-                // 鱼眼
                 ctx.fillStyle = "#fff";
                 ctx.beginPath();
                 ctx.arc(size/2, -size/6, size/6, 0, Math.PI*2);
                 ctx.fill();
-
                 ctx.restore();
             }
 
