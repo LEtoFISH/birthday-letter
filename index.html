@@ -1,1528 +1,1512 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>一封特别的信</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        body {
-            font-family:
-                "Microsoft YaHei",
-                "PingFang SC",
-                "Noto Sans SC",
-                sans-serif;
-
-            background:
-                radial-gradient(
-                    circle at 50% 20%,
-                    rgba(255,255,255,.9),
-                    transparent 38%
-                ),
-                linear-gradient(
-                    135deg,
-                    #ffdce9,
-                    #ffc4dd 48%,
-                    #f4b4d3
-                );
-
-            color: #71394e;
-        }
-
-
-        /* =====================================================
-           背景爱心
-        ===================================================== */
-
-        .background-decoration {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .heart {
-            position: absolute;
-            color: rgba(255,255,255,.4);
-            font-size: 22px;
-
-            animation:
-                floatHeart linear infinite;
-        }
-
-        .heart:nth-child(1) {
-            left: 10%;
-            top: 90%;
-            animation-duration: 11s;
-        }
-
-        .heart:nth-child(2) {
-            left: 25%;
-            top: 80%;
-            animation-duration: 13s;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .heart:nth-child(3) {
-            left: 48%;
-            top: 92%;
-            animation-duration: 10s;
-        }
+<title>一封特别的信</title>
 
-        .heart:nth-child(4) {
-            left: 72%;
-            top: 85%;
-            animation-duration: 12s;
-        }
+<style>
 
-        .heart:nth-child(5) {
-            left: 88%;
-            top: 90%;
-            animation-duration: 14s;
-        }
+/* =========================================================
+   基础
+========================================================= */
 
-        @keyframes floatHeart {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-            0% {
-                transform:
-                    translateY(0)
-                    rotate(0deg);
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-                opacity: 0;
-            }
+body {
+    font-family:
+        "Microsoft YaHei",
+        "PingFang SC",
+        "Noto Sans SC",
+        sans-serif;
 
-            15% {
-                opacity: 1;
-            }
+    color: #754058;
+}
 
-            100% {
-                transform:
-                    translateY(-110vh)
-                    rotate(25deg);
 
-                opacity: 0;
-            }
-        }
+/* =========================================================
+   开场背景
+========================================================= */
 
+#opening {
 
+    position: fixed;
+    inset: 0;
 
-        /* =====================================================
-           开场
-        ===================================================== */
+    z-index: 100;
 
-        #opening {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            position: fixed;
-            inset: 0;
+    background:
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(255,255,255,.95),
+            transparent 34%
+        ),
 
-            z-index: 100;
+        linear-gradient(
+            135deg,
+            #ffe0eb 0%,
+            #ffc9df 45%,
+            #f3b4d1 100%
+        );
 
-            transition:
-                opacity 1s ease,
-                visibility 1s ease;
-        }
+    transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease;
+}
 
-        #opening.hide {
+#opening.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
 
-        .opening-content {
+.opening-content {
 
-            width: min(90%, 700px);
+    width: 90%;
 
-            text-align: center;
+    max-width: 900px;
 
-            animation:
-                openingFloat 4s ease-in-out infinite;
-        }
+    text-align: center;
 
-        @keyframes openingFloat {
+    animation:
+        openingFloat 4s ease-in-out infinite;
+}
 
-            0%,
-            100% {
-                transform: translateY(0);
-            }
+@keyframes openingFloat {
 
-            50% {
-                transform: translateY(-10px);
-            }
-        }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
 
-        .small-text {
+    50% {
+        transform: translateY(-8px);
+    }
+}
 
-            font-size: 14px;
 
-            letter-spacing: 6px;
+.opening-small {
 
-            margin-bottom: 20px;
+    font-size: 14px;
 
-            color:
-                rgba(113,57,78,.65);
-        }
+    letter-spacing: 7px;
 
-        .opening-title {
+    color:
+        rgba(116,59,82,.58);
 
-            font-family:
-                "STKaiti",
-                "KaiTi",
-                serif;
+    margin-bottom: 22px;
+}
 
-            font-size:
-                clamp(48px, 8vw, 86px);
 
-            font-weight: 500;
+.opening-title {
 
-            letter-spacing: 10px;
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        serif;
 
-            color: #7c3f57;
+    font-size:
+        clamp(52px, 7vw, 92px);
 
-            text-shadow:
-                0 4px 10px
-                rgba(255,255,255,.8);
-        }
+    font-weight: 500;
 
-        .birthday-line {
+    letter-spacing: 12px;
 
-            margin-top: 20px;
+    color: #783c55;
 
-            font-size: 15px;
+    text-shadow:
+        0 4px 15px rgba(255,255,255,.8);
+}
 
-            letter-spacing: 4px;
 
-            color:
-                rgba(113,57,78,.65);
-        }
+.opening-subtitle {
 
+    margin-top: 20px;
 
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        serif;
 
-        /* =====================================================
-           信封
-        ===================================================== */
+    font-size: 16px;
 
-        .envelope-wrapper {
+    letter-spacing: 4px;
 
-            margin:
-                45px auto 0;
+    color:
+        rgba(115,57,79,.62);
+}
 
-            width: 220px;
-            height: 145px;
 
-            position: relative;
+/* =========================================================
+   信封
+========================================================= */
 
-            cursor: pointer;
+.envelope-wrapper {
 
-            transition:
-                transform .3s ease;
-        }
+    position: relative;
 
-        .envelope-wrapper:hover {
+    width: 220px;
+    height: 145px;
 
-            transform:
-                translateY(-5px)
-                scale(1.03);
-        }
+    margin: 42px auto 0;
 
-        .envelope {
+    cursor: pointer;
 
-            position: absolute;
+    transition:
+        transform .3s ease;
+}
 
-            inset: 0;
+.envelope-wrapper:hover {
 
-            background: #fff3f7;
+    transform:
+        translateY(-6px)
+        scale(1.03);
+}
 
-            border-radius: 5px;
 
-            box-shadow:
-                0 20px 40px
-                rgba(131,51,85,.18);
-        }
+.envelope {
 
-        .envelope::before {
+    position: absolute;
 
-            content: "";
+    inset: 0;
 
-            position: absolute;
+    background: #fff5f9;
 
-            left: 0;
-            top: 0;
+    border-radius: 5px;
 
-            border-left:
-                110px solid transparent;
+    box-shadow:
+        0 20px 40px
+        rgba(125,52,85,.18);
 
-            border-right:
-                110px solid transparent;
+    overflow: hidden;
+}
 
-            border-top:
-                75px solid #f7c3d7;
 
-            z-index: 3;
+.envelope::before {
 
-            transform-origin:
-                top center;
+    content: "";
 
-            transition:
-                transform .8s ease;
-        }
+    position: absolute;
 
-        .envelope::after {
+    left: 0;
+    top: 0;
 
-            content: "";
+    width: 0;
+    height: 0;
 
-            position: absolute;
+    border-left:
+        110px solid transparent;
 
-            left: 0;
-            bottom: 0;
+    border-right:
+        110px solid transparent;
 
-            border-left:
-                110px solid #f9d7e4;
+    border-top:
+        76px solid #f4bed4;
 
-            border-top:
-                72px solid transparent;
+    z-index: 4;
 
-            z-index: 4;
-        }
+    transform-origin:
+        top center;
 
-        .envelope-wrapper.open
-        .envelope::before {
+    transition:
+        transform .8s ease;
+}
 
-            transform:
-                rotateX(180deg);
-        }
 
-        .letter-inside {
+.envelope::after {
 
-            position: absolute;
+    content: "";
 
-            width: 170px;
-            height: 110px;
+    position: absolute;
 
-            background: #fffafc;
+    left: 0;
+    bottom: 0;
 
-            left: 25px;
-            bottom: 10px;
+    border-left:
+        110px solid #f8d3e2;
 
-            z-index: 2;
+    border-top:
+        74px solid transparent;
 
-            padding: 15px;
+    z-index: 5;
+}
 
-            color: #9d526f;
 
-            font-size: 13px;
+.envelope-wrapper.open
+.envelope::before {
 
-            box-shadow:
-                0 5px 15px
-                rgba(80,30,50,.08);
+    transform:
+        rotateX(180deg);
+}
 
-            transition:
-                transform 1s ease,
-                bottom 1s ease;
-        }
 
-        .envelope-wrapper.open
-        .letter-inside {
+.letter-preview {
 
-            bottom: 70px;
+    position: absolute;
 
-            transform:
-                translateY(-20px);
-        }
+    width: 170px;
+    height: 112px;
 
-        .seal {
+    left: 25px;
+    bottom: 10px;
 
-            position: absolute;
+    background: #fffafd;
 
-            width: 38px;
-            height: 38px;
+    z-index: 2;
 
-            border-radius: 50%;
+    padding: 20px 10px;
 
-            background: #d77a9c;
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        serif;
 
-            color: white;
+    font-size: 16px;
 
-            display: flex;
+    line-height: 1.6;
 
-            justify-content: center;
-            align-items: center;
+    color: #a35473;
 
-            left: calc(50% - 19px);
-            top: 48px;
+    box-shadow:
+        0 5px 15px
+        rgba(90,30,60,.08);
 
-            z-index: 10;
+    transition:
+        transform 1s ease,
+        bottom 1s ease;
+}
 
-            font-size: 17px;
 
-            box-shadow:
-                0 4px 10px
-                rgba(130,50,80,.25);
+.envelope-wrapper.open
+.letter-preview {
 
-            transition:
-                opacity .5s ease,
-                transform .5s ease;
-        }
+    bottom: 75px;
 
-        .envelope-wrapper.open
-        .seal {
+    transform:
+        translateY(-20px);
+}
 
-            opacity: 0;
 
-            transform:
-                scale(.5);
-        }
+.seal {
 
-        .open-button {
+    position: absolute;
 
-            margin-top: 25px;
+    width: 40px;
+    height: 40px;
 
-            padding:
-                13px 38px;
+    left: 50%;
+    top: 48px;
 
-            border: none;
+    transform: translateX(-50%);
 
-            border-radius: 999px;
+    z-index: 10;
 
-            background:
-                rgba(255,255,255,.65);
+    display: flex;
 
-            color: #783d55;
+    align-items: center;
+    justify-content: center;
 
-            font-size: 15px;
+    border-radius: 50%;
 
-            letter-spacing: 3px;
+    background: #d8759a;
 
-            cursor: pointer;
+    color: white;
 
-            box-shadow:
-                0 8px 20px
-                rgba(115,44,75,.15);
+    font-size: 18px;
 
-            transition:
-                all .3s ease;
+    box-shadow:
+        0 5px 12px
+        rgba(120,50,80,.25);
 
-            backdrop-filter:
-                blur(10px);
-        }
+    transition:
+        opacity .5s ease,
+        transform .5s ease;
+}
 
-        .open-button:hover {
 
-            background: white;
+.envelope-wrapper.open
+.seal {
 
-            transform:
-                translateY(-3px);
+    opacity: 0;
 
-            box-shadow:
-                0 12px 25px
-                rgba(115,44,75,.2);
-        }
+    transform:
+        translateX(-50%)
+        scale(.4);
+}
 
 
+/* =========================================================
+   拆信按钮
+========================================================= */
 
-        /* =====================================================
-           正文页面
-        ===================================================== */
+.open-button {
 
-        #letter-page {
+    margin-top: 26px;
 
-            position: fixed;
+    padding:
+        13px 40px;
 
-            inset: 0;
+    border: none;
 
-            z-index: 20;
+    border-radius: 999px;
 
-            display: flex;
+    background:
+        rgba(255,255,255,.72);
 
-            justify-content: center;
-            align-items: center;
+    color: #783d56;
 
-            padding: 20px;
+    font-size: 15px;
 
-            opacity: 0;
+    letter-spacing: 4px;
 
-            visibility: hidden;
+    cursor: pointer;
 
-            transition:
-                opacity 1.2s ease,
-                visibility 1.2s ease;
+    box-shadow:
+        0 8px 25px
+        rgba(110,45,75,.15);
 
-            background:
+    backdrop-filter:
+        blur(10px);
 
-                linear-gradient(
-                    to bottom,
+    transition:
+        all .3s ease;
+}
 
-                    rgba(255,220,235,.96)
-                    0%,
 
-                    rgba(255,205,226,.94)
-                    42%,
+.open-button:hover {
 
-                    rgba(155,213,224,.9)
-                    43%,
+    background: white;
 
-                    rgba(84,166,188,.98)
-                    100%
-                );
-        }
+    transform:
+        translateY(-3px);
 
-        #letter-page.show {
+    box-shadow:
+        0 13px 30px
+        rgba(110,45,75,.2);
+}
 
-            opacity: 1;
 
-            visibility: visible;
-        }
 
-        .letter-container {
+/* =========================================================
+   正文页面
+========================================================= */
 
-            position: relative;
+#letter-page {
 
-            width: min(1200px, 96vw);
+    position: fixed;
 
-            height: min(850px, 96vh);
+    inset: 0;
 
-            overflow: hidden;
+    z-index: 20;
 
-            display: flex;
+    opacity: 0;
 
-            justify-content: center;
+    visibility: hidden;
 
-            align-items: center;
-        }
+    transition:
+        opacity 1.3s ease,
+        visibility 1.3s ease;
 
+    /*
+       上半部分：天空
+       下半部分：水
+    */
 
+    background:
 
-        /* =====================================================
-           鱼区域
-        ===================================================== */
+        linear-gradient(
+            to bottom,
 
-        .fish-wrapper {
+            #ffddea 0%,
+            #ffc9df 34%,
+            #f7b9d4 42%,
 
-            position: absolute;
+            #a7d6e1 43%,
+            #8fc8d7 58%,
+            #68b0c5 100%
+        );
+}
 
-            width: 1050px;
 
-            height: 520px;
+#letter-page.show {
 
-            left: 50%;
-            top: 50%;
+    opacity: 1;
 
-            transform:
-                translate(-50%, -50%);
+    visibility: visible;
+}
 
-            z-index: 5;
-        }
 
+/* =========================================================
+   整个场景
+========================================================= */
 
-        /*
-         * 鱼身体
-         *
-         * 这一部分比上一版明显放大。
-         * 正文会被限制在这个鱼形区域里。
-         */
+.scene {
 
-        .fish-body {
+    position: relative;
 
-            position: absolute;
+    width: 100%;
+    height: 100%;
 
-            width: 850px;
+    overflow: hidden;
+}
 
-            height: 440px;
 
-            left: 50px;
+/* =========================================================
+   水下光线
+========================================================= */
 
-            top: 40px;
+.underwater-light {
 
-            background:
+    position: absolute;
 
-                radial-gradient(
-                    circle at 28% 25%,
-                    rgba(255,255,255,.35),
-                    transparent 8%
-                ),
+    inset:
+        43% 0 0 0;
 
-                radial-gradient(
-                    circle at 60% 70%,
-                    rgba(255,255,255,.12),
-                    transparent 20%
-                ),
+    z-index: 1;
 
-                linear-gradient(
-                    145deg,
-                    #f8aac5,
-                    #ec88ad 55%,
-                    #db719b
-                );
+    overflow: hidden;
 
-            border-radius:
+    pointer-events: none;
+}
 
-                58% 48% 48% 54% /
-                55% 58% 45% 52%;
 
-            box-shadow:
+.light {
 
-                0 25px 45px
-                rgba(83,65,85,.22);
-        }
+    position: absolute;
 
+    width: 220px;
+    height: 700px;
 
-        /* =====================================================
-           鱼尾
-        ===================================================== */
+    top: -100px;
 
-        .fish-tail {
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.11),
+            transparent
+        );
 
-            position: absolute;
+    transform:
+        rotate(13deg);
 
-            width: 250px;
+    animation:
+        lightMove 7s ease-in-out infinite;
+}
 
-            height: 300px;
 
-            right: -15px;
+.light:nth-child(1) {
+    left: 12%;
+}
 
-            top: 110px;
+.light:nth-child(2) {
 
-            background:
+    left: 48%;
 
-                linear-gradient(
-                    145deg,
-                    #ee9cba,
-                    #d66e99
-                );
+    transform:
+        rotate(-10deg);
 
-            clip-path:
+    animation-delay:
+        -2s;
+}
 
-                polygon(
-                    100% 50%,
-                    0 0,
-                    28% 50%,
-                    0 100%
-                );
+.light:nth-child(3) {
 
-            filter:
+    left: 78%;
 
-                drop-shadow(
-                    0 15px 12px
-                    rgba(90,50,80,.14)
-                );
-        }
+    transform:
+        rotate(8deg);
 
+    animation-delay:
+        -4s;
+}
 
-        /* =====================================================
-           鱼鳍
-        ===================================================== */
 
-        .fin-top {
+@keyframes lightMove {
 
-            position: absolute;
+    0%,
+    100% {
+        opacity: .15;
+        transform:
+            translateX(-30px)
+            rotate(12deg);
+    }
 
-            width: 180px;
-            height: 130px;
+    50% {
+        opacity: .55;
+        transform:
+            translateX(30px)
+            rotate(12deg);
+    }
+}
 
-            left: 320px;
-            top: -35px;
 
-            background:
-                #e789ac;
 
-            clip-path:
-                polygon(
-                    0 100%,
-                    50% 0,
-                    100% 100%
-                );
+/* =========================================================
+   鱼主体
+========================================================= */
 
-            transform:
-                rotate(-8deg);
-        }
+.fish-scene {
 
-        .fin-bottom {
+    position: absolute;
 
-            position: absolute;
+    left: 50%;
+    top: 47%;
 
-            width: 170px;
-            height: 110px;
+    width: 1500px;
+    height: 720px;
 
-            left: 350px;
-            bottom: -25px;
+    transform:
+        translate(-50%, -50%);
 
-            background:
-                #dc769f;
+    z-index: 10;
+}
 
-            clip-path:
-                polygon(
-                    0 0,
-                    100% 0,
-                    55% 100%
-                );
-        }
 
+/*
+   鱼身体
 
+   这一版特别放大。
 
-        /* =====================================================
-           鱼眼
-        ===================================================== */
+   屏幕 1920px 时：
+   鱼身体约占屏幕 70%+
+*/
 
-        .fish-eye {
+.fish-body {
 
-            position: absolute;
+    position: absolute;
 
-            width: 48px;
-            height: 48px;
+    left: 70px;
+    top: 80px;
 
-            border-radius: 50%;
+    width: 1190px;
+    height: 580px;
 
-            background: white;
+    background:
 
-            left: 125px;
-            top: 145px;
+        radial-gradient(
+            circle at 23% 28%,
+            rgba(255,255,255,.34),
+            transparent 9%
+        ),
 
-            box-shadow:
-                inset 0 0 0 7px #f3b0c9;
-        }
+        radial-gradient(
+            circle at 65% 60%,
+            rgba(255,255,255,.13),
+            transparent 24%
+        ),
 
-        .fish-eye::after {
+        linear-gradient(
+            145deg,
+            #f5a8c4,
+            #ed8db0 50%,
+            #dd719d
+        );
 
-            content: "";
+    border-radius:
 
-            position: absolute;
+        58% 53% 48% 55% /
+        53% 58% 46% 50%;
 
-            width: 18px;
-            height: 18px;
+    box-shadow:
 
-            border-radius: 50%;
+        0 28px 60px
+        rgba(75,54,72,.22);
+}
 
-            background: #4c3542;
 
-            left: 13px;
-            top: 13px;
-        }
+/* =========================================================
+   鱼尾
+========================================================= */
 
+.fish-tail {
 
+    position: absolute;
 
-        /* =====================================================
-           鱼里面的正文
-        ===================================================== */
+    left: 1130px;
+    top: 195px;
 
-        .letter-text {
+    width: 330px;
+    height: 350px;
 
-            position: absolute;
+    background:
 
-            z-index: 10;
+        linear-gradient(
+            145deg,
+            #ee9bbb,
+            #d76c98
+        );
 
-            /*
-             * 正文区域比鱼身体小。
-             * 这样文字不会跑到鱼外面。
-             */
+    clip-path:
 
-            width: 690px;
+        polygon(
+            100% 50%,
+            0 0,
+            24% 50%,
+            0 100%
+        );
 
-            height: 390px;
+    filter:
+        drop-shadow(
+            0 20px 16px
+            rgba(80,45,70,.14)
+        );
+}
 
-            left: 120px;
 
-            top: 65px;
+/* =========================================================
+   上鳍
+========================================================= */
 
-            overflow: hidden;
+.fish-fin-top {
 
-            /*
-             * 关键：
-             * 使用椭圆形区域限制文字。
-             */
+    position: absolute;
 
-            clip-path:
+    left: 475px;
+    top: 20px;
 
-                ellipse(
-                    48% 50%
-                    at 50% 50%
-                );
+    width: 230px;
+    height: 170px;
 
-            padding:
-                18px 40px;
+    background:
+        #e789ad;
 
-            text-align: left;
+    clip-path:
+        polygon(
+            0 100%,
+            45% 0,
+            100% 100%
+        );
 
-            color:
-                rgba(102,46,70,.92);
+    transform:
+        rotate(-5deg);
+}
 
-            font-family:
 
-                "STKaiti",
-                "KaiTi",
-                "Microsoft YaHei",
-                serif;
+/* =========================================================
+   下鳍
+========================================================= */
 
-            /*
-             * 这里缩小字号，
-             * 让完整原文能够放进鱼里。
-             */
+.fish-fin-bottom {
 
-            font-size: 14px;
+    position: absolute;
 
-            line-height: 1.65;
+    left: 520px;
+    bottom: 5px;
 
-            letter-spacing: .5px;
+    width: 210px;
+    height: 145px;
 
-            text-shadow:
-                0 1px 1px
-                rgba(255,255,255,.28);
-        }
+    background:
+        #dc779f;
 
-        .letter-title {
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            55% 100%
+        );
+}
 
-            text-align: center;
 
-            font-size: 25px;
+/* =========================================================
+   鱼眼
+========================================================= */
 
-            letter-spacing: 5px;
+.fish-eye {
 
-            margin-bottom: 12px;
+    position: absolute;
 
-            color:
-                rgba(103,46,69,.95);
-        }
+    left: 160px;
+    top: 205px;
 
-        .letter-text p {
+    width: 58px;
+    height: 58px;
 
-            margin-bottom: 7px;
-        }
+    border-radius: 50%;
 
+    background: white;
 
+    box-shadow:
+        inset 0 0 0 8px #f3b0c9;
 
-        /* =====================================================
-           水面
-        ===================================================== */
+    z-index: 15;
+}
 
-        .water-surface {
 
-            position: absolute;
+.fish-eye::after {
 
-            width: 100vw;
+    content: "";
 
-            height: 95px;
+    position: absolute;
 
-            left: 50%;
+    left: 16px;
+    top: 16px;
 
-            transform:
-                translateX(-50%);
+    width: 22px;
+    height: 22px;
 
-            top: 50%;
+    border-radius: 50%;
 
-            z-index: 20;
+    background: #493441;
+}
 
-            overflow: hidden;
 
-            pointer-events: none;
-        }
 
-        .wave {
+/* =========================================================
+   鱼身文字区域
+========================================================= */
 
-            position: absolute;
+/*
+   重点：
 
-            width: 120%;
+   不再使用 ellipse clip-path。
 
-            height: 100%;
+   文字区域本身就放在鱼身体里面，
+   左右和上下留出足够安全距离。
 
-            left: -10%;
+   因此最后一段不会再被鱼底部裁掉。
+*/
 
-            top: 20px;
+.fish-letter {
 
-            background:
+    position: absolute;
 
-                radial-gradient(
-                    ellipse at 50% 0%,
-                    rgba(255,255,255,.72),
-                    transparent 50%
-                );
+    z-index: 20;
 
-            border-radius:
-                50% 50% 0 0 /
-                30% 30% 0 0;
+    left: 250px;
+    top: 125px;
 
-            animation:
-                waveMove 5s ease-in-out infinite;
-        }
+    width: 890px;
+    height: 490px;
 
-        .wave::before,
-        .wave::after {
+    overflow: hidden;
 
-            content: "";
+    padding:
+        8px 25px 20px 25px;
 
-            position: absolute;
+    color:
+        rgba(100,46,69,.94);
 
-            left: -5%;
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        "Microsoft YaHei",
+        serif;
 
-            width: 110%;
+    font-size: 14px;
 
-            height: 55px;
+    line-height: 1.55;
 
-            border-top:
-                4px solid
-                rgba(255,255,255,.55);
+    letter-spacing: .4px;
 
-            border-radius: 50%;
+    text-shadow:
+        0 1px 1px
+        rgba(255,255,255,.25);
+}
 
-            animation:
-                waveMove 4s ease-in-out infinite;
-        }
 
-        .wave::before {
-            top: 8px;
-        }
+/* 标题 */
 
-        .wave::after {
+.fish-letter h2 {
 
-            top: 23px;
+    text-align: center;
 
-            opacity: .45;
+    font-size: 29px;
 
-            animation-delay:
-                -1.5s;
-        }
+    font-weight: normal;
 
-        @keyframes waveMove {
+    letter-spacing: 7px;
 
-            0%,
-            100% {
-                transform:
-                    translateX(-2%);
-            }
+    margin-bottom: 15px;
 
-            50% {
-                transform:
-                    translateX(2%);
-            }
-        }
+    color:
+        rgba(104,46,70,.95);
+}
 
 
+/* 段落 */
 
-        /* =====================================================
-           水下倒影
-        ===================================================== */
+.fish-letter p {
 
-        .reflection-area {
+    margin-bottom: 8px;
 
-            position: absolute;
+    text-align: left;
+}
 
-            width: 800px;
 
-            height: 390px;
+/* 最后的生日祝福 */
 
-            top: calc(50% + 50px);
+.fish-letter .last-line {
 
-            left: 50%;
+    margin-top: 10px;
 
-            transform:
-                translateX(-50%);
+    text-align: center;
 
-            overflow: hidden;
+    font-size: 15px;
 
-            z-index: 8;
+    letter-spacing: 1px;
+}
 
-            /*
-             * 从上到下越来越透明
-             */
 
-            mask-image:
 
-                linear-gradient(
-                    to bottom,
+/* =========================================================
+   水面
+========================================================= */
 
-                    rgba(0,0,0,.9),
+.water-surface {
 
-                    rgba(0,0,0,.65) 45%,
+    position: absolute;
 
-                    transparent 100%
-                );
+    left: 0;
+    right: 0;
 
-            -webkit-mask-image:
+    top: 43%;
 
-                linear-gradient(
-                    to bottom,
+    height: 100px;
 
-                    rgba(0,0,0,.9),
+    z-index: 30;
 
-                    rgba(0,0,0,.65) 45%,
+    pointer-events: none;
 
-                    transparent 100%
-                );
-        }
+    overflow: hidden;
+}
 
 
-        .reflection-text {
+/*
+   半透明水层
+*/
 
-            width: 690px;
+.water-surface::before {
 
-            position: absolute;
+    content: "";
 
-            left: 50%;
+    position: absolute;
 
-            top: -5px;
+    left: 0;
+    right: 0;
 
-            transform:
+    top: 20px;
 
-                translateX(-50%)
-                scaleY(-1);
+    height: 65px;
 
-            transform-origin:
-                top center;
+    background:
 
-            color:
-                rgba(255,246,250,.52);
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.20),
+            rgba(255,255,255,.03)
+        );
 
-            font-family:
+    backdrop-filter:
+        blur(1px);
+}
 
-                "STKaiti",
-                "KaiTi",
-                "Microsoft YaHei",
-                serif;
 
-            font-size: 14px;
+/*
+   第一条波浪
+*/
 
-            line-height: 1.65;
+.wave {
 
-            letter-spacing: .5px;
+    position: absolute;
 
-            filter:
-                blur(1.8px);
+    width: 115%;
 
-            opacity: .7;
+    left: -7.5%;
 
-            text-align: left;
-        }
+    top: 14px;
 
-        .reflection-title {
+    height: 40px;
 
-            text-align: center;
+    border-top:
+        5px solid
+        rgba(255,255,255,.62);
 
-            font-size: 25px;
+    border-radius:
+        50%;
 
-            letter-spacing: 5px;
+    animation:
+        waterWave 5s ease-in-out infinite;
+}
 
-            margin-bottom: 12px;
-        }
 
-        .reflection-text p {
+/*
+   第二条波浪
+*/
 
-            margin-bottom: 7px;
-        }
+.wave::before {
 
+    content: "";
 
+    position: absolute;
 
-        /* =====================================================
-           水下光线
-        ===================================================== */
+    width: 100%;
 
-        .light-ray {
+    height: 35px;
 
-            position: absolute;
+    left: 0;
 
-            width: 220px;
+    top: 10px;
 
-            height: 500px;
+    border-top:
+        3px solid
+        rgba(255,255,255,.42);
 
-            background:
+    border-radius:
+        50%;
+}
 
-                linear-gradient(
-                    90deg,
-                    transparent,
-                    rgba(255,255,255,.12),
-                    transparent
-                );
 
-            transform:
-                rotate(12deg);
+/*
+   第三条波浪
+*/
 
-            top: 0;
+.wave::after {
 
-            left: 10%;
+    content: "";
 
-            z-index: 3;
+    position: absolute;
 
-            animation:
-                lightRay 6s ease-in-out infinite;
-        }
+    width: 100%;
 
-        .light-ray:nth-child(2) {
+    height: 35px;
 
-            left: 70%;
+    left: 0;
 
-            animation-delay:
-                -2s;
+    top: 22px;
 
-            transform:
-                rotate(-10deg);
-        }
+    border-top:
+        2px solid
+        rgba(255,255,255,.25);
 
-        @keyframes lightRay {
+    border-radius:
+        50%;
+}
 
-            0%,
-            100% {
 
-                opacity: .2;
+@keyframes waterWave {
 
-                transform:
-                    translateX(-20px)
-                    rotate(12deg);
-            }
+    0%,
+    100% {
+        transform:
+            translateX(-1.5%);
+    }
 
-            50% {
+    50% {
+        transform:
+            translateX(1.5%);
+    }
+}
 
-                opacity: .5;
 
-                transform:
-                    translateX(20px)
-                    rotate(12deg);
-            }
-        }
 
+/* =========================================================
+   水下倒影
+========================================================= */
 
+.reflection {
 
-        /* =====================================================
-           底部祝福
-        ===================================================== */
+    position: absolute;
 
-        .birthday-ending {
+    z-index: 8;
 
-            position: absolute;
+    left: 50%;
 
-            z-index: 30;
+    top:
+        calc(43% + 60px);
 
-            bottom: 18px;
+    width: 950px;
 
-            text-align: center;
+    height: 470px;
 
-            color:
-                rgba(255,255,255,.9);
+    transform:
+        translateX(-50%);
 
-            font-family:
+    overflow: hidden;
 
-                "STKaiti",
-                "KaiTi",
-                serif;
+    pointer-events: none;
 
-            font-size: 19px;
+    opacity: .75;
 
-            letter-spacing: 4px;
+    /*
+       越往下越消失
+    */
 
-            text-shadow:
-                0 2px 8px
-                rgba(42,104,122,.3);
+    mask-image:
 
-            animation:
-                endingFloat 3s ease-in-out infinite;
-        }
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.72) 0%,
+            rgba(0,0,0,.48) 35%,
+            rgba(0,0,0,.20) 70%,
+            transparent 100%
+        );
 
-        @keyframes endingFloat {
+    -webkit-mask-image:
 
-            0%,
-            100% {
-                transform:
-                    translateY(0);
-            }
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.72) 0%,
+            rgba(0,0,0,.48) 35%,
+            rgba(0,0,0,.20) 70%,
+            transparent 100%
+        );
+}
 
-            50% {
-                transform:
-                    translateY(-5px);
-            }
-        }
 
+.reflection-content {
 
+    width: 890px;
 
-        /* =====================================================
-           音乐按钮
-        ===================================================== */
+    margin:
+        0 auto;
 
-        #music-control {
+    color:
+        rgba(255,248,251,.58);
 
-            position: fixed;
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        "Microsoft YaHei",
+        serif;
 
-            right: 24px;
+    font-size: 14px;
 
-            bottom: 24px;
+    line-height: 1.55;
 
-            width: 52px;
+    transform:
+        scaleY(-1);
 
-            height: 52px;
+    transform-origin:
+        top center;
 
-            border: none;
+    filter:
+        blur(1.5px);
+}
 
-            border-radius: 50%;
 
-            background:
-                rgba(255,255,255,.72);
+.reflection-content h2 {
 
-            backdrop-filter:
-                blur(10px);
+    text-align: center;
 
-            box-shadow:
-                0 8px 25px
-                rgba(50,80,90,.18);
+    font-size: 29px;
 
-            color: #744259;
+    font-weight: normal;
 
-            font-size: 22px;
+    letter-spacing: 7px;
 
-            cursor: pointer;
+    margin-bottom: 15px;
+}
 
-            z-index: 200;
 
-            transition:
-                transform .3s ease;
-        }
+.reflection-content p {
 
-        #music-control:hover {
+    margin-bottom: 8px;
+}
 
-            transform:
-                scale(1.08);
-        }
 
+/* =========================================================
+   水面上的小光点
+========================================================= */
 
+.water-glow {
 
-        /* =====================================================
-           手机
-        ===================================================== */
+    position: absolute;
 
-        @media (max-width: 800px) {
+    z-index: 35;
 
-            .fish-wrapper {
+    top: calc(43% + 10px);
 
-                transform:
-                    translate(-50%, -50%)
-                    scale(.72);
+    left: 50%;
 
-                transform-origin:
-                    center center;
-            }
+    transform:
+        translateX(-50%);
 
-            .reflection-area {
+    width: 850px;
 
-                transform:
-                    translateX(-50%)
-                    scale(.72);
+    height: 35px;
 
-                transform-origin:
-                    top center;
-            }
+    background:
 
-            .birthday-ending {
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.28),
+            transparent 70%
+        );
 
-                bottom: 65px;
+    filter:
+        blur(7px);
+}
 
-                font-size: 15px;
-            }
-        }
 
 
-        @media (max-width: 500px) {
+/* =========================================================
+   最底部祝福
+========================================================= */
 
-            .opening-title {
+.ending {
 
-                font-size: 47px;
+    position: absolute;
 
-                letter-spacing: 5px;
-            }
+    z-index: 40;
 
-            .small-text {
+    left: 50%;
 
-                font-size: 10px;
+    bottom: 70px;
 
-                letter-spacing: 3px;
-            }
+    transform:
+        translateX(-50%);
 
-            .birthday-line {
+    white-space: nowrap;
 
-                font-size: 11px;
+    color:
+        rgba(255,255,255,.92);
 
-                letter-spacing: 2px;
-            }
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        serif;
 
-            .fish-wrapper {
+    font-size: 19px;
 
-                transform:
-                    translate(-50%, -50%)
-                    scale(.48);
-            }
+    letter-spacing: 5px;
 
-            .reflection-area {
+    text-shadow:
+        0 2px 10px
+        rgba(40,100,120,.3);
 
-                transform:
-                    translateX(-50%)
-                    scale(.48);
-            }
+    animation:
+        endingFloat 3s ease-in-out infinite;
+}
 
-            #music-control {
 
-                width: 46px;
-                height: 46px;
+@keyframes endingFloat {
 
-                right: 15px;
-                bottom: 15px;
-            }
-        }
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
 
-    </style>
+    50% {
+        transform:
+            translateX(-50%)
+            translateY(-5px);
+    }
+}
 
+
+
+/* =========================================================
+   音乐按钮
+========================================================= */
+
+#music-control {
+
+    position: fixed;
+
+    z-index: 200;
+
+    right: 24px;
+    bottom: 24px;
+
+    width: 52px;
+    height: 52px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.78);
+
+    color:
+        #744259;
+
+    font-size: 21px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 25px
+        rgba(50,80,90,.18);
+
+    backdrop-filter:
+        blur(10px);
+
+    transition:
+        transform .3s ease;
+}
+
+
+#music-control:hover {
+
+    transform:
+        scale(1.08);
+}
+
+
+
+/* =========================================================
+   桌面小屏幕
+========================================================= */
+
+@media (max-width: 1500px) {
+
+    .fish-scene {
+
+        transform:
+            translate(-50%, -50%)
+            scale(.88);
+
+        transform-origin:
+            center center;
+    }
+
+    .reflection {
+
+        transform:
+            translateX(-50%)
+            scale(.88);
+
+        transform-origin:
+            top center;
+    }
+}
+
+
+/* =========================================================
+   平板
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .fish-scene {
+
+        transform:
+            translate(-50%, -50%)
+            scale(.68);
+    }
+
+    .reflection {
+
+        transform:
+            translateX(-50%)
+            scale(.68);
+    }
+
+    .ending {
+
+        bottom: 55px;
+
+        font-size: 15px;
+    }
+}
+
+
+/* =========================================================
+   手机
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .opening-title {
+
+        font-size: 46px;
+
+        letter-spacing: 5px;
+    }
+
+    .opening-small {
+
+        font-size: 10px;
+
+        letter-spacing: 4px;
+    }
+
+    .opening-subtitle {
+
+        font-size: 11px;
+
+        letter-spacing: 2px;
+    }
+
+    .fish-scene {
+
+        transform:
+            translate(-50%, -50%)
+            scale(.43);
+    }
+
+    .reflection {
+
+        transform:
+            translateX(-50%)
+            scale(.43);
+    }
+
+    .ending {
+
+        bottom: 65px;
+
+        font-size: 13px;
+
+        letter-spacing: 2px;
+    }
+
+    #music-control {
+
+        width: 46px;
+        height: 46px;
+
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+</style>
 </head>
 
 
 <body>
 
 
-    <!-- =====================================================
-         背景
-    ===================================================== -->
+<!-- =========================================================
+     开场
+========================================================= -->
 
-    <div class="background-decoration">
+<section id="opening">
 
-        <div class="heart">♡</div>
-        <div class="heart">♡</div>
-        <div class="heart">♡</div>
-        <div class="heart">♡</div>
-        <div class="heart">♡</div>
+    <div class="opening-content">
 
-    </div>
+        <div class="opening-small">
+            FOR MY SPECIAL FRIEND
+        </div>
 
 
-
-    <!-- =====================================================
-         音乐
-    ===================================================== -->
-
-    <audio
-        id="birthdayMusic"
-        src="夏天的风.mp3"
-        loop>
-    </audio>
+        <h1 class="opening-title">
+            一封特别的信
+        </h1>
 
 
+        <div class="opening-subtitle">
+            写给那个陪我走过春夏秋冬的人
+        </div>
 
-    <!-- =====================================================
-         开场页面
-    ===================================================== -->
 
-    <section id="opening">
+        <!-- 信封 -->
 
-        <div class="opening-content">
+        <div
+            class="envelope-wrapper"
+            id="envelope">
 
-            <div class="small-text">
-                FOR MY SPECIAL FRIEND
-            </div>
+            <div class="letter-preview">
 
-            <h1 class="opening-title">
-                一封特别的信
-            </h1>
+                送给你<br>
+                一封特别的信。
 
-            <div class="birthday-line">
-                写给那个陪我走过春夏秋冬的人
             </div>
 
 
-            <!-- 信封 -->
+            <div class="envelope">
 
-            <div
-                class="envelope-wrapper"
-                id="envelope">
-
-                <div class="letter-inside">
-
-                    送给你<br>
-                    一封特别的信。
-
-                </div>
-
-
-                <div class="envelope">
-
-                    <div class="seal">
-                        ♡
-                    </div>
-
+                <div class="seal">
+                    ♡
                 </div>
 
             </div>
-
-
-            <button
-                class="open-button"
-                id="openButton">
-
-                拆开信件
-
-            </button>
 
         </div>
 
-    </section>
+
+        <button
+            class="open-button"
+            id="openButton">
+
+            拆开信件
+
+        </button>
+
+    </div>
+
+</section>
 
 
 
-    <!-- =====================================================
-         正文
-    ===================================================== -->
+<!-- =========================================================
+     正文页面
+========================================================= -->
 
-    <section id="letter-page">
+<section id="letter-page">
 
-        <div class="letter-container">
-
-
-            <!-- =================================================
-                 鱼
-            ================================================= -->
-
-            <div class="fish-wrapper">
+    <div class="scene">
 
 
-                <!-- 鱼身体 -->
+        <!-- 水下光线 -->
 
-                <div class="fish-body">
+        <div class="underwater-light">
 
+            <div class="light"></div>
+            <div class="light"></div>
+            <div class="light"></div>
 
-                    <!-- 鱼眼 -->
-
-                    <div class="fish-eye"></div>
-
-
-                    <!-- 鱼鳍 -->
-
-                    <div class="fin-top"></div>
-
-                    <div class="fin-bottom"></div>
+        </div>
 
 
-                    <!-- =================================================
-                         完整正文
-                    ================================================= -->
 
-                    <div class="letter-text">
+        <!-- =================================================
+             鱼
+        ================================================= -->
 
-                        <div class="letter-title">
-                            致我特别的朋友
-                        </div>
+        <div class="fish-scene">
 
 
-                        <p>
-                            不知不觉间又陪你走过了一整年的春夏秋冬，
-                            很开心我的生命里有你的出现。
-                        </p>
+            <!-- 鱼身体 -->
+
+            <div class="fish-body">
 
 
-                        <p>
-                            友谊的开始太过久远，已经回忆不起最初相识的时刻了。
-                            但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
-                        </p>
+                <!-- 鱼眼 -->
+
+                <div class="fish-eye"></div>
 
 
-                        <p>
-                            我们这么多年的相处中，有过快乐，也有过争执，
-                            但我很开心我们能够真心相待。
-                        </p>
+                <!-- 鱼鳍 -->
 
+                <div class="fish-fin-top"></div>
 
-                        <p>
-                            在那之后，我带你认识了很多新朋友，
-                            鹿子、gv、猪仔还有那个神秘的群主。
-                            他们心中一定都有你这位特别讨喜的朋友。
-                        </p>
-
-
-                        <p>
-                            对于即将升上高一的你来说，环境的变更可能会使你无所适从，
-                            但别给自己太大压力，把它当作一种新的体验就好，
-                            你的性格一定会使你很快适应新的同学和环境。
-                        </p>
-
-
-                        <p>
-                            纵使你有很多不足，也做过错一些事，但人无完人，
-                            我相信你会因此反思变得更加成熟、更加稳重。
-                            所谓成长就是一个从无知到成熟、从依赖到独立的过程。
-                        </p>
-
-
-                        <p>
-                            虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，
-                            愿你所求皆如愿，所行皆坦途。
-                        </p>
-
-
-                        <p>
-                            当你回头时，我一定一直都在你身边，
-                            无论未来发生什么，我都陪你碎碎念念，
-                            也陪你岁岁年年。
-                        </p>
-
-
-                        <p>
-                            你在我心中，永远都是一位特别的朋友。
-                            生日快乐，我的好朋友。
-                        </p>
-
-                    </div>
-
-                </div>
-
+                <div class="fish-fin-bottom"></div>
 
 
                 <!-- =================================================
-                     鱼尾
+                     正文
                 ================================================= -->
 
-                <div class="fish-tail"></div>
+                <div class="fish-letter">
 
-            </div>
-
-
-
-            <!-- =================================================
-                 水面
-            ================================================= -->
-
-            <div class="water-surface">
-
-                <div class="wave"></div>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 水下倒影
-            ================================================= -->
-
-            <div class="reflection-area">
-
-                <div class="light-ray"></div>
-
-                <div class="light-ray"></div>
-
-
-                <div class="reflection-text">
-
-
-                    <div class="reflection-title">
+                    <h2>
                         致我特别的朋友
-                    </div>
+                    </h2>
 
 
                     <p>
@@ -1577,7 +1561,7 @@
                     </p>
 
 
-                    <p>
+                    <p class="last-line">
                         你在我心中，永远都是一位特别的朋友。
                         生日快乐，我的好朋友。
                     </p>
@@ -1588,184 +1572,286 @@
 
 
 
-            <!-- =================================================
-                 底部祝福
-            ================================================= -->
+            <!-- 鱼尾 -->
 
-            <div class="birthday-ending">
+            <div class="fish-tail"></div>
 
-                愿你所求皆如愿，所行皆坦途。
+        </div>
+
+
+
+        <!-- =================================================
+             水面
+        ================================================= -->
+
+        <div class="water-surface">
+
+            <div class="wave"></div>
+
+        </div>
+
+
+        <div class="water-glow"></div>
+
+
+
+        <!-- =================================================
+             水下倒影
+        ================================================= -->
+
+        <div class="reflection">
+
+            <div class="reflection-content">
+
+                <h2>
+                    致我特别的朋友
+                </h2>
+
+
+                <p>
+                    不知不觉间又陪你走过了一整年的春夏秋冬，
+                    很开心我的生命里有你的出现。
+                </p>
+
+
+                <p>
+                    友谊的开始太过久远，已经回忆不起最初相识的时刻了。
+                    但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
+                </p>
+
+
+                <p>
+                    我们这么多年的相处中，有过快乐，也有过争执，
+                    但我很开心我们能够真心相待。
+                </p>
+
+
+                <p>
+                    在那之后，我带你认识了很多新朋友，
+                    鹿子、gv、猪仔还有那个神秘的群主。
+                    他们心中一定都有你这位特别讨喜的朋友。
+                </p>
+
+
+                <p>
+                    对于即将升上高一的你来说，环境的变更可能会使你无所适从，
+                    但别给自己太大压力，把它当作一种新的体验就好，
+                    你的性格一定会使你很快适应新的同学和环境。
+                </p>
+
+
+                <p>
+                    纵使你有很多不足，也做过错一些事，但人无完人，
+                    我相信你会因此反思变得更加成熟、更加稳重。
+                    所谓成长就是一个从无知到成熟、从依赖到独立的过程。
+                </p>
+
+
+                <p>
+                    虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，
+                    愿你所求皆如愿，所行皆坦途。
+                </p>
+
+
+                <p>
+                    当你回头时，我一定一直都在你身边，
+                    无论未来发生什么，我都陪你碎碎念念，
+                    也陪你岁岁年年。
+                </p>
+
+
+                <p>
+                    你在我心中，永远都是一位特别的朋友。
+                    生日快乐，我的好朋友。
+                </p>
 
             </div>
 
         </div>
 
-    </section>
+
+
+        <!-- =================================================
+             底部文字
+        ================================================= -->
+
+        <div class="ending">
+
+            愿你所求皆如愿，所行皆坦途。
+
+        </div>
+
+    </div>
+
+</section>
 
 
 
-    <!-- =====================================================
-         音乐控制
-    ===================================================== -->
+<!-- =========================================================
+     音乐
+========================================================= -->
 
-    <button
-        id="music-control"
-        title="关闭音乐">
-
-        ♪
-
-    </button>
+<audio
+    id="birthdayMusic"
+    src="夏天的风.mp3"
+    loop>
+</audio>
 
 
+<button
+    id="music-control"
+    title="关闭音乐">
 
-    <script>
+    ♪
 
-
-        /* =====================================================
-           获取元素
-        ===================================================== */
-
-        const envelope =
-            document.getElementById("envelope");
-
-        const openButton =
-            document.getElementById("openButton");
-
-        const opening =
-            document.getElementById("opening");
-
-        const letterPage =
-            document.getElementById("letter-page");
-
-        const music =
-            document.getElementById("birthdayMusic");
-
-        const musicControl =
-            document.getElementById("music-control");
-
-
-        let musicPlaying = false;
-
-        let letterOpened = false;
+</button>
 
 
 
-        /* =====================================================
-           打开信件
-        ===================================================== */
+<script>
 
-        function openLetter() {
+/* =========================================================
+   获取元素
+========================================================= */
 
+const opening =
+    document.getElementById("opening");
+
+const envelope =
+    document.getElementById("envelope");
+
+const openButton =
+    document.getElementById("openButton");
+
+const letterPage =
+    document.getElementById("letter-page");
+
+const music =
+    document.getElementById("birthdayMusic");
+
+const musicControl =
+    document.getElementById("music-control");
+
+
+let opened = false;
+
+let musicPlaying = false;
+
+
+
+/* =========================================================
+   打开信件
+========================================================= */
+
+function openLetter() {
+
+    if (opened) {
+        return;
+    }
+
+    opened = true;
+
+
+    /* 信封打开 */
+
+    envelope.classList.add("open");
+
+
+    /* =====================================================
+       音乐
+
+       音量设置为 0.4
+    ===================================================== */
+
+    music.volume = 0.4;
+
+
+    music.play()
+        .then(() => {
+
+            musicPlaying = true;
+
+            musicControl.innerHTML = "♪";
+
+            musicControl.title =
+                "关闭音乐";
+
+        })
+        .catch(() => {
 
             /*
-             * 防止用户连续点击
-             */
+               如果浏览器阻止自动播放，
+               用户仍然可以点击右下角按钮播放。
+            */
 
-            if (letterOpened) {
-                return;
-            }
+            musicPlaying = false;
 
-            letterOpened = true;
-
-
-            /*
-             * 信封打开
-             */
-
-            envelope.classList.add("open");
+        });
 
 
-            /*
-             * 音乐
-             *
-             * 音量 = 原音量的 0.4
-             */
+    /* =====================================================
+       切换到信件
+    ===================================================== */
+
+    setTimeout(() => {
+
+        opening.classList.add("hide");
+
+        letterPage.classList.add("show");
+
+    }, 950);
+
+}
+
+
+
+/* =========================================================
+   点击信封
+========================================================= */
+
+envelope.addEventListener(
+    "click",
+    openLetter
+);
+
+
+/* =========================================================
+   点击按钮
+========================================================= */
+
+openButton.addEventListener(
+    "click",
+    openLetter
+);
+
+
+
+/* =========================================================
+   音乐开关
+========================================================= */
+
+musicControl.addEventListener(
+    "click",
+    () => {
+
+        if (musicPlaying) {
+
+            music.pause();
+
+            musicPlaying = false;
+
+            musicControl.innerHTML =
+                "🔇";
+
+            musicControl.title =
+                "打开音乐";
+
+        } else {
 
             music.volume = 0.4;
 
-
             music.play()
                 .then(() => {
-
-                    musicPlaying = true;
-
-                    musicControl.innerHTML = "♪";
-
-                    musicControl.title =
-                        "关闭音乐";
-
-                })
-                .catch(() => {
-
-                    console.log(
-                        "浏览器阻止了音乐自动播放"
-                    );
-
-                });
-
-
-            /*
-             * 等待信封动画结束
-             */
-
-            setTimeout(() => {
-
-                opening.classList.add("hide");
-
-                letterPage.classList.add("show");
-
-            }, 900);
-
-        }
-
-
-
-        /* =====================================================
-           点击拆信
-        ===================================================== */
-
-        openButton.addEventListener(
-            "click",
-            openLetter
-        );
-
-
-        envelope.addEventListener(
-            "click",
-            openLetter
-        );
-
-
-
-        /* =====================================================
-           音乐开关
-        ===================================================== */
-
-        musicControl.addEventListener(
-            "click",
-            () => {
-
-
-                if (musicPlaying) {
-
-
-                    music.pause();
-
-                    musicPlaying = false;
-
-                    musicControl.innerHTML =
-                        "🔇";
-
-                    musicControl.title =
-                        "打开音乐";
-
-
-                } else {
-
-
-                    music.volume = 0.4;
-
-                    music.play();
 
                     musicPlaying = true;
 
@@ -1775,13 +1861,21 @@
                     musicControl.title =
                         "关闭音乐";
 
-                }
+                })
+                .catch(() => {
 
-            }
-        );
+                    console.log(
+                        "浏览器阻止了音乐播放"
+                    );
 
-    </script>
+                });
+
+        }
+
+    }
+);
+
+</script>
 
 </body>
-
 </html>
