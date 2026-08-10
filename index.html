@@ -146,9 +146,10 @@
         </div>
     </div>
 
-    <!-- 背景音乐 -->
+    <!-- 背景音乐，修改这里的文件名和你上传的MP3完全一致 -->
     <audio id="bgMusic" loop preload="auto">
-    <source src="./music/夏天的风.mp3" type="audio/mpeg">
+        <source src="./music/夏天的风.mp3" type="audio/mpeg">
+    
     
     <button class="audio-btn" id="musicCtrl">🎵</button>
 
@@ -183,7 +184,7 @@
             }
         }
 
-        // 2. 超多爱心粒子特效代码
+        // 2. 超多爱心粒子特效 240个满屏密集粒子
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -236,14 +237,14 @@
             }
         }
 
-        // 生成大量粒子
+        // 生成240个粒子，满屏飘落
         function createParticles(count){
             particles = [];
             for(let i=0; i<count; i++){
                 particles.push(new Particle());
             }
         }
-        createParticles(120); // 数值越大粒子越多，120已经非常密集
+        createParticles(240);
 
         // 动画循环
         function animate(){
