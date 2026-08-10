@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,18 +38,21 @@ body {
 
 
 /* =========================================================
-   开场背景
+   开场页面
 ========================================================= */
 
 #opening {
 
     position: fixed;
+
     inset: 0;
 
     z-index: 100;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     background:
@@ -72,8 +76,11 @@ body {
 }
 
 #opening.hide {
+
     opacity: 0;
+
     visibility: hidden;
+
     pointer-events: none;
 }
 
@@ -89,6 +96,7 @@ body {
     animation:
         openingFloat 4s ease-in-out infinite;
 }
+
 
 @keyframes openingFloat {
 
@@ -164,6 +172,7 @@ body {
     position: relative;
 
     width: 220px;
+
     height: 145px;
 
     margin: 42px auto 0;
@@ -173,6 +182,7 @@ body {
     transition:
         transform .3s ease;
 }
+
 
 .envelope-wrapper:hover {
 
@@ -207,9 +217,11 @@ body {
     position: absolute;
 
     left: 0;
+
     top: 0;
 
     width: 0;
+
     height: 0;
 
     border-left:
@@ -238,6 +250,7 @@ body {
     position: absolute;
 
     left: 0;
+
     bottom: 0;
 
     border-left:
@@ -263,9 +276,11 @@ body {
     position: absolute;
 
     width: 170px;
+
     height: 112px;
 
     left: 25px;
+
     bottom: 10px;
 
     background: #fffafd;
@@ -310,18 +325,22 @@ body {
     position: absolute;
 
     width: 40px;
+
     height: 40px;
 
     left: 50%;
+
     top: 48px;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     z-index: 10;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     border-radius: 50%;
@@ -354,7 +373,7 @@ body {
 
 
 /* =========================================================
-   拆信按钮
+   开始按钮
 ========================================================= */
 
 .open-button {
@@ -383,9 +402,6 @@ body {
         0 8px 25px
         rgba(110,45,75,.15);
 
-    backdrop-filter:
-        blur(10px);
-
     transition:
         all .3s ease;
 }
@@ -404,9 +420,8 @@ body {
 }
 
 
-
 /* =========================================================
-   正文页面
+   信件页面
 ========================================================= */
 
 #letter-page {
@@ -424,11 +439,6 @@ body {
     transition:
         opacity 1.3s ease,
         visibility 1.3s ease;
-
-    /*
-       上半部分：天空
-       下半部分：水
-    */
 
     background:
 
@@ -455,22 +465,28 @@ body {
 
 
 /* =========================================================
-   整个场景
+   粒子
 ========================================================= */
 
-.scene {
+#particleCanvas {
 
-    position: relative;
+    position: fixed;
+
+    inset: 0;
 
     width: 100%;
+
     height: 100%;
 
-    overflow: hidden;
+    z-index: 45;
+
+    pointer-events: none;
 }
 
 
 /* =========================================================
    水下光线
+   注意：这里已经取消 blur
 ========================================================= */
 
 .underwater-light {
@@ -493,6 +509,7 @@ body {
     position: absolute;
 
     width: 220px;
+
     height: 700px;
 
     top: -100px;
@@ -501,7 +518,7 @@ body {
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.11),
+            rgba(255,255,255,.08),
             transparent
         );
 
@@ -517,6 +534,7 @@ body {
     left: 12%;
 }
 
+
 .light:nth-child(2) {
 
     left: 48%;
@@ -527,6 +545,7 @@ body {
     animation-delay:
         -2s;
 }
+
 
 .light:nth-child(3) {
 
@@ -544,14 +563,18 @@ body {
 
     0%,
     100% {
-        opacity: .15;
+
+        opacity: .10;
+
         transform:
             translateX(-30px)
             rotate(12deg);
     }
 
     50% {
-        opacity: .55;
+
+        opacity: .30;
+
         transform:
             translateX(30px)
             rotate(12deg);
@@ -559,9 +582,8 @@ body {
 }
 
 
-
 /* =========================================================
-   鱼主体
+   鱼整体
 ========================================================= */
 
 .fish-scene {
@@ -569,35 +591,106 @@ body {
     position: absolute;
 
     left: 50%;
+
     top: 47%;
 
     width: 1500px;
+
     height: 720px;
 
+    --fish-scale: 1;
+
     transform:
-        translate(-50%, -50%);
+        translate(-50%, -50%)
+        scale(var(--fish-scale));
+
+    transform-origin:
+        center center;
 
     z-index: 10;
+
+    animation:
+        fishSwimming 8s ease-in-out infinite;
 }
 
 
-/*
+/* =========================================================
+   鱼游动
+========================================================= */
+
+@keyframes fishSwimming {
+
+    0% {
+
+        transform:
+            translate(
+                calc(-50% - 8px),
+                calc(-50% + 3px)
+            )
+            scale(var(--fish-scale))
+            rotate(-1deg);
+    }
+
+    25% {
+
+        transform:
+            translate(
+                calc(-50% + 15px),
+                calc(-50% - 7px)
+            )
+            scale(var(--fish-scale))
+            rotate(1deg);
+    }
+
+    50% {
+
+        transform:
+            translate(
+                calc(-50% + 25px),
+                calc(-50% + 4px)
+            )
+            scale(var(--fish-scale))
+            rotate(2deg);
+    }
+
+    75% {
+
+        transform:
+            translate(
+                calc(-50% - 5px),
+                calc(-50% + 9px)
+            )
+            scale(var(--fish-scale))
+            rotate(-1deg);
+    }
+
+    100% {
+
+        transform:
+            translate(
+                calc(-50% - 8px),
+                calc(-50% + 3px)
+            )
+            scale(var(--fish-scale))
+            rotate(-1deg);
+    }
+}
+
+
+/* =========================================================
    鱼身体
-
-   这一版特别放大。
-
-   屏幕 1920px 时：
-   鱼身体约占屏幕 70%+
-*/
+========================================================= */
 
 .fish-body {
 
     position: absolute;
 
     left: 70px;
+
     top: 80px;
 
     width: 1190px;
+
     height: 580px;
 
     background:
@@ -630,6 +723,24 @@ body {
 
         0 28px 60px
         rgba(75,54,72,.22);
+
+    animation:
+        fishBreathing 4s ease-in-out infinite;
+}
+
+
+@keyframes fishBreathing {
+
+    0%,
+    100% {
+        filter:
+            brightness(1);
+    }
+
+    50% {
+        filter:
+            brightness(1.045);
+    }
 }
 
 
@@ -642,9 +753,11 @@ body {
     position: absolute;
 
     left: 1130px;
+
     top: 195px;
 
     width: 330px;
+
     height: 350px;
 
     background:
@@ -669,6 +782,29 @@ body {
             0 20px 16px
             rgba(80,45,70,.14)
         );
+
+    transform-origin:
+        left center;
+
+    animation:
+        tailMove 1.4s ease-in-out infinite;
+}
+
+
+@keyframes tailMove {
+
+    0%,
+    100% {
+
+        transform:
+            rotate(4deg);
+    }
+
+    50% {
+
+        transform:
+            rotate(-6deg);
+    }
 }
 
 
@@ -681,9 +817,11 @@ body {
     position: absolute;
 
     left: 475px;
+
     top: 20px;
 
     width: 230px;
+
     height: 170px;
 
     background:
@@ -698,6 +836,27 @@ body {
 
     transform:
         rotate(-5deg);
+
+    transform-origin:
+        bottom center;
+
+    animation:
+        finMove 2.6s ease-in-out infinite;
+}
+
+
+@keyframes finMove {
+
+    0%,
+    100% {
+        transform:
+            rotate(-5deg);
+    }
+
+    50% {
+        transform:
+            rotate(4deg);
+    }
 }
 
 
@@ -710,9 +869,11 @@ body {
     position: absolute;
 
     left: 520px;
+
     bottom: 5px;
 
     width: 210px;
+
     height: 145px;
 
     background:
@@ -724,6 +885,27 @@ body {
             100% 0,
             55% 100%
         );
+
+    transform-origin:
+        top center;
+
+    animation:
+        bottomFinMove 3s ease-in-out infinite;
+}
+
+
+@keyframes bottomFinMove {
+
+    0%,
+    100% {
+        transform:
+            rotate(2deg);
+    }
+
+    50% {
+        transform:
+            rotate(-5deg);
+    }
 }
 
 
@@ -736,9 +918,11 @@ body {
     position: absolute;
 
     left: 160px;
+
     top: 205px;
 
     width: 58px;
+
     height: 58px;
 
     border-radius: 50%;
@@ -759,32 +943,41 @@ body {
     position: absolute;
 
     left: 16px;
+
     top: 16px;
 
     width: 22px;
+
     height: 22px;
 
     border-radius: 50%;
 
     background: #493441;
+
+    animation:
+        eyeMove 5s ease-in-out infinite;
 }
 
 
+@keyframes eyeMove {
+
+    0%,
+    100% {
+        transform:
+            translateX(0);
+    }
+
+    50% {
+        transform:
+            translateX(4px);
+    }
+}
+
 
 /* =========================================================
-   鱼身文字区域
+   鱼身文字
+   这里保持完全清晰
 ========================================================= */
-
-/*
-   重点：
-
-   不再使用 ellipse clip-path。
-
-   文字区域本身就放在鱼身体里面，
-   左右和上下留出足够安全距离。
-
-   因此最后一段不会再被鱼底部裁掉。
-*/
 
 .fish-letter {
 
@@ -793,9 +986,11 @@ body {
     z-index: 20;
 
     left: 250px;
+
     top: 125px;
 
     width: 890px;
+
     height: 490px;
 
     overflow: hidden;
@@ -818,13 +1013,17 @@ body {
 
     letter-spacing: .4px;
 
+    /*
+       不使用 blur
+    */
+
+    filter: none;
+
     text-shadow:
         0 1px 1px
         rgba(255,255,255,.25);
 }
 
-
-/* 标题 */
 
 .fish-letter h2 {
 
@@ -843,8 +1042,6 @@ body {
 }
 
 
-/* 段落 */
-
 .fish-letter p {
 
     margin-bottom: 8px;
@@ -852,8 +1049,6 @@ body {
     text-align: left;
 }
 
-
-/* 最后的生日祝福 */
 
 .fish-letter .last-line {
 
@@ -867,9 +1062,9 @@ body {
 }
 
 
-
 /* =========================================================
    水面
+   已取消 backdrop-filter
 ========================================================= */
 
 .water-surface {
@@ -877,6 +1072,7 @@ body {
     position: absolute;
 
     left: 0;
+
     right: 0;
 
     top: 43%;
@@ -891,10 +1087,6 @@ body {
 }
 
 
-/*
-   半透明水层
-*/
-
 .water-surface::before {
 
     content: "";
@@ -902,6 +1094,7 @@ body {
     position: absolute;
 
     left: 0;
+
     right: 0;
 
     top: 20px;
@@ -912,18 +1105,20 @@ body {
 
         linear-gradient(
             to bottom,
-            rgba(255,255,255,.20),
-            rgba(255,255,255,.03)
+            rgba(255,255,255,.18),
+            rgba(255,255,255,.02)
         );
 
-    backdrop-filter:
-        blur(1px);
+    /*
+       原来的 backdrop-filter: blur
+       已删除
+    */
 }
 
 
-/*
-   第一条波浪
-*/
+/* =========================================================
+   水波
+========================================================= */
 
 .wave {
 
@@ -949,10 +1144,6 @@ body {
 }
 
 
-/*
-   第二条波浪
-*/
-
 .wave::before {
 
     content: "";
@@ -975,10 +1166,6 @@ body {
         50%;
 }
 
-
-/*
-   第三条波浪
-*/
 
 .wave::after {
 
@@ -1018,9 +1205,9 @@ body {
 }
 
 
-
 /* =========================================================
-   水下倒影
+   倒影
+   取消原来的 filter: blur
 ========================================================= */
 
 .reflection {
@@ -1045,11 +1232,7 @@ body {
 
     pointer-events: none;
 
-    opacity: .75;
-
-    /*
-       越往下越消失
-    */
+    opacity: .68;
 
     mask-image:
 
@@ -1070,6 +1253,28 @@ body {
             rgba(0,0,0,.20) 70%,
             transparent 100%
         );
+
+    animation:
+        reflectionMove 4s ease-in-out infinite;
+}
+
+
+@keyframes reflectionMove {
+
+    0%,
+    100% {
+
+        transform:
+            translateX(-50%)
+            skewX(-1deg);
+    }
+
+    50% {
+
+        transform:
+            translateX(-50%)
+            skewX(1deg);
+    }
 }
 
 
@@ -1081,7 +1286,7 @@ body {
         0 auto;
 
     color:
-        rgba(255,248,251,.58);
+        rgba(255,248,251,.60);
 
     font-family:
         "STKaiti",
@@ -1099,8 +1304,12 @@ body {
     transform-origin:
         top center;
 
-    filter:
-        blur(1.5px);
+    /*
+       原来的 filter: blur(1.5px)
+       已删除
+    */
+
+    filter: none;
 }
 
 
@@ -1125,7 +1334,8 @@ body {
 
 
 /* =========================================================
-   水面上的小光点
+   水面光线
+   去掉 blur
 ========================================================= */
 
 .water-glow {
@@ -1134,7 +1344,8 @@ body {
 
     z-index: 35;
 
-    top: calc(43% + 10px);
+    top:
+        calc(43% + 10px);
 
     left: 50%;
 
@@ -1149,18 +1360,37 @@ body {
 
         radial-gradient(
             ellipse,
-            rgba(255,255,255,.28),
+            rgba(255,255,255,.22),
             transparent 70%
         );
 
-    filter:
-        blur(7px);
+    /*
+       原来的 filter: blur(7px)
+       已删除
+    */
+
+    filter: none;
+
+    animation:
+        waterGlow 3s ease-in-out infinite;
 }
 
 
+@keyframes waterGlow {
+
+    0%,
+    100% {
+        opacity: .45;
+    }
+
+    50% {
+        opacity: .85;
+    }
+}
+
 
 /* =========================================================
-   最底部祝福
+   底部祝福
 ========================================================= */
 
 .ending {
@@ -1216,6 +1446,72 @@ body {
 }
 
 
+/* =========================================================
+   鼠标爱心
+========================================================= */
+
+.heart-trail {
+
+    position: fixed;
+
+    z-index: 999;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    font-size: 14px;
+
+    color: #f38db3;
+
+    text-shadow:
+        0 0 8px
+        rgba(255,255,255,.8);
+
+    animation:
+        heartFloat 1.2s ease-out forwards;
+}
+
+
+@keyframes heartFloat {
+
+    0% {
+
+        opacity: .95;
+
+        transform:
+            translate(-50%, -50%)
+            scale(.55)
+            rotate(0deg);
+    }
+
+    35% {
+
+        opacity: .9;
+
+        transform:
+            translate(
+                -50%,
+                -65%
+            )
+            scale(1)
+            rotate(-8deg);
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translate(
+                -50%,
+                -180%
+            )
+            scale(.7)
+            rotate(15deg);
+    }
+}
+
 
 /* =========================================================
    音乐按钮
@@ -1228,9 +1524,11 @@ body {
     z-index: 200;
 
     right: 24px;
+
     bottom: 24px;
 
     width: 52px;
+
     height: 52px;
 
     border: none;
@@ -1251,9 +1549,6 @@ body {
         0 8px 25px
         rgba(50,80,90,.18);
 
-    backdrop-filter:
-        blur(10px);
-
     transition:
         transform .3s ease;
 }
@@ -1266,21 +1561,15 @@ body {
 }
 
 
-
 /* =========================================================
-   桌面小屏幕
+   响应式
 ========================================================= */
 
 @media (max-width: 1500px) {
 
     .fish-scene {
 
-        transform:
-            translate(-50%, -50%)
-            scale(.88);
-
-        transform-origin:
-            center center;
+        --fish-scale: .88;
     }
 
     .reflection {
@@ -1295,17 +1584,11 @@ body {
 }
 
 
-/* =========================================================
-   平板
-========================================================= */
-
 @media (max-width: 1000px) {
 
     .fish-scene {
 
-        transform:
-            translate(-50%, -50%)
-            scale(.68);
+        --fish-scale: .68;
     }
 
     .reflection {
@@ -1323,10 +1606,6 @@ body {
     }
 }
 
-
-/* =========================================================
-   手机
-========================================================= */
 
 @media (max-width: 600px) {
 
@@ -1353,9 +1632,7 @@ body {
 
     .fish-scene {
 
-        transform:
-            translate(-50%, -50%)
-            scale(.43);
+        --fish-scale: .43;
     }
 
     .reflection {
@@ -1377,9 +1654,11 @@ body {
     #music-control {
 
         width: 46px;
+
         height: 46px;
 
         right: 15px;
+
         bottom: 15px;
     }
 }
@@ -1414,17 +1693,13 @@ body {
         </div>
 
 
-        <!-- 信封 -->
-
         <div
             class="envelope-wrapper"
             id="envelope">
 
             <div class="letter-preview">
-
                 送给你<br>
                 一封特别的信。
-
             </div>
 
 
@@ -1454,7 +1729,7 @@ body {
 
 
 <!-- =========================================================
-     正文页面
+     信件
 ========================================================= -->
 
 <section id="letter-page">
@@ -1462,12 +1737,21 @@ body {
     <div class="scene">
 
 
+        <!-- 粒子 -->
+
+        <canvas
+            id="particleCanvas">
+        </canvas>
+
+
         <!-- 水下光线 -->
 
         <div class="underwater-light">
 
             <div class="light"></div>
+
             <div class="light"></div>
+
             <div class="light"></div>
 
         </div>
@@ -1481,26 +1765,16 @@ body {
         <div class="fish-scene">
 
 
-            <!-- 鱼身体 -->
-
             <div class="fish-body">
 
-
-                <!-- 鱼眼 -->
-
                 <div class="fish-eye"></div>
-
-
-                <!-- 鱼鳍 -->
 
                 <div class="fish-fin-top"></div>
 
                 <div class="fish-fin-bottom"></div>
 
 
-                <!-- =================================================
-                     正文
-                ================================================= -->
+                <!-- 鱼身文字 -->
 
                 <div class="fish-letter">
 
@@ -1571,7 +1845,6 @@ body {
             </div>
 
 
-
             <!-- 鱼尾 -->
 
             <div class="fish-tail"></div>
@@ -1596,7 +1869,7 @@ body {
 
 
         <!-- =================================================
-             水下倒影
+             倒影
         ================================================= -->
 
         <div class="reflection">
@@ -1672,7 +1945,7 @@ body {
 
 
         <!-- =================================================
-             底部文字
+             底部祝福
         ================================================= -->
 
         <div class="ending">
@@ -1711,7 +1984,7 @@ body {
 <script>
 
 /* =========================================================
-   获取元素
+   页面元素
 ========================================================= */
 
 const opening =
@@ -1732,11 +2005,16 @@ const music =
 const musicControl =
     document.getElementById("music-control");
 
+const particleCanvas =
+    document.getElementById("particleCanvas");
+
+const particleCtx =
+    particleCanvas.getContext("2d");
+
 
 let opened = false;
 
 let musicPlaying = false;
-
 
 
 /* =========================================================
@@ -1757,11 +2035,7 @@ function openLetter() {
     envelope.classList.add("open");
 
 
-    /* =====================================================
-       音乐
-
-       音量设置为 0.4
-    ===================================================== */
+    /* 音乐 */
 
     music.volume = 0.4;
 
@@ -1773,25 +2047,15 @@ function openLetter() {
 
             musicControl.innerHTML = "♪";
 
-            musicControl.title =
-                "关闭音乐";
-
         })
         .catch(() => {
-
-            /*
-               如果浏览器阻止自动播放，
-               用户仍然可以点击右下角按钮播放。
-            */
 
             musicPlaying = false;
 
         });
 
 
-    /* =====================================================
-       切换到信件
-    ===================================================== */
+    /* 页面切换 */
 
     setTimeout(() => {
 
@@ -1799,15 +2063,12 @@ function openLetter() {
 
         letterPage.classList.add("show");
 
+        startParticles();
+
     }, 950);
 
 }
 
-
-
-/* =========================================================
-   点击信封
-========================================================= */
 
 envelope.addEventListener(
     "click",
@@ -1815,15 +2076,10 @@ envelope.addEventListener(
 );
 
 
-/* =========================================================
-   点击按钮
-========================================================= */
-
 openButton.addEventListener(
     "click",
     openLetter
 );
-
 
 
 /* =========================================================
@@ -1861,19 +2117,418 @@ musicControl.addEventListener(
                     musicControl.title =
                         "关闭音乐";
 
-                })
-                .catch(() => {
-
-                    console.log(
-                        "浏览器阻止了音乐播放"
-                    );
-
                 });
 
         }
 
     }
 );
+
+
+/* =========================================================
+   粒子系统
+========================================================= */
+
+let particles = [];
+
+let particleStarted = false;
+
+
+/* =========================================================
+   Canvas 大小
+========================================================= */
+
+function resizeParticleCanvas() {
+
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+
+    particleCanvas.width =
+        window.innerWidth * dpr;
+
+    particleCanvas.height =
+        window.innerHeight * dpr;
+
+
+    particleCanvas.style.width =
+        window.innerWidth + "px";
+
+    particleCanvas.style.height =
+        window.innerHeight + "px";
+
+
+    particleCtx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+}
+
+
+resizeParticleCanvas();
+
+
+window.addEventListener(
+    "resize",
+    resizeParticleCanvas
+);
+
+
+/* =========================================================
+   创建粒子
+========================================================= */
+
+function createParticle() {
+
+    const x =
+        Math.random() *
+        window.innerWidth;
+
+
+    const waterTop =
+        window.innerHeight *
+        0.40;
+
+
+    const y =
+        waterTop +
+        Math.random() *
+        window.innerHeight *
+        0.55;
+
+
+    particles.push({
+
+        x: x,
+
+        y: y,
+
+        size:
+            Math.random() *
+            2.5 +
+            .7,
+
+        speed:
+            Math.random() *
+            .35 +
+            .12,
+
+        drift:
+            (Math.random() - .5) *
+            .3,
+
+        opacity:
+            Math.random() *
+            .5 +
+            .25,
+
+        life:
+            Math.random() *
+            300 +
+            180,
+
+        phase:
+            Math.random() *
+            Math.PI *
+            2
+
+    });
+
+}
+
+
+/* =========================================================
+   启动粒子
+========================================================= */
+
+function startParticles() {
+
+    if (particleStarted) {
+        return;
+    }
+
+    particleStarted = true;
+
+
+    for (
+        let i = 0;
+        i < 75;
+        i++
+    ) {
+
+        createParticle();
+
+    }
+
+
+    animateParticles();
+
+}
+
+
+/* =========================================================
+   粒子动画
+========================================================= */
+
+function animateParticles() {
+
+    particleCtx.clearRect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+
+    if (
+        Math.random() < .18 &&
+        particles.length < 110
+    ) {
+
+        createParticle();
+
+    }
+
+
+    particles.forEach(
+        particle => {
+
+            particle.y -=
+                particle.speed;
+
+            particle.x +=
+                particle.drift;
+
+            particle.phase += .02;
+
+            particle.x +=
+                Math.sin(
+                    particle.phase
+                ) * .15;
+
+            particle.life--;
+
+
+            let alpha =
+                particle.opacity;
+
+
+            if (
+                particle.life < 70
+            ) {
+
+                alpha *=
+                    particle.life / 70;
+
+            }
+
+
+            particleCtx.beginPath();
+
+
+            particleCtx.arc(
+                particle.x,
+                particle.y,
+                particle.size,
+                0,
+                Math.PI * 2
+            );
+
+
+            particleCtx.fillStyle =
+                `rgba(255,255,255,${alpha})`;
+
+
+            particleCtx.shadowBlur =
+                8;
+
+            particleCtx.shadowColor =
+                "rgba(255,255,255,.7)";
+
+
+            particleCtx.fill();
+
+        }
+    );
+
+
+    particles =
+        particles.filter(
+            particle =>
+                particle.life > 0 &&
+                particle.y > -20
+        );
+
+
+    requestAnimationFrame(
+        animateParticles
+    );
+
+}
+
+
+/* =========================================================
+   鼠标爱心拖尾
+========================================================= */
+
+let lastHeartTime = 0;
+
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        const now =
+            Date.now();
+
+
+        if (
+            now - lastHeartTime < 55
+        ) {
+
+            return;
+        }
+
+
+        lastHeartTime =
+            now;
+
+
+        createHeart(
+            event.clientX,
+            event.clientY
+        );
+
+    }
+);
+
+
+/* =========================================================
+   创建爱心
+========================================================= */
+
+function createHeart(
+    x,
+    y
+) {
+
+    const heart =
+        document.createElement("div");
+
+
+    heart.className =
+        "heart-trail";
+
+
+    const hearts = [
+        "♡",
+        "♥",
+        "♡",
+        "♥"
+    ];
+
+
+    heart.innerHTML =
+        hearts[
+            Math.floor(
+                Math.random() *
+                hearts.length
+            )
+        ];
+
+
+    const offsetX =
+        (Math.random() - .5) *
+        18;
+
+
+    const offsetY =
+        (Math.random() - .5) *
+        18;
+
+
+    heart.style.left =
+        (x + offsetX) +
+        "px";
+
+
+    heart.style.top =
+        (y + offsetY) +
+        "px";
+
+
+    const size =
+        Math.random() *
+        8 +
+        10;
+
+
+    heart.style.fontSize =
+        size +
+        "px";
+
+
+    const colors = [
+        "#f38db3",
+        "#ee7fa9",
+        "#ffabc9",
+        "#ffffff"
+    ];
+
+
+    heart.style.color =
+        colors[
+            Math.floor(
+                Math.random() *
+                colors.length
+            )
+        ];
+
+
+    document.body.appendChild(
+        heart
+    );
+
+
+    setTimeout(
+        () => {
+
+            heart.remove();
+
+        },
+        1300
+    );
+
+}
+
+
+/* =========================================================
+   鼠标离开
+========================================================= */
+
+document.addEventListener(
+    "mouseleave",
+    () => {
+
+        lastHeartTime =
+            Date.now();
+
+    }
+);
+
+
+/* =========================================================
+   音乐预加载
+========================================================= */
+
+music.load();
 
 </script>
 
