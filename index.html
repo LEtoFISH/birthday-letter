@@ -14,7 +14,7 @@
             min-height: 100vh;
             background: #fef2f7;
             font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-            overflow-x: hidden;
+            overflow-x: auto;
             cursor: default;
         }
         @media (max-width: 768px) {
@@ -77,66 +77,59 @@
             transform: scale(1.05);
         }
         .letter-wrap {
-            max-width: 700px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 50px 25px;
             display: none;
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .letter-wrap {
-                padding: 30px 15px;
+                padding: 24px 18px;
             }
         }
         .letter-card {
             background: #ffffff;
-            padding: 55px 40px;
-            border-radius: 22px;
-            box-shadow: 0 8px 30px rgba(232, 108, 156, 0.15);
-        }
-        @media (max-width: 600px) {
-            .letter-card {
-                padding: 35px 15px;
-            }
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
         }
         h1 {
             text-align: center;
             color: #e86c9c;
-            margin-bottom: 32px;
-            font-size: 28px;
+            margin-bottom: 36px;
+            font-size: 32px;
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             h1 {
-                font-size: 24px;
-                margin-bottom: 24px;
+                font-size: 26px;
+                margin-bottom: 28px;
             }
         }
-        /* 外层容器 */
         .fish-wrap {
             position: relative;
-            overflow-x: auto;
+            width: 100%;
+            overflow: visible;
             padding: 10px 0;
         }
-        /* 上方原文鱼形文字 */
         .fish-top {
             font-family: "SimSun", Consolas, monospace;
-            font-size: 12px;
-            line-height: 1.45;
+            font-size: 13px;
+            line-height: 1.55;
             color: #444;
             white-space: pre;
             text-align: center;
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .fish-top {
-                font-size: 9.2px;
+                font-size: 11px;
             }
         }
-        /* 水面波浪+湖水填充容器 */
         .water-line {
             position: relative;
             width: 100%;
-            height: 26px;
+            height: 32px;
             overflow: hidden;
-            margin: 8px 0;
+            margin: 10px 0;
         }
         .water-surface {
             position: absolute;
@@ -168,7 +161,7 @@
             left: 0;
             bottom: 0;
             width: 100%;
-            height: 18px;
+            height: 22px;
             background: linear-gradient(180deg, rgba(135, 206, 235, 0.45), rgba(100, 149, 237, 0.65));
         }
         @keyframes waterWave {
@@ -179,11 +172,10 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        /* 水下倒影文字 */
         .fish-bottom {
             font-family: "SimSun", Consolas, monospace;
-            font-size: 12px;
-            line-height: 1.45;
+            font-size: 13px;
+            line-height: 1.55;
             color: rgba(100, 149, 237, 0.75);
             white-space: pre;
             text-align: center;
@@ -191,15 +183,15 @@
             opacity: 0.55;
             filter: blur(0.8px);
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .fish-bottom {
-                font-size: 9.2px;
+                font-size: 11px;
             }
             .water-line {
-                height: 22px;
+                height: 26px;
             }
             .water-fill {
-                height: 14px;
+                height: 18px;
             }
         }
         .sign {
@@ -224,7 +216,7 @@
             cursor: pointer;
             z-index: 99;
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .audio-btn {
                 width: 44px;
                 height: 44px;
@@ -283,11 +275,12 @@
             纵使你有很多不足，也做过错一些事，但人无完人，我相信你会因此反思变得更加成熟、更加稳重。所谓成长就是一个从无知到成熟、从依赖到独立的过程。
           虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友。生日快乐，我的好朋友。
 </pre>
-            <!-- 动态波浪水面+湖水填充层 -->
-            <div class="water-line">
-                <div class="water-surface"></div>
-                <div class="water-fill"></div>
-            </div>
+
+                <div class="water-line">
+                    <div class="water-surface"></div>
+                    <div class="water-fill"></div>
+                </div>
+
 <pre class="fish-bottom">
                         不知不觉间又陪你走过了一整年的春夏秋冬，很开心我的生命里有你的出现。
                     友谊的开始太过久远，已经回忆不起最初相识的时刻了。但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
@@ -298,6 +291,7 @@
           虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友。生日快乐，我的好朋友。
 </pre>
             </div>
+
             <div class="sign">
                 <p>山药</p>
                 <p>2026.08.12</p>
@@ -307,7 +301,7 @@
 
     <audio id="bgMusic" loop preload="auto">
         <source src="./music/夏天的风.mp3" type="audio/mpeg">
-    
+    </audio>
 
     <button class="audio-btn" id="musicCtrl">🎵</button>
 
