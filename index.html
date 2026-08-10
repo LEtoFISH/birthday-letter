@@ -14,7 +14,6 @@
             min-height: 100vh;
             background: #fef2f7;
             font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
-            overflow-x: auto;
             cursor: default;
         }
         @media (max-width: 768px) {
@@ -105,10 +104,11 @@
                 margin-bottom: 28px;
             }
         }
+        /* 关键修复：开启横向滚动，保护pre鱼形文本不换行 */
         .fish-wrap {
             position: relative;
-            width: 100%;
-            overflow: visible;
+            overflow-x: auto;
+            overflow-y: visible;
             padding: 10px 0;
         }
         .fish-top {
@@ -124,23 +124,26 @@
                 font-size: 11px;
             }
         }
-        .water-line {
+
+        /* 水面分界线（波浪） */
+        .water-surface-line {
             position: relative;
             width: 100%;
             height: 32px;
             overflow: hidden;
-            margin: 10px 0;
+            margin: 10px 0 0;
+            z-index: 2;
         }
-        .water-surface {
+        .wave-anim {
             position: absolute;
             left: 0;
             top: 0;
             width: 200%;
             height: 100%;
-            background: linear-gradient(90deg, rgba(135, 206, 235, 0.18), rgba(173, 216, 230, 0.5), rgba(135, 206, 235, 0.18));
+            background: linear-gradient(90deg, rgba(135, 206, 235, 0.2), rgba(173, 216, 230, 0.55), rgba(135, 206, 235, 0.2));
             animation: waterWave 3s linear infinite;
         }
-        .water-surface::before {
+        .wave-anim::before {
             content: "";
             position: absolute;
             left: 0;
@@ -156,14 +159,18 @@
             );
             animation: waterShine 2.5s linear infinite;
         }
-        .water-fill {
+
+        /* 水体向下灌满，盖住倒影文字！ */
+        .water-body {
             position: absolute;
+            top: 32px;
             left: 0;
-            bottom: 0;
             width: 100%;
-            height: 22px;
-            background: linear-gradient(180deg, rgba(135, 206, 235, 0.45), rgba(100, 149, 237, 0.65));
+            height: 100%;
+            background: linear-gradient(180deg, rgba(135, 206, 235, 0.48), rgba(90, 135, 210, 0.68));
+            z-index: 1;
         }
+
         @keyframes waterWave {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -172,28 +179,30 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
+
+        /* 倒影在水体下层 */
         .fish-bottom {
+            position: relative;
+            z-index: 0;
             font-family: "SimSun", Consolas, monospace;
             font-size: 13px;
             line-height: 1.55;
-            color: rgba(100, 149, 237, 0.75);
+            color: rgba(100, 149, 237, 0.7);
             white-space: pre;
             text-align: center;
             transform: scaleY(-1);
-            opacity: 0.55;
-            filter: blur(0.8px);
+            opacity: 0.52;
+            filter: blur(0.9px);
         }
         @media (max-width: 768px) {
             .fish-bottom {
                 font-size: 11px;
             }
-            .water-line {
+            .water-surface-line {
                 height: 26px;
             }
-            .water-fill {
-                height: 18px;
-            }
         }
+
         .sign {
             margin-top: 45px;
             text-align: right;
@@ -275,12 +284,12 @@
             纵使你有很多不足，也做过错一些事，但人无完人，我相信你会因此反思变得更加成熟、更加稳重。所谓成长就是一个从无知到成熟、从依赖到独立的过程。
           虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友。生日快乐，我的好朋友。
 </pre>
-
-                <div class="water-line">
-                    <div class="water-surface"></div>
-                    <div class="water-fill"></div>
+                <!-- 水面波浪分界线 -->
+                <div class="water-surface-line">
+                    <div class="wave-anim"></div>
                 </div>
-
+                <!-- 水体向下灌满，盖住倒影 -->
+                <div class="water-body"></div>
 <pre class="fish-bottom">
                         不知不觉间又陪你走过了一整年的春夏秋冬，很开心我的生命里有你的出现。
                     友谊的开始太过久远，已经回忆不起最初相识的时刻了。但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
@@ -301,7 +310,7 @@
 
     <audio id="bgMusic" loop preload="auto">
         <source src="./music/夏天的风.mp3" type="audio/mpeg">
-    </audio>
+    
 
     <button class="audio-btn" id="musicCtrl">🎵</button>
 
