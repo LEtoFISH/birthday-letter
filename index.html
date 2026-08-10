@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>生日快乐｜专属信件</title>
     <style>
         * {
@@ -15,6 +15,13 @@
             background: #fef2f7;
             font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
             overflow-x: hidden;
+            cursor: none; /* 桌面隐藏原生鼠标，显示拖尾光标 */
+        }
+        /* 移动端恢复鼠标样式 */
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
         }
         /* 礼物弹窗遮罩 */
         .gift-modal {
@@ -36,6 +43,17 @@
             text-align: center;
             box-shadow: 0 0 40px #ffb6c1;
         }
+        /* 手机弹窗缩小 */
+        @media (max-width: 600px) {
+            .gift-box {
+                width: 85vw;
+                padding: 40px 20px;
+            }
+            .gift-box h2 {
+                font-size: 26px;
+                margin-bottom: 25px;
+            }
+        }
         .gift-box h2 {
             font-size: 32px;
             color: #e86c9c;
@@ -51,6 +69,12 @@
             cursor: pointer;
             transition: 0.3s;
         }
+        @media (max-width: 600px) {
+            .receive-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
         .receive-btn:hover {
             background: #d45b89;
             transform: scale(1.05);
@@ -62,11 +86,21 @@
             padding: 50px 25px;
             display: none;
         }
+        @media (max-width: 600px) {
+            .letter-wrap {
+                padding: 30px 15px;
+            }
+        }
         .letter-card {
             background: #ffffff;
             padding: 55px 40px;
             border-radius: 22px;
             box-shadow: 0 8px 30px rgba(232, 108, 156, 0.15);
+        }
+        @media (max-width: 600px) {
+            .letter-card {
+                padding: 35px 20px;
+            }
         }
         h1 {
             text-align: center;
@@ -74,11 +108,24 @@
             margin-bottom: 32px;
             font-size: 28px;
         }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+        }
         .text p {
             font-size: 16px;
             line-height: 1.9;
             color: #444;
             margin-bottom: 20px;
+        }
+        @media (max-width: 600px) {
+            .text p {
+                font-size: 15px;
+                line-height: 1.8;
+                margin-bottom: 16px;
+            }
         }
         .sign {
             margin-top: 45px;
@@ -103,7 +150,16 @@
             cursor: pointer;
             z-index: 99;
         }
-        /* 粒子画布铺满全屏 */
+        @media (max-width: 600px) {
+            .audio-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+                bottom: 18px;
+                right: 18px;
+            }
+        }
+        /* 全局爱心粒子画布 */
         #particleCanvas {
             position: fixed;
             top: 0;
@@ -113,11 +169,29 @@
             pointer-events: none;
             z-index: 1;
         }
+        /* 鼠标拖尾画布（仅桌面可见） */
+        #mouseTrailCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+            display: none;
+        }
+        @media (min-width: 769px) {
+            #mouseTrailCanvas {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- 粒子特效画布 -->
+    <!-- 全屏爱心粒子画布 -->
     <canvas id="particleCanvas"></canvas>
+    <!-- 桌面鼠标拖尾画布 -->
+    <canvas id="mouseTrailCanvas"></canvas>
 
     <!-- 开场礼物弹窗 -->
     <div class="gift-modal" id="modal">
@@ -146,25 +220,32 @@
         </div>
     </div>
 
-    <!-- 背景音乐，修改这里的文件名和你上传的MP3完全一致 -->
+    <!-- 背景音乐 -->
     <audio id="bgMusic" loop preload="auto">
         <source src="./music/夏天的风.mp3" type="audio/mpeg">
-    
     
     <button class="audio-btn" id="musicCtrl">🎵</button>
 
     <script>
+        // ===================== 设备音量区分 =====================
+        const music = document.getElementById('bgMusic');
+        // 判断是否为PC端
+        const isPC = window.innerWidth > 768;
+        if(isPC){
+            music.volume = 0.4; // 电脑音量降低
+        }else{
+            music.volume = 1.0; // 手机正常音量
+        }
+
         // 1. 弹窗点击逻辑
         const modal = document.getElementById('modal');
         const letterBox = document.getElementById('letterBox');
         const openBtn = document.getElementById('openLetterBtn');
-        const music = document.getElementById('bgMusic');
         let musicPlay = false;
 
         openBtn.addEventListener('click', () => {
             modal.style.display = 'none';
             letterBox.style.display = 'block';
-            // 打开信件自动播放音乐
             music.play().then(() => {
                 musicPlay = true;
             }).catch(e => console.log("浏览器限制自动播放，手动点音乐按钮"));
@@ -184,7 +265,7 @@
             }
         }
 
-        // 2. 超多爱心粒子特效 240个满屏密集粒子
+        // ===================== 全屏飘落爱心粒子（240个） =====================
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -199,7 +280,6 @@
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        // 粒子类
         class Particle {
             constructor(){
                 this.x = Math.random() * width;
@@ -215,7 +295,6 @@
                 this.y += this.speedY;
                 this.x += this.speedX;
                 this.rotate += this.rotateSpeed;
-                // 落到底部重新回到顶部
                 if(this.y > height){
                     this.y = -20;
                     this.x = Math.random() * width;
@@ -228,7 +307,6 @@
                 ctx.beginPath();
                 ctx.globalAlpha = this.opacity;
                 ctx.fillStyle = "#ff8fb3";
-                // 绘制爱心
                 ctx.moveTo(0, 0);
                 ctx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, 0, 0, this.size);
                 ctx.bezierCurveTo(this.size, 0, this.size/2, -this.size/2, 0, 0);
@@ -237,7 +315,6 @@
             }
         }
 
-        // 生成240个粒子，满屏飘落
         function createParticles(count){
             particles = [];
             for(let i=0; i<count; i++){
@@ -246,7 +323,6 @@
         }
         createParticles(240);
 
-        // 动画循环
         function animate(){
             ctx.clearRect(0,0,width,height);
             particles.forEach(p => {
@@ -256,6 +332,47 @@
             requestAnimationFrame(animate);
         }
         animate();
+
+        // ===================== 电脑端鼠标拖尾特效（手机自动关闭） =====================
+        if(isPC){
+            const trailCanvas = document.getElementById('mouseTrailCanvas');
+            const trailCtx = trailCanvas.getContext('2d');
+            trailCanvas.width = window.innerWidth;
+            trailCanvas.height = window.innerHeight;
+
+            let mouseX = 0, mouseY = 0;
+            const trailPoints = [];
+            const maxTrail = 35; // 拖尾长度
+
+            // 彩虹粉色系拖尾
+            const colors = ['#ff8fb3','#e86c9c','#ffc0cb','#f8a8c8','#ff7aa2'];
+
+            window.addEventListener('mousemove', (e)=>{
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                trailPoints.push({x:mouseX, y:mouseY, color:colors[Math.floor(Math.random()*colors.length)]});
+                if(trailPoints.length > maxTrail) trailPoints.shift();
+            })
+
+            function drawTrail(){
+                trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
+                trailPoints.forEach((point, index)=>{
+                    const alpha = index / trailPoints.length;
+                    trailCtx.beginPath();
+                    trailCtx.arc(point.x, point.y, 4, 0, Math.PI*2);
+                    trailCtx.fillStyle = point.color + Math.floor(alpha*255).toString(16).padStart(2,'0');
+                    trailCtx.fill();
+                })
+                requestAnimationFrame(drawTrail);
+            }
+            drawTrail();
+
+            // 窗口大小变化重绘拖尾画布
+            window.addEventListener('resize', ()=>{
+                trailCanvas.width = window.innerWidth;
+                trailCanvas.height = window.innerHeight;
+            })
+        }
     </script>
 </body>
 </html>
