@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>生日快乐｜专属信件</title>
+    <title>致珍贵的鱼｜生日来信</title>
     <style>
         * {
             margin: 0;
@@ -15,15 +15,13 @@
             background: #fef2f7;
             font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
             overflow-x: hidden;
-            cursor: none; /* 桌面隐藏原生鼠标，显示拖尾光标 */
+            cursor: none;
         }
-        /* 移动端恢复鼠标样式 */
         @media (max-width: 768px) {
             body {
                 cursor: auto;
             }
         }
-        /* 礼物弹窗遮罩 */
         .gift-modal {
             position: fixed;
             top: 0;
@@ -43,7 +41,6 @@
             text-align: center;
             box-shadow: 0 0 40px #ffb6c1;
         }
-        /* 手机弹窗缩小 */
         @media (max-width: 600px) {
             .gift-box {
                 width: 85vw;
@@ -79,7 +76,6 @@
             background: #d45b89;
             transform: scale(1.05);
         }
-        /* 信件容器 默认隐藏 */
         .letter-wrap {
             max-width: 700px;
             margin: 0 auto;
@@ -99,7 +95,7 @@
         }
         @media (max-width: 600px) {
             .letter-card {
-                padding: 35px 20px;
+                padding: 35px 15px;
             }
         }
         h1 {
@@ -114,17 +110,20 @@
                 margin-bottom: 24px;
             }
         }
-        .text p {
-            font-size: 16px;
-            line-height: 1.9;
+        /* 鱼形文字核心样式：等宽字体，保留空格换行 */
+        .fish-text {
+            font-family: "SimSun", Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.4;
             color: #444;
-            margin-bottom: 20px;
+            white-space: pre;
+            text-align: center;
+            overflow-x: auto;
+            padding: 10px 0;
         }
         @media (max-width: 600px) {
-            .text p {
-                font-size: 15px;
-                line-height: 1.8;
-                margin-bottom: 16px;
+            .fish-text {
+                font-size: 10px;
             }
         }
         .sign {
@@ -135,7 +134,6 @@
         .heart {
             color: #e86c9c;
         }
-        /* 音乐控制按钮 */
         .audio-btn {
             position: fixed;
             bottom: 25px;
@@ -159,7 +157,6 @@
                 right: 18px;
             }
         }
-        /* 全局爱心粒子画布 */
         #particleCanvas {
             position: fixed;
             top: 0;
@@ -169,7 +166,6 @@
             pointer-events: none;
             z-index: 1;
         }
-        /* 鼠标拖尾画布（仅桌面可见） */
         #mouseTrailCanvas {
             position: fixed;
             top: 0;
@@ -188,12 +184,9 @@
     </style>
 </head>
 <body>
-    <!-- 全屏爱心粒子画布 -->
     <canvas id="particleCanvas"></canvas>
-    <!-- 桌面鼠标拖尾画布 -->
     <canvas id="mouseTrailCanvas"></canvas>
 
-    <!-- 开场礼物弹窗 -->
     <div class="gift-modal" id="modal">
         <div class="gift-box">
             <h2>一些特别的话</h2>
@@ -201,43 +194,55 @@
         </div>
     </div>
 
-    <!-- 信件主体 -->
     <div class="letter-wrap" id="letterBox">
         <div class="letter-card">
             <h1>致我珍贵的鱼</h1>
-            <div class="text">
-                <p>不知不觉间又陪你走过了一整年的春夏秋冬，很开心我的生命里有你的出现。友谊的开始太过久远，已经回忆不起最初相识的时刻了。但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。</p>
-                <p>我们这么多年的相处中，有过快乐，也有过争执，但是对彼此来说，都算是真挚。我也带你认识了很多新朋友，鹿子、gv、猪仔还有那个神秘的群主。他们心中一定都有你这位特别讨喜的朋友。</p>
-                <p>对于即将升上高一的你来说，环境的变更可能会使你无所适从，但别给自己太大压力，把它当作一种新的体验就好，你的性格一定会使你很快适应新的同学和环境。</p>
-                <p>纵使你有很多不足，也做过错一些事，但人无完人，我相信你会因此反思变得更加成熟、更加稳重。所谓成长就是一个从无知到成熟、从依赖到独立的过程。</p>
-                <p>虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友</p>
-                <p>生日快乐，我的好朋友<span class="heart">❤️</span></p>
-                <div class="sign">
-                    <p>山药</p>
-                    <p>2026.08.12</p>
-                </div>
+            <!-- 文字排版拼成小鱼轮廓，内容全部是你原文 -->
+            <pre class="fish-text">
+                      不知不觉间又陪你走过了一整年
+                很开心我的生命里有你的出现。友谊的
+            开始太过久远，已经回忆不起最初相识的
+           时刻了。但我印象里仍有那个喜欢玩抓喜房
+          的“讨厌猫の鱼”。
+        我们这么多年的相处中，有过快乐，也有过
+       争执，但是对彼此来说，都算是真挚。我也带你
+      认识了很多新朋友，鹿子、gv、猪仔还有那个神秘
+     的群主。他们心中一定都有你这位特别讨喜的朋友。
+    对于即将升上高一的你来说，环境的变更可能会
+   使你无所适从，但别给自己太大压力，把它当作一种
+  新的体验就好，你的性格一定会使你很快适应新的
+ 同学和环境。
+纵使你有很多不足，也做过错一些事，但人无完人，
+我相信你会因此反思变得更加成熟、更加稳重。所谓
+成长就是一个从无知到成熟、从依赖到独立的过程。
+虽然我不太会说华丽的话，但真心祝你天天开心、
+永远安康，愿你所求皆如愿，所行皆坦途。当你回头
+时，我一定一直都在你身边，无论未来发生什么，我都
+陪你碎碎念念，也陪你岁岁年年。你在我心中，永远
+都是一位特别的朋友
+生日快乐，我的好朋友❤️
+            </pre>
+            <div class="sign">
+                <p>山药</p>
+                <p>2026.08.12</p>
             </div>
         </div>
     </div>
 
-    <!-- 背景音乐 -->
     <audio id="bgMusic" loop preload="auto">
         <source src="./music/夏天的风.mp3" type="audio/mpeg">
     
     <button class="audio-btn" id="musicCtrl">🎵</button>
 
     <script>
-        // ===================== 设备音量区分 =====================
         const music = document.getElementById('bgMusic');
-        // 判断是否为PC端
         const isPC = window.innerWidth > 768;
         if(isPC){
-            music.volume = 0.4; // 电脑音量降低
+            music.volume = 0.4;
         }else{
-            music.volume = 1.0; // 手机正常音量
+            music.volume = 1.0;
         }
 
-        // 1. 弹窗点击逻辑
         const modal = document.getElementById('modal');
         const letterBox = document.getElementById('letterBox');
         const openBtn = document.getElementById('openLetterBtn');
@@ -251,7 +256,6 @@
             }).catch(e => console.log("浏览器限制自动播放，手动点音乐按钮"));
         })
 
-        // 音乐暂停/播放按钮
         const musicBtn = document.getElementById('musicCtrl');
         musicBtn.onclick = () => {
             if(musicPlay){
@@ -265,7 +269,6 @@
             }
         }
 
-        // ===================== 全屏飘落爱心粒子（240个） =====================
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -333,7 +336,6 @@
         }
         animate();
 
-        // ===================== 电脑端鼠标拖尾特效（手机自动关闭） =====================
         if(isPC){
             const trailCanvas = document.getElementById('mouseTrailCanvas');
             const trailCtx = trailCanvas.getContext('2d');
@@ -342,9 +344,7 @@
 
             let mouseX = 0, mouseY = 0;
             const trailPoints = [];
-            const maxTrail = 35; // 拖尾长度
-
-            // 彩虹粉色系拖尾
+            const maxTrail = 35;
             const colors = ['#ff8fb3','#e86c9c','#ffc0cb','#f8a8c8','#ff7aa2'];
 
             window.addEventListener('mousemove', (e)=>{
@@ -367,7 +367,6 @@
             }
             drawTrail();
 
-            // 窗口大小变化重绘拖尾画布
             window.addEventListener('resize', ()=>{
                 trailCanvas.width = window.innerWidth;
                 trailCanvas.height = window.innerHeight;
