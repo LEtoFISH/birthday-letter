@@ -1,87 +1,480 @@
-.water-line {
-    position: relative;
-    width: 100%;
-    height: 26px;
-    overflow: hidden;
-    margin: 8px 0;
-}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>致珍贵的鱼｜生日来信</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background: #fef2f7;
+            font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+            overflow-x: hidden;
+            cursor: default;
+        }
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+        }
+        .gift-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .gift-box {
+            background: #fff;
+            padding: 60px 40px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 0 40px #ffb6c1;
+        }
+        @media (max-width: 600px) {
+            .gift-box {
+                width: 85vw;
+                padding: 40px 20px;
+            }
+            .gift-box h2 {
+                font-size: 26px;
+                margin-bottom: 25px;
+            }
+        }
+        .gift-box h2 {
+            font-size: 32px;
+            color: #e86c9c;
+            margin-bottom: 35px;
+        }
+        .receive-btn {
+            padding: 14px 42px;
+            font-size: 18px;
+            border: none;
+            background: #e86c9c;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        @media (max-width: 600px) {
+            .receive-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }
+        .receive-btn:hover {
+            background: #d45b89;
+            transform: scale(1.05);
+        }
+        .letter-wrap {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 50px 25px;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .letter-wrap {
+                padding: 30px 15px;
+            }
+        }
+        .letter-card {
+            background: #ffffff;
+            padding: 55px 40px;
+            border-radius: 22px;
+            box-shadow: 0 8px 30px rgba(232, 108, 156, 0.15);
+        }
+        @media (max-width: 600px) {
+            .letter-card {
+                padding: 35px 15px;
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #e86c9c;
+            margin-bottom: 32px;
+            font-size: 28px;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+        }
+        /* 外层容器 */
+        .fish-wrap {
+            position: relative;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+        /* 上方原文鱼形文字 */
+        .fish-top {
+            font-family: "SimSun", Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            color: #444;
+            white-space: pre;
+            text-align: center;
+        }
+        @media (max-width: 600px) {
+            .fish-top {
+                font-size: 9.2px;
+            }
+        }
+        /* 水面波浪+湖水填充容器 */
+        .water-line {
+            position: relative;
+            width: 100%;
+            height: 26px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+        .water-surface {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(135, 206, 235, 0.18), rgba(173, 216, 230, 0.5), rgba(135, 206, 235, 0.18));
+            animation: waterWave 3s linear infinite;
+        }
+        .water-surface::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 200%;
+            height: 100%;
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent 0,
+                transparent 24px,
+                rgba(255, 255, 255, 0.35) 24px,
+                rgba(255, 255, 255, 0.35) 48px
+            );
+            animation: waterShine 2.5s linear infinite;
+        }
+        .water-fill {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 18px;
+            background: linear-gradient(180deg, rgba(135, 206, 235, 0.45), rgba(100, 149, 237, 0.65));
+        }
+        @keyframes waterWave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes waterShine {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        /* 水下倒影文字 */
+        .fish-bottom {
+            font-family: "SimSun", Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.45;
+            color: rgba(100, 149, 237, 0.75);
+            white-space: pre;
+            text-align: center;
+            transform: scaleY(-1);
+            opacity: 0.55;
+            filter: blur(0.8px);
+        }
+        @media (max-width: 600px) {
+            .fish-bottom {
+                font-size: 9.2px;
+            }
+            .water-line {
+                height: 22px;
+            }
+            .water-fill {
+                height: 14px;
+            }
+        }
+        .sign {
+            margin-top: 45px;
+            text-align: right;
+            color: #666;
+        }
+        .heart {
+            color: #e86c9c;
+        }
+        .audio-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: #e86c9c;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 99;
+        }
+        @media (max-width: 600px) {
+            .audio-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+                bottom: 18px;
+                right: 18px;
+            }
+        }
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+        #mouseTrailCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+            display: none;
+        }
+        @media (min-width: 769px) {
+            #mouseTrailCanvas {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <canvas id="mouseTrailCanvas"></canvas>
 
-.water-surface {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(135, 206, 235, 0.18), rgba(173, 216, 230, 0.5), rgba(135, 206, 235, 0.18));
-    animation: waterWave 3s linear infinite;
-}
+    <div class="gift-modal" id="modal">
+        <div class="gift-box">
+            <h2>一些特别的话</h2>
+            <button class="receive-btn" id="openLetterBtn">拆开信件</button>
+        </div>
+    </div>
 
-.water-surface::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 200%;
-    height: 100%;
-    background-image: repeating-linear-gradient(
-        90deg,
-        transparent 0,
-        transparent 24px,
-        rgba(255, 255, 255, 0.35) 24px,
-        rgba(255, 255, 255, 0.35) 48px
-    );
-    animation: waterShine 2.5s linear infinite;
-}
+    <div class="letter-wrap" id="letterBox">
+        <div class="letter-card">
+            <h1>致我珍贵的鱼</h1>
+            <div class="fish-wrap">
+<pre class="fish-top">
+                        不知不觉间又陪你走过了一整年的春夏秋冬，很开心我的生命里有你的出现。
+                    友谊的开始太过久远，已经回忆不起最初相识的时刻了。但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
+                  我们这么多年的相处中，有过快乐，也有过争执，但我很开心我们能够真心相待。
+                在那之后，我带你认识了很多新朋友，鹿子、gv、猪仔还有那个神秘的群主。他们心中一定都有你这位特别讨喜的朋友。
+              对于即将升上高一的你来说，环境的变更可能会使你无所适从，但别给自己太大压力，把它当作一种新的体验就好，你的性格一定会使你很快适应新的同学和环境。
+            纵使你有很多不足，也做过错一些事，但人无完人，我相信你会因此反思变得更加成熟、更加稳重。所谓成长就是一个从无知到成熟、从依赖到独立的过程。
+          虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友。生日快乐，我的好朋友。
+</pre>
+            <!-- 动态波浪水面+湖水填充层 -->
+            <div class="water-line">
+                <div class="water-surface"></div>
+                <div class="water-fill"></div>
+            </div>
+<pre class="fish-bottom">
+                        不知不觉间又陪你走过了一整年的春夏秋冬，很开心我的生命里有你的出现。
+                    友谊的开始太过久远，已经回忆不起最初相识的时刻了。但我印象里仍有那个喜欢玩抓喜房的“讨厌猫の鱼”。
+                  我们这么多年的相处中，有过快乐，也有过争执，但我很开心我们能够真心相待。
+                在那之后，我带你认识了很多新朋友，鹿子、gv、猪仔还有那个神秘的群主。他们心中一定都有你这位特别讨喜的朋友。
+              对于即将升上高一的你来说，环境的变更可能会使你无所适从，但别给自己太大压力，把它当作一种新的体验就好，你的性格一定会使你很快适应新的同学和环境。
+            纵使你有很多不足，也做过错一些事，但人无完人，我相信你会因此反思变得更加成熟、更加稳重。所谓成长就是一个从无知到成熟、从依赖到独立的过程。
+          虽然我不太会说华丽的话，但真心祝你天天开心、永远安康，愿你所求皆如愿，所行皆坦途。当你回头时，我一定一直都在你身边，无论未来发生什么，我都陪你碎碎念念，也陪你岁岁年年。你在我心中，永远都是一位特别的朋友。生日快乐，我的好朋友。
+</pre>
+            </div>
+            <div class="sign">
+                <p>山药</p>
+                <p>2026.08.12</p>
+            </div>
+        </div>
+    </div>
 
-.water-fill {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 18px;
-    background: linear-gradient(180deg, rgba(135, 206, 235, 0.45), rgba(100, 149, 237, 0.65));
-}
+    <audio id="bgMusic" loop preload="auto">
+        <source src="./music/夏天的风.mp3" type="audio/mpeg">
+    
 
-@keyframes waterWave {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
+    <button class="audio-btn" id="musicCtrl">🎵</button>
 
-@keyframes waterShine {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
+    <script>
+        const music = document.getElementById('bgMusic');
+        const isPC = window.innerWidth > 768;
+        if(isPC){
+            music.volume = 0.4;
+        }else{
+            music.volume = 1.0;
+        }
 
-.fish-bottom {
-    font-family: "SimSun", Consolas, monospace;
-    font-size: 12px;
-    line-height: 1.45;
-    color: rgba(100, 149, 237, 0.75);
-    white-space: pre;
-    text-align: center;
-    transform: scaleY(-1);
-    opacity: 0.55;
-    filter: blur(0.8px);
-}
+        const modal = document.getElementById('modal');
+        const letterBox = document.getElementById('letterBox');
+        const openBtn = document.getElementById('openLetterBtn');
+        let musicPlay = false;
 
-@media (max-width: 600px) {
-    .fish-bottom {
-        font-size: 9.2px;
-    }
+        openBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            letterBox.style.display = 'block';
+            music.play().then(() => {
+                musicPlay = true;
+            }).catch(e => console.log("浏览器限制自动播放，手动点音乐按钮"));
+        })
 
-    .water-line {
-        height: 22px;
-    }
+        const musicBtn = document.getElementById('musicCtrl');
+        musicBtn.onclick = () => {
+            if(musicPlay){
+                music.pause();
+                musicBtn.innerText = "🔇";
+                musicPlay = false;
+            }else{
+                music.play();
+                musicBtn.innerText = "🎵";
+                musicPlay = true;
+            }
+        }
 
-    .water-fill {
-        height: 14px;
-    }
-}
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resizeCanvas(){
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor(){
+                this.x = Math.random() * width;
+                this.y = Math.random() * height - height;
+                this.size = Math.random() * 12 + 4;
+                this.speedY = Math.random() * 1.2 + 0.6;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.opacity = Math.random() * 0.6 + 0.3;
+                this.rotate = Math.random() * Math.PI * 2;
+                this.rotateSpeed = Math.random() * 0.02 - 0.01;
+            }
+            update(){
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.rotate += this.rotateSpeed;
+                if(this.y > height){
+                    this.y = -20;
+                    this.x = Math.random() * width;
+                }
+            }
+            draw(){
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotate);
+                ctx.beginPath();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = "#ff8fb3";
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(-this.size/2, -this.size/2, -this.size, 0, 0, this.size);
+                ctx.bezierCurveTo(this.size, 0, this.size/2, -this.size/2, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function createParticles(count){
+            particles = [];
+            for(let i=0; i<count; i++){
+                particles.push(new Particle());
+            }
+        }
+        createParticles(240);
+
+        function animate(){
+            ctx.clearRect(0,0,width,height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            })
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        if(isPC){
+            const trailCanvas = document.getElementById('mouseTrailCanvas');
+            const trailCtx = trailCanvas.getContext('2d');
+            trailCanvas.width = window.innerWidth;
+            trailCanvas.height = window.innerHeight;
+
+            let mouseX = 0, mouseY = 0;
+            const trailPoints = [];
+            const maxTrail = 32;
+            const colors = ['#ff8fb3','#e86c9c','#ffc0cb','#f8a8c8','#ff7aa2'];
+
+            window.addEventListener('mousemove', (e)=>{
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                trailPoints.push({
+                    x: mouseX,
+                    y: mouseY,
+                    color: colors[Math.floor(Math.random()*colors.length)],
+                    size: Math.random() * 6 + 3
+                });
+                if(trailPoints.length > maxTrail) trailPoints.shift();
+            })
+
+            function drawLittleFish(ctx, x, y, size, rotate, alpha, fillColor) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(rotate);
+                ctx.globalAlpha = alpha;
+                ctx.fillStyle = fillColor;
+                ctx.beginPath();
+                ctx.ellipse(-size/3, 0, size, size/2, 0, 0, Math.PI*2);
+                ctx.fill();
+                ctx.beginPath();
+                ctx.moveTo(-size, -size/2);
+                ctx.lineTo(-size*1.6, 0);
+                ctx.lineTo(-size, size/2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.fillStyle = "#fff";
+                ctx.beginPath();
+                ctx.arc(size/2, -size/6, size/6, 0, Math.PI*2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function drawTrail(){
+                trailCtx.clearRect(0,0,trailCanvas.width,trailCanvas.height);
+                for(let i = 0; i < trailPoints.length; i++){
+                    const point = trailPoints[i];
+                    const alpha = i / trailPoints.length;
+                    const rotate = Math.sin(Date.now() / 600 + i) * 0.4;
+                    drawLittleFish(trailCtx, point.x, point.y, point.size, rotate, alpha, point.color);
+                }
+                requestAnimationFrame(drawTrail);
+            }
+            drawTrail();
+
+            window.addEventListener('resize', ()=>{
+                trailCanvas.width = window.innerWidth;
+                trailCanvas.height = window.innerHeight;
+            })
+        }
+    </script>
+</body>
+</html>
