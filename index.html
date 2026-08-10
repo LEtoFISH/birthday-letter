@@ -2535,9 +2535,180 @@ music.load();
 </body>
 </html>
 /* =========================================================
-   模拟浏览器缩放 150%
+   手机横屏模式
 ========================================================= */
 
-body {
-    zoom: 1.5;
+@media screen and (max-width: 768px) and (orientation: portrait) {
+
+    body::before {
+
+        content: "请将手机横过来观看 💗";
+
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 99999;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 30px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #ffe0eb,
+                #f5b6d0
+            );
+
+        color: #783c55;
+
+        font-family:
+            "Microsoft YaHei",
+            sans-serif;
+
+        font-size: 20px;
+
+        letter-spacing: 3px;
+
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   手机横屏
+========================================================= */
+
+@media screen and (max-width: 900px) and (orientation: landscape) {
+
+    html,
+    body {
+
+        width: 100%;
+
+        height: 100%;
+
+        overflow: hidden;
+    }
+
+
+    .opening-title {
+
+        font-size: 42px;
+
+        letter-spacing: 7px;
+    }
+
+
+    .opening-small {
+
+        font-size: 9px;
+
+        letter-spacing: 4px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .opening-subtitle {
+
+        margin-top: 10px;
+
+        font-size: 11px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .envelope-wrapper {
+
+        margin-top: 20px;
+
+        transform: scale(.85);
+    }
+
+
+    .envelope-wrapper:hover {
+
+        transform:
+            translateY(-5px)
+            scale(.88);
+    }
+
+
+    .open-button {
+
+        margin-top: 5px;
+
+        padding:
+            10px 30px;
+
+        font-size: 13px;
+    }
+
+
+    /* -------------------------
+       鱼
+    ------------------------- */
+
+    .fish-scene {
+
+        --fish-scale: .48;
+
+        top: 46%;
+    }
+
+
+    /* -------------------------
+       倒影
+    ------------------------- */
+
+    .reflection {
+
+        transform:
+            translateX(-50%)
+            scale(.48);
+
+        transform-origin:
+            top center;
+    }
+
+
+    /* -------------------------
+       底部文字
+    ------------------------- */
+
+    .ending {
+
+        bottom: 15px;
+
+        font-size: 12px;
+
+        letter-spacing: 2px;
+    }
+
+
+    /* -------------------------
+       音乐按钮
+    ------------------------- */
+
+    #music-control {
+
+        width: 38px;
+
+        height: 38px;
+
+        right: 12px;
+
+        bottom: 12px;
+
+        font-size: 16px;
+    }
+
 }
