@@ -1937,7 +1937,57 @@ body {
 }
 @media screen and (max-width:900px) and (orientation:portrait){
     #rotate-tip{display:flex;}
-    #opening,#letter-page,#music-control{display:none!important;}
+    #letter-page,#music-control{display:none!important;}
+}
+
+
+/* 手机旋转观看模式 */
+#mobile-mode-btn {
+    position:fixed;
+    top:28px;
+    right:28px;
+    z-index:10000;
+    padding:12px 20px;
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.7);
+    background:rgba(255,255,255,.35);
+    backdrop-filter:blur(10px);
+    color:#754058;
+    font-size:15px;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(117,64,88,.15);
+    animation:mobileBtnGlow 3s ease-in-out infinite;
+}
+
+@keyframes mobileBtnGlow {
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-5px);}
+}
+
+#global-scale.mobile-rotate-mode {
+    width:100vh;
+    height:100vw;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) rotate(90deg) scale(1.25);
+    transform-origin:center center;
+}
+
+#mobile-back-btn {
+    display:none;
+    position:fixed;
+    top:25px;
+    left:25px;
+    z-index:300;
+    padding:10px 18px;
+    border-radius:25px;
+    border:0;
+    background:rgba(255,255,255,.55);
+    color:#754058;
+}
+
+#global-scale.mobile-rotate-mode #mobile-back-btn {
+    display:block;
 }
 
 </style>
@@ -1955,14 +2005,6 @@ body {
   </div>
 </div>
 
-<div id="rotate-tip">
-    <div class="rotate-tip-inner">
-        <div class="rotate-icon">↻</div>
-        请横屏查看<br>
-        开启自动旋转体验完整信件
-    </div>
-</div>
-
 
 <div id="global-scale">
 
@@ -1977,6 +2019,8 @@ body {
     <div class="meteor two"></div>
 
     <div class="opening-content">
+
+        <button id="mobile-mode-btn">📱 手机横屏观看</button>
 
         <div class="opening-small">
             FOR MY SPECIAL FRIEND
@@ -2235,6 +2279,18 @@ const particleCanvas =
 
 const particleCtx =
     particleCanvas.getContext("2d");
+
+const globalScale = document.getElementById("global-scale");
+const mobileModeBtn = document.getElementById("mobile-mode-btn");
+const mobileBackBtn = document.getElementById("mobile-back-btn");
+
+mobileModeBtn.addEventListener("click",()=>{
+    globalScale.classList.add("mobile-rotate-mode");
+});
+
+mobileBackBtn.addEventListener("click",()=>{
+    globalScale.classList.remove("mobile-rotate-mode");
+});
 
 
 let opened = false;
