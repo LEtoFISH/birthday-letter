@@ -24,7 +24,11 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="screen-orientation" content="landscape">
+<meta name="x5-orientation" content="landscape">
+<meta name="full-screen" content="yes">
+<meta name="x5-fullscreen" content="true">
 
 <title>一封特别的信</title>
 
@@ -1861,11 +1865,62 @@ body {
     100%{opacity:0;}
 }
 
+
+/* ===== 微信手机端横屏体验优化 ===== */
+#rotate-tip{
+    display:none;
+}
+
+.rotate-tip-inner{
+    text-align:center;
+    font-family:"STKaiti","KaiTi",serif;
+    color:#754058;
+    font-size:18px;
+    letter-spacing:3px;
+    line-height:2;
+}
+
+.rotate-icon{
+    font-size:48px;
+    margin-bottom:20px;
+    animation:rotateHint 2s ease-in-out infinite;
+}
+
+@keyframes rotateHint{
+    0%,100%{transform:rotate(0deg);}
+    50%{transform:rotate(90deg);}
+}
+
+@media screen and (max-width:900px) and (orientation:portrait){
+    #rotate-tip{
+        display:flex;
+        position:fixed;
+        inset:0;
+        z-index:99999;
+        align-items:center;
+        justify-content:center;
+        background:linear-gradient(135deg,#ffe0eb,#8fc8d7);
+    }
+}
+
+@media screen and (max-width:900px) and (orientation:landscape){
+    #rotate-tip{
+        display:none;
+    }
+}
 </style>
 </head>
 
 
 <body>
+<div id="rotate-tip">
+    <div class="rotate-tip-inner">
+        <div class="rotate-icon">↻</div>
+        请横屏查看<br>
+        开启自动旋转体验完整信件
+    </div>
+</div>
+
 
 <div id="global-scale">
 
