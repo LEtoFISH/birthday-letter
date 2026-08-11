@@ -4,6 +4,14 @@
 
     height:100vh;
 
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    overflow:hidden;
+
     transform:
         scale(1.25);
 
@@ -323,6 +331,58 @@ body {
 }
 
 
+.preview-sign {
+    margin-top: 12px;
+    margin-right: 4px;
+    text-align: right;
+    font-family:
+        "STKaiti",
+        "KaiTi",
+        serif;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #9d536f;
+    letter-spacing: 2px;
+    position: relative;
+    transform: rotate(-3deg);
+    transform-origin: right center;
+    opacity: .92;
+}
+
+.preview-sign::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -5px;
+    width: 48px;
+    height: 1px;
+    background: rgba(157,83,111,.35);
+}
+
+.preview-sign::after {
+    content: "✦";
+    position: absolute;
+    right: -3px;
+    bottom: -8px;
+    font-size: 10px;
+    color: rgba(157,83,111,.55);
+}
+
+.preview-sign {
+    animation: signAppear 1.8s ease both;
+}
+
+@keyframes signAppear {
+    from {
+        opacity:0;
+        transform:translateY(8px) rotate(-8deg);
+    }
+    to {
+        opacity:.92;
+        transform:translateY(0) rotate(-3deg);
+    }
+}
+
 .envelope-wrapper.open
 .letter-preview {
 
@@ -622,8 +682,7 @@ body {
 
     z-index: 10;
 
-    animation:
-        fishSwimming 8s ease-in-out infinite;
+    animation:none;
 }
 
 
@@ -1818,6 +1877,10 @@ body {
             <div class="letter-preview">
            <br>
     讨厌猫の鱼
+    <div class="preview-sign">
+        山药<br>
+        2026.8.12
+    </div>
 </div>
 
 
@@ -2090,6 +2153,7 @@ function openLetter() {
         .catch(() => {
 
             musicPlaying = false;
+            musicControl.innerHTML = "🔇";
 
         });
 
@@ -2321,8 +2385,8 @@ function animateParticles() {
     particleCtx.clearRect(
         0,
         0,
-        window.innerWidth,
-        window.innerHeight
+        particleCanvas.width,
+        particleCanvas.height
     );
 
     // 重置 Canvas 绘制状态
@@ -2603,16 +2667,7 @@ setInterval(()=>{
     }
 },450);
 
-// 增强鱼尾摆动真实感
-const fishTail=document.querySelector('.fish-tail');
-if(fishTail){
-    fishTail.addEventListener('animationiteration',()=>{
-        fishTail.style.transform='rotate(5deg)';
-        setTimeout(()=>{
-            fishTail.style.transform='rotate(-6deg)';
-        },300);
-    });
-}
+// 鱼尾动画交由 CSS 控制，避免 JS transform 覆盖动画状态
 
 </script>
 
