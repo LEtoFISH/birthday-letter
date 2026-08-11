@@ -1,2856 +1,1644 @@
-#global-scale {
-
-    width:100vw;
-
-    height:100vh;
-
-    position:absolute;
-
-    left:0;
-
-    top:0;
-
-    overflow:hidden;
-
-    transform:
-        scale(1.25);
-
-    transform-origin:
-        center center;
-
-}
 <!DOCTYPE html>
 <html lang="zh-CN">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="screen-orientation" content="landscape">
-<meta name="x5-orientation" content="landscape">
-<meta name="full-screen" content="yes">
-<meta name="x5-fullscreen" content="true">
-
-<title>一封特别的信</title>
-
-<style>
-
-/* =========================================================
-   基础
-========================================================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,
-body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-body {
-    font-family:
-        "Microsoft YaHei",
-        "PingFang SC",
-        "Noto Sans SC",
-        sans-serif;
-
-    color: #754058;
-}
-
-
-/* =========================================================
-   开场页面
-========================================================= */
-
-#opening {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 100;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-
-        radial-gradient(
-            circle at 50% 25%,
-            rgba(255,255,255,.95),
-            transparent 34%
-        ),
-
-        linear-gradient(
-            135deg,
-            #ffe0eb 0%,
-            #ffc9df 45%,
-            #f3b4d1 100%
-        );
-
-    transition:
-        opacity 1.2s ease,
-        visibility 1.2s ease;
-}
-
-#opening.hide {
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    pointer-events: none;
-}
-
-
-.opening-content {
-
-    width: 90%;
-
-    max-width: 900px;
-
-    text-align: center;
-
-    animation:
-        openingFloat 4s ease-in-out infinite;
-}
-
-
-@keyframes openingFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-
-.opening-small {
-
-    font-size: 14px;
-
-    letter-spacing: 7px;
-
-    color:
-        rgba(116,59,82,.58);
-
-    margin-bottom: 22px;
-}
-
-
-.opening-title {
-
-    font-family:
-        "STKaiti",
-        "KaiTi",
-        serif;
-
-    font-size:
-        clamp(52px, 7vw, 92px);
-
-    font-weight: 500;
-
-    letter-spacing: 12px;
-
-    color: #783c55;
-
-    text-shadow:
-        0 4px 15px rgba(255,255,255,.8);
-}
-
-
-.opening-subtitle {
-
-    margin-top: 20px;
-
-    font-family:
-        "STKaiti",
-        "KaiTi",
-        serif;
-
-    font-size: 16px;
-
-    letter-spacing: 4px;
-
-    color:
-        rgba(115,57,79,.62);
-}
-
-
-/* =========================================================
-   信封
-========================================================= */
-
-.envelope-wrapper {
-
-    position: relative;
-
-    width: 220px;
-
-    height: 145px;
-
-    margin: 42px auto 0;
-
-    cursor: pointer;
-
-    transition:
-        transform .3s ease;
-}
-
-
-.envelope-wrapper:hover {
-
-    transform:
-        translateY(-6px)
-        scale(1.03);
-}
-
-
-.envelope {
-
-    position: absolute;
-
-    inset: 0;
-
-    background: #fff5f9;
-
-    border-radius: 5px;
-
-    box-shadow:
-        0 20px 40px
-        rgba(125,52,85,.18);
-
-    overflow: hidden;
-}
-
-
-.envelope::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    top: 0;
-
-    width: 0;
-
-    height: 0;
-
-    border-left:
-        110px solid transparent;
-
-    border-right:
-        110px solid transparent;
-
-    border-top:
-        76px solid #f4bed4;
-
-    z-index: 4;
-
-    transform-origin:
-        top center;
-
-    transition:
-        transform .8s ease;
-}
-
-
-.envelope::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    bottom: 0;
-
-    border-left:
-        110px solid #f8d3e2;
-
-    border-top:
-        74px solid transparent;
-
-    z-index: 5;
-}
-
-
-.envelope-wrapper.open
-.envelope::before {
-
-    transform:
-        rotateX(180deg);
-}
-
-
-.letter-preview {
-
-    position: absolute;
-
-    width: 170px;
-
-    height: 112px;
-
-    left: 25px;
-
-    bottom: 10px;
-
-    background: #fffafd;
-
-    z-index: 2;
-
-    padding: 20px 10px;
-
-    font-family:
-        "STKaiti",
-        "KaiTi",
-        serif;
-
-    font-size: 16px;
-
-    line-height: 1.6;
-
-    color: #a35473;
-
-    box-shadow:
-        0 5px 15px
-        rgba(90,30,60,.08);
-
-    transition:
-        transform 1s ease,
-        bottom 1s ease;
-}
-
-
-.preview-sign {
-    margin-top: 8px;
-    margin-right: 10px;
-    padding-right: 4px;
-    text-align: right;
-    font-family:
-        "STKaiti",
-        "KaiTi",
-        serif;
-    font-size: 12px;
-    line-height: 1.55;
-    color: #9d536f;
-    letter-spacing: 2px;
-    position: relative;
-    transform: rotate(-2deg) translateX(-4px);
-    transform-origin: right center;
-    opacity: .92;
-}
-
-.preview-sign::before {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: -5px;
-    width: 48px;
-    height: 1px;
-    background: rgba(157,83,111,.35);
-}
-
-.preview-sign::after {
-    content: "✦";
-    position: absolute;
-    right: -3px;
-    bottom: -8px;
-    font-size: 10px;
-    color: rgba(157,83,111,.55);
-}
-
-.preview-sign {
-    animation: signAppear 1.8s ease both;
-}
-
-@keyframes signAppear {
-    from {
-        opacity:0;
-        transform:translateY(8px) rotate(-6deg);
-    }
-    to {
-        opacity:.92;
-        transform:translateY(0) rotate(-2deg) translateX(-4px);
-    }
-}
-
-.envelope-wrapper.open
-.letter-preview {
-
-    bottom: 75px;
-
-    transform:
-        translateY(-20px);
-}
-
-
-.seal {
-
-    position: absolute;
-
-    width: 40px;
-
-    height: 40px;
-
-    left: 50%;
-
-    top: 48px;
-
-    transform:
-        translateX(-50%);
-
-    z-index: 10;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: #d8759a;
-
-    color: white;
-
-    font-size: 18px;
-
-    box-shadow:
-        0 5px 12px
-        rgba(120,50,80,.25);
-
-    transition:
-        opacity .5s ease,
-        transform .5s ease;
-}
-
-
-.envelope-wrapper.open
-.seal {
-
-    opacity: 0;
-
-    transform:
-        translateX(-50%)
-        scale(.4);
-}
-
-
-/* =========================================================
-   开始按钮
-========================================================= */
-
-.open-button {
-
-    margin-top: 26px;
-
-    padding:
-        13px 40px;
-
-    border: none;
-
-    border-radius: 999px;
-
-    background:
-        rgba(255,255,255,.72);
-
-    color: #783d56;
-
-    font-size: 15px;
-
-    letter-spacing: 4px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 25px
-        rgba(110,45,75,.15);
-
-    transition:
-        all .3s ease;
-}
-
-
-.open-button:hover {
-
-    background: white;
-
-    transform:
-        translateY(-3px);
-
-    box-shadow:
-        0 13px 30px
-        rgba(110,45,75,.2);
-}
-
-
-/* =========================================================
-   信件页面
-========================================================= */
-
-#letter-page {
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 20;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity 1.3s ease,
-        visibility 1.3s ease;
-
-    background:
-
-        linear-gradient(
-            to bottom,
-
-            #ffddea 0%,
-            #ffc9df 34%,
-            #f7b9d4 42%,
-
-            #a7d6e1 43%,
-            #8fc8d7 58%,
-            #68b0c5 100%
-        );
-}
-
-
-#letter-page.show {
-
-    opacity: 1;
-
-    visibility: visible;
-}
-
-
-/* =========================================================
-   粒子
-========================================================= */
-
-#particleCanvas {
-
-    position: fixed;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    z-index: 45;
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   水下光线
-   注意：这里已经取消 blur
-========================================================= */
-
-.underwater-light {
-
-    position: absolute;
-
-    inset:
-        43% 0 0 0;
-
-    z-index: 1;
-
-    overflow: hidden;
-
-    pointer-events: none;
-}
-
-
-.light {
-
-    position: absolute;
-
-    width: 220px;
-
-    height: 700px;
-
-    top: -100px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.08),
-            transparent
-        );
-
-    transform:
-        rotate(13deg);
-
-    animation:
-        lightMove 7s ease-in-out infinite;
-}
-
-
-.light:nth-child(1) {
-    left: 12%;
-}
-
-
-.light:nth-child(2) {
-
-    left: 48%;
-
-    transform:
-        rotate(-10deg);
-
-    animation-delay:
-        -2s;
-}
-
-
-.light:nth-child(3) {
-
-    left: 78%;
-
-    transform:
-        rotate(8deg);
-
-    animation-delay:
-        -4s;
-}
-
-
-@keyframes lightMove {
-
-    0%,
-    100% {
-
-        opacity: .10;
-
-        transform:
-            translateX(-30px)
-            rotate(12deg);
-    }
-
-    50% {
-
-        opacity: .30;
-
-        transform:
-            translateX(30px)
-            rotate(12deg);
-    }
-}
-
-
-/* =========================================================
-   鱼整体
-========================================================= */
-
-.fish-scene {
-
-    position: absolute;
-
-    left: 50%;
-
-    top: 47%;
-
-    width: 1500px;
-
-    height: 720px;
-
-    --fish-scale: 1;
-
-    transform:
-        translate(-50%, -50%)
-        scale(var(--fish-scale));
-
-    transform-origin:
-        center center;
-
-    z-index: 10;
-
-    animation:none;
-}
-
-
-/* =========================================================
-   鱼游动
-========================================================= */
-
-@keyframes fishSwimming {
-
-    0% {
-
-        transform:
-            translate(
-                calc(-50% - 8px),
-                calc(-50% + 3px)
-            )
-            scale(var(--fish-scale))
-            rotate(-1deg);
-    }
-
-    25% {
-
-        transform:
-            translate(
-                calc(-50% + 15px),
-                calc(-50% - 7px)
-            )
-            scale(var(--fish-scale))
-            rotate(1deg);
-    }
-
-    50% {
-
-        transform:
-            translate(
-                calc(-50% + 25px),
-                calc(-50% + 4px)
-            )
-            scale(var(--fish-scale))
-            rotate(2deg);
-    }
-
-    75% {
-
-        transform:
-            translate(
-                calc(-50% - 5px),
-                calc(-50% + 9px)
-            )
-            scale(var(--fish-scale))
-            rotate(-1deg);
-    }
-
-    100% {
-
-        transform:
-            translate(
-                calc(-50% - 8px),
-                calc(-50% + 3px)
-            )
-            scale(var(--fish-scale))
-            rotate(-1deg);
-    }
-}
-
-
-/* =========================================================
-   鱼身体
-========================================================= */
-
-.fish-body {
-
-    position: absolute;
-
-    left: 70px;
-
-    top: 80px;
-
-    width: 1190px;
-
-    height: 580px;
-
-    background:
-
-        radial-gradient(
-            circle at 23% 28%,
-            rgba(255,255,255,.34),
-            transparent 9%
-        ),
-
-        radial-gradient(
-            circle at 65% 60%,
-            rgba(255,255,255,.13),
-            transparent 24%
-        ),
-
-        linear-gradient(
-            145deg,
-            #f5a8c4,
-            #ed8db0 50%,
-            #dd719d
-        );
-
-    border-radius:
-
-        58% 53% 48% 55% /
-        53% 58% 46% 50%;
-
-    box-shadow:
-
-        0 28px 60px
-        rgba(75,54,72,.22);
-
-    animation:
-        fishBreathing 4s ease-in-out infinite;
-}
-
-
-@keyframes fishBreathing {
-
-    0%,
-    100% {
-        filter:
-            brightness(1);
-    }
-
-    50% {
-        filter:
-            brightness(1.045);
-    }
-}
-
-
-/* =========================================================
-   鱼尾
-========================================================= */
-
-.fish-tail {
-
-    position: absolute;
-
-    left: 1130px;
-
-    top: 195px;
-
-    width: 330px;
-
-    height: 350px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #ee9bbb,
-            #d76c98
-        );
-
-    clip-path:
-
-        polygon(
-            100% 50%,
-            0 0,
-            24% 50%,
-            0 100%
-        );
-
-    filter:
-        drop-shadow(
-            0 20px 16px
-            rgba(80,45,70,.14)
-        );
-
-    transform-origin:
-        left center;
-
-    animation:
-        tailMove 1.4s ease-in-out infinite;
-}
-
-
-@keyframes tailMove {
-
-    0%,
-    100% {
-
-        transform:
-            rotate(4deg);
-    }
-
-    50% {
-
-        transform:
-            rotate(-6deg);
-    }
-}
-
-
-/* =========================================================
-   上鳍
-========================================================= */
-
-.fish-fin-top {
-
-    position: absolute;
-
-    left: 475px;
-
-    top: 20px;
-
-    width: 230px;
-
-    height: 170px;
-
-    background:
-        #e789ad;
-
-    clip-path:
-        polygon(
-            0 100%,
-            45% 0,
-            100% 100%
-        );
-
-    transform:
-        rotate(-5deg);
-
-    transform-origin:
-        bottom center;
-
-    animation:
-        finMove 2.6s ease-in-out infinite;
-}
-
-
-@keyframes finMove {
-
-    0%,
-    100% {
-        transform:
-            rotate(-5deg);
-    }
-
-    50% {
-        transform:
-            rotate(4deg);
-    }
-}
-
-
-/* =========================================================
-   下鳍
-========================================================= */
-
-.fish-fin-bottom {
-
-    position: absolute;
-
-    left: 520px;
-
-    bottom: 5px;
-
-    width: 210px;
-
-    height: 145px;
-
-    background:
-        #dc779f;
-
-    clip-path:
-        polygon(
-            0 0,
-            100% 0,
-            55% 100%
-        );
-
-    transform-origin:
-        top center;
-
-    animation:
-        bottomFinMove 3s ease-in-out infinite;
-}
-
-
-@keyframes bottomFinMove {
-
-    0%,
-    100% {
-        transform:
-            rotate(2deg);
-    }
-
-    50% {
-        transform:
-            rotate(-5deg);
-    }
-}
-
-
-/* =========================================================
-   鱼眼
-========================================================= */
-
-.fish-eye {
-
-    position: absolute;
-
-    left: 160px;
-
-    top: 205px;
-
-    width: 58px;
-
-    height: 58px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    box-shadow:
-        inset 0 0 0 8px #f3b0c9;
-
-    z-index: 15;
-}
-
-
-.fish-eye::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 16px;
-
-    top: 16px;
-
-    width: 22px;
-
-    height: 22px;
-
-    border-radius: 50%;
-
-    background: #493441;
-
-    animation:
-        eyeMove 5s ease-in-out infinite;
-}
-
-
-@keyframes eyeMove {
-
-    0%,
-    100% {
-        transform:
-            translateX(0);
-    }
-
-    50% {
-        transform:
-            translateX(4px);
-    }
-}
-
-
-/* =========================================================
-   鱼身文字
-   这里保持完全清晰
-========================================================= */
-
-.fish-letter {
-
-    position: absolute;
-
-    z-index: 20;
-
-    left: 250px;
-
-    top: 125px;
-
-    width: 890px;
-
-    height: 490px;
-
-    overflow: hidden;
-
-    padding:
-        8px 45px 20px 45px;
-
-    color:
-        rgba(100,46,69,.94);
-
-    font-family:
-        "STKaiti",
-        "KaiTi",
-        "Microsoft YaHei",
-        serif;
-
-    font-size: 14px;
-
-    line-height: 1.6;
-
-    letter-spacing: .5px;
-
-    text-align: center;   /* 关键：文字整体居中 */
-
-    letter-spacing: .4px;
-
-    /* 不使用 blur */
-    filter: none;
-
-    text-shadow:
-        0 1px 1px
-        rgba(255,255,255,.25);
-}
-
-
-.fish-letter h2 {
-
-    text-align: center;
-
-    font-size: 29px;
-
-    font-weight: normal;
-
-    letter-spacing: 7px;
-
-    margin-bottom: 15px;
-
-    color:
-        rgba(104,46,70,.95);
-}
-
-
-.fish-letter p {
-
-    margin-bottom: 10px;
-
-    text-align: center;   /* 每一行文字居中 */
-
-}
-
-
-.fish-letter .last-line {
-
-    margin-top: 12px;
-
-    text-align: center;
-
-    font-size: 15px;
-
-    letter-spacing: 2px;
-
-}
-
-
-/* =========================================================
-   水面
-   已取消 backdrop-filter
-========================================================= */
-
-.water-surface {
-
-    position: absolute;
-
-    left: 0;
-
-    right: 0;
-
-    top: 43%;
-
-    height: 100px;
-
-    z-index: 30;
-
-    pointer-events: none;
-
-    overflow: hidden;
-}
-
-
-.water-surface::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-
-    right: 0;
-
-    top: 20px;
-
-    height: 65px;
-
-    background:
-
-        linear-gradient(
-            to bottom,
-            rgba(255,255,255,.18),
-            rgba(255,255,255,.02)
-        );
-
-    /*
-       原来的 backdrop-filter: blur
-       已删除
-    */
-}
-
-
-/* =========================================================
-   水波
-========================================================= */
-
-.wave {
-
-    position: absolute;
-
-    width: 115%;
-
-    left: -7.5%;
-
-    top: 14px;
-
-    height: 40px;
-
-    border-top:
-        5px solid
-        rgba(255,255,255,.62);
-
-    border-radius:
-        50%;
-
-    animation:
-        waterWave 5s ease-in-out infinite;
-}
-
-
-.wave::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 100%;
-
-    height: 35px;
-
-    left: 0;
-
-    top: 10px;
-
-    border-top:
-        3px solid
-        rgba(255,255,255,.42);
-
-    border-radius:
-        50%;
-}
-
-
-.wave::after {
-
-    content: "";
-
-    position: absolute;
-
-    width: 100%;
-
-    height: 35px;
-
-    left: 0;
-
-    top: 22px;
-
-    border-top:
-        2px solid
-        rgba(255,255,255,.25);
-
-    border-radius:
-        50%;
-}
-
-
-@keyframes waterWave {
-
-    0%,
-    100% {
-        transform:
-            translateX(-1.5%);
-    }
-
-    50% {
-        transform:
-            translateX(1.5%);
-    }
-}
-
-
-/* =========================================================
-   倒影
-   取消原来的 filter: blur
-========================================================= */
-
-.reflection {
-
-    position: absolute;
-
-    z-index: 8;
-
-    left: 50%;
-
-    top:
-        calc(43% + 60px);
-
-    width: 950px;
-
-    height: 470px;
-
-    transform:
-        translateX(-50%);
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-    opacity: .68;
-
-    mask-image:
-
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.72) 0%,
-            rgba(0,0,0,.48) 35%,
-            rgba(0,0,0,.20) 70%,
-            transparent 100%
-        );
-
-    -webkit-mask-image:
-
-        linear-gradient(
-            to bottom,
-            rgba(0,0,0,.72) 0%,
-            rgba(0,0,0,.48) 35%,
-            rgba(0,0,0,.20) 70%,
-            transparent 100%
-        );
-
-    animation:
-        reflectionMove 4s ease-in-out infinite;
-}
-
-
-@keyframes reflectionMove {
-
-    0%,
-    100% {
-
-        transform:
-            translateX(-50%)
-            skewX(-1deg);
-    }
-
-    50% {
-
-        transform:
-            translateX(-50%)
-            skewX(1deg);
-    }
-}
-
-
-.reflection-content {
-
-    width: 890px;
-
-    margin:
-        0 auto;
-
-    color:
-        rgba(255,248,251,.60);
-
-    font-family:
-        "STKaiti",
-        "KaiTi",
-        "Microsoft YaHei",
-        serif;
-
-    font-size: 14px;
-
-    line-height: 1.55;
-
-    transform:
-        scaleY(-1);
-
-    transform-origin:
-        top center;
-
-    /*
-       原来的 filter: blur(1.5px)
-       已删除
-    */
-
-    filter: none;
-}
-
-
-.reflection-content h2 {
-
-    text-align: center;
-
-    font-size: 29px;
-
-    font-weight: normal;
-
-    letter-spacing: 7px;
-
-    margin-bottom: 15px;
-}
-
-
-.reflection-content p {
-
-    margin-bottom: 8px;
-}
-
-
-/* =========================================================
-   水面光线
-   去掉 blur
-========================================================= */
-
-.water-glow {
-
-    position: absolute;
-
-    z-index: 35;
-
-    top:
-        calc(43% + 10px);
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    width: 850px;
-
-    height: 35px;
-
-    background:
-
-        radial-gradient(
-            ellipse,
-            rgba(255,255,255,.22),
-            transparent 70%
-        );
-
-    /*
-       原来的 filter: blur(7px)
-       已删除
-    */
-
-    filter: none;
-
-    animation:
-        waterGlow 3s ease-in-out infinite;
-}
-
-
-@keyframes waterGlow {
-
-    0%,
-    100% {
-        opacity: .45;
-    }
-
-    50% {
-        opacity: .85;
-    }
-}
-
-
-/* =========================================================
-   底部祝福
-========================================================= */
-
-.ending {
-
-    position: absolute;
-
-    z-index: 40;
-
-    left: 50%;
-
-    bottom: 70px;
-
-    transform:
-        translateX(-50%);
-
-    white-space: nowrap;
-
-    color:
-        rgba(255,255,255,.92);
-
-    font-family:
-        "STKaiti",
-        "KaiTi",
-        serif;
-
-    font-size: 19px;
-
-    letter-spacing: 5px;
-
-    text-shadow:
-        0 2px 10px
-        rgba(40,100,120,.3);
-
-    animation:
-        endingFloat 3s ease-in-out infinite;
-}
-
-
-@keyframes endingFloat {
-
-    0%,
-    100% {
-        transform:
-            translateX(-50%)
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateX(-50%)
-            translateY(-5px);
-    }
-}
-
-
-/* =========================================================
-   鼠标爱心
-========================================================= */
-
-.heart-trail {
-
-    position: fixed;
-
-    z-index: 999;
-
-    pointer-events: none;
-
-    user-select: none;
-
-    font-size: 14px;
-
-    color: #f38db3;
-
-    text-shadow:
-        0 0 8px
-        rgba(255,255,255,.8);
-
-    animation:
-        heartFloat 1.2s ease-out forwards;
-}
-
-
-@keyframes heartFloat {
-
-    0% {
-
-        opacity: .95;
-
-        transform:
-            translate(-50%, -50%)
-            scale(.55)
-            rotate(0deg);
-    }
-
-    35% {
-
-        opacity: .9;
-
-        transform:
-            translate(
-                -50%,
-                -65%
-            )
-            scale(1)
-            rotate(-8deg);
-    }
-
-    100% {
-
-        opacity: 0;
-
-        transform:
-            translate(
-                -50%,
-                -180%
-            )
-            scale(.7)
-            rotate(15deg);
-    }
-}
-
-
-/* =========================================================
-   音乐按钮
-========================================================= */
-
-#music-control {
-
-    position: fixed;
-
-    z-index: 200;
-
-    right: 24px;
-
-    bottom: 24px;
-
-    width: 52px;
-
-    height: 52px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255,255,255,.78);
-
-    color:
-        #744259;
-
-    font-size: 21px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 25px
-        rgba(50,80,90,.18);
-
-    transition:
-        transform .3s ease;
-}
-
-
-#music-control:hover {
-
-    transform:
-        scale(1.08);
-}
-
-
-/* =========================================================
-   响应式
-========================================================= */
-
-@media (max-width: 1500px) {
-
-    .fish-scene {
-
-        --fish-scale: .88;
-    }
-
-    .reflection {
-
-        transform:
-            translateX(-50%)
-            scale(.88);
-
-        transform-origin:
-            top center;
-    }
-}
-
-
-@media (max-width: 1000px) {
-
-    .fish-scene {
-
-        --fish-scale: .68;
-    }
-
-    .reflection {
-
-        transform:
-            translateX(-50%)
-            scale(.68);
-    }
-
-    .ending {
-
-        bottom: 55px;
-
-        font-size: 15px;
-    }
-}
-
-
-@media (max-width: 600px) {
-
-    .opening-title {
-
-        font-size: 46px;
-
-        letter-spacing: 5px;
-    }
-
-    .opening-small {
-
-        font-size: 10px;
-
-        letter-spacing: 4px;
-    }
-
-    .opening-subtitle {
-
-        font-size: 11px;
-
-        letter-spacing: 2px;
-    }
-
-    .fish-scene {
-
-        --fish-scale: .43;
-    }
-
-    .fish-letter {
-
-        font-size: 16px;
-        line-height: 1.75;
-    }
-
-    .reflection {
-
-        transform:
-            translateX(-50%)
-            scale(.43);
-    }
-
-    .ending {
-
-        bottom: 65px;
-
-        font-size: 13px;
-
-        letter-spacing: 2px;
-    }
-
-    #music-control {
-
-        width: 46px;
-
-        height: 46px;
-
-        right: 15px;
-
-        bottom: 15px;
-    }
-}
-
-
-/* ====== 升级效果：气泡 / 3D拆信 / 鱼游动增强 / 手机优化 ====== */
-
-.bubble {
-    position:absolute;
-    bottom:-40px;
-    border-radius:50%;
-    background:rgba(255,255,255,.35);
-    border:1px solid rgba(255,255,255,.45);
-    pointer-events:none;
-    z-index:12;
-    animation:bubbleRise linear forwards;
-}
-
-@keyframes bubbleRise {
-    0% { transform:translateY(0) scale(.8); opacity:0; }
-    20% { opacity:.8; }
-    100% { transform:translateY(-900px) scale(1.2); opacity:0; }
-}
-
-
-.fish-body {
-    animation:
-        fishBreathing 4s ease-in-out infinite,
-        fishBodyWave 3s ease-in-out infinite;
-}
-
-@keyframes fishBodyWave {
-    0%,100% { transform:rotate(0deg); }
-    50% { transform:rotate(.8deg); }
-}
-
-@media(max-width:600px){
-    /* 微信移动端优化：重新定位鱼身信件区域，避免超出鱼体 */
-    .fish-letter {
-        left: 250px;
-        top: 150px;
-        width: 780px;
-        height: 430px;
-        padding: 10px 80px 25px 80px;
-        font-size: 12px;
-        line-height: 1.7;
-        letter-spacing: .2px;
-        transform: scale(.95);
-        transform-origin: center center;
-        overflow: hidden;
-    }
-
-    .fish-letter h2 {
-        font-size: 22px;
-        letter-spacing: 5px;
-        margin-bottom: 10px;
-    }
-
-    .fish-letter p {
-        margin-bottom: 7px;
-    }
-
-    .fish-letter .last-line {
-        font-size: 13px;
-        margin-top: 8px;
-    }
-}
-
-
-/* ================= 开场星空与流星 ================= */
-#opening::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    background-image:
-        radial-gradient(circle,rgba(255,255,255,.9) 1px,transparent 2px),
-        radial-gradient(circle,rgba(255,255,255,.7) 1.5px,transparent 3px),
-        radial-gradient(circle,rgba(255,240,250,.8) 1px,transparent 2px);
-    background-size:90px 90px,160px 160px,220px 220px;
-    animation:starMove 18s linear infinite;
-    opacity:.75;
-}
-
-@keyframes starMove{
-    from{background-position:0 0,40px 80px,120px 30px;}
-    to{background-position:0 600px,40px 680px,120px 630px;}
-}
-
-.meteor{
-    position:absolute;
-    width:3px;
-    height:140px;
-    background:linear-gradient(to bottom,rgba(255,255,255,0),#fff);
-    border-radius:999px;
-    transform:rotate(-45deg);
-    opacity:0;
-    filter:drop-shadow(0 0 8px white);
-    pointer-events:none;
-}
-
-.meteor.one{
-    right:20%;
-    top:5%;
-    animation:meteorMove 5s linear infinite 1s;
-}
-.meteor.two{
-    right:55%;
-    top:15%;
-    height:90px;
-    animation:meteorMove 7s linear infinite 3.5s;
-}
-
-@keyframes meteorMove{
-    0%{opacity:0;transform:translate(0,0) rotate(-45deg);}
-    10%{opacity:1;}
-    45%{opacity:0;transform:translate(-420px,420px) rotate(-45deg);}
-    100%{opacity:0;}
-}
-
-
-/* ===== 微信手机端横屏体验优化 ===== */
-#rotate-tip{
-    display:none;
-}
-
-.rotate-tip-inner{
-    text-align:center;
-    font-family:"STKaiti","KaiTi",serif;
-    color:#754058;
-    font-size:18px;
-    letter-spacing:3px;
-    line-height:2;
-}
-
-.rotate-icon{
-    font-size:48px;
-    margin-bottom:20px;
-    animation:rotateHint 2s ease-in-out infinite;
-}
-
-@keyframes rotateHint{
-    0%,100%{transform:rotate(0deg);}
-    50%{transform:rotate(90deg);}
-}
-
-@media screen and (max-width:900px) and (orientation:portrait){
-    #rotate-tip{
-        display:flex;
-        position:fixed;
-        inset:0;
-        z-index:99999;
-        align-items:center;
-        justify-content:center;
-        background:linear-gradient(135deg,#ffe0eb,#8fc8d7);
-    }
-}
-
-@media screen and (max-width:900px) and (orientation:landscape){
-    #rotate-tip{
-        display:none;
-    }
-}
-
-/* 微信竖屏提示优化 */
-#rotate-tip{
-    display:none;
-    position:fixed;
-    inset:0;
-    z-index:99999;
-    background:linear-gradient(135deg,#ffe0eb,#8fc8d7);
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:#754058;
-    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
-}
-#rotate-tip .rotate-box{
-    animation:rotateHint 2s ease-in-out infinite;
-    font-size:18px;
-    letter-spacing:2px;
-    line-height:2;
-}
-#rotate-tip .phone-icon{
-    font-size:55px;
-    margin-bottom:20px;
-}
-@keyframes rotateHint{
-    50%{transform:translateY(-8px);}
-}
-@media screen and (max-width:900px) and (orientation:portrait){
-    #rotate-tip{display:flex;}
-    #letter-page,#music-control{display:none!important;}
-}
-
-
-/* 手机旋转观看模式 */
-#mobile-mode-btn {
-    position:fixed;
-    top:28px;
-    right:28px;
-    z-index:10000;
-    padding:12px 20px;
-    border-radius:30px;
-    border:1px solid rgba(255,255,255,.7);
-    background:rgba(255,255,255,.35);
-    backdrop-filter:blur(10px);
-    color:#754058;
-    font-size:15px;
-    cursor:pointer;
-    box-shadow:0 8px 25px rgba(117,64,88,.15);
-    animation:mobileBtnGlow 3s ease-in-out infinite;
-}
-
-@keyframes mobileBtnGlow {
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-5px);}
-}
-
-#global-scale.mobile-rotate-mode {
-    width:100vh;
-    height:100vw;
-    left:50%;
-    top:50%;
-    transform:translate(-50%,-50%) rotate(90deg) scale(1.25);
-    transform-origin:center center;
-}
-
-#mobile-back-btn {
-    display:none;
-    position:fixed;
-    top:25px;
-    left:25px;
-    z-index:300;
-    padding:10px 18px;
-    border-radius:25px;
-    border:0;
-    background:rgba(255,255,255,.55);
-    color:#754058;
-}
-
-#global-scale.mobile-rotate-mode #mobile-back-btn {
-    display:block;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="screen-orientation" content="landscape">
+    <meta name="x5-orientation" content="landscape">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title>一封特别的信</title>
+
+    <style>
+        /* =========================================================
+           基础
+        ========================================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #ffc9df;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+            color: #754058;
+        }
+
+        /* =========================================================
+           全局缩放容器（电脑端正常，手机竖屏时旋转）
+        ========================================================= */
+        #global-scale {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+            transform: scale(1.25);
+            transform-origin: center center;
+            transition: transform 0.6s ease;
+        }
+
+        /* =========================================================
+           手机竖屏适配：旋转 90° 并缩放
+        ========================================================= */
+        @media screen and (max-width: 900px) and (orientation: portrait) {
+            #global-scale {
+                /* 宽高互换：宽度 = 屏幕高度，高度 = 屏幕宽度 */
+                width: 100vh;
+                height: 100vw;
+                transform: rotate(90deg) scale(0.58);
+                transform-origin: center center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -50vw;
+                margin-left: -50vh;
+                /* 旋转后交互坐标修正用 pointer-events: auto 保持可点击 */
+                pointer-events: auto;
+            }
+
+            /* 手机竖屏时隐藏横屏提示（如果有） */
+            #rotate-tip {
+                display: none !important;
+            }
+
+            /* 手机竖屏时调整文字大小 */
+            .fish-letter {
+                font-size: 12px !important;
+                line-height: 1.5 !important;
+            }
+            .fish-letter h2 {
+                font-size: 20px !important;
+                letter-spacing: 4px !important;
+            }
+            .fish-letter p {
+                margin-bottom: 4px !important;
+            }
+            .fish-letter .last-line {
+                font-size: 12px !important;
+            }
+
+            /* 调整底部祝福 */
+            .ending {
+                font-size: 14px !important;
+                bottom: 30px !important;
+                letter-spacing: 3px !important;
+            }
+
+            /* 调整音乐按钮位置 */
+            #music-control {
+                width: 40px !important;
+                height: 40px !important;
+                right: 10px !important;
+                bottom: 10px !important;
+                font-size: 16px !important;
+            }
+
+            /* 开场页面适配 */
+            .opening-title {
+                font-size: 40px !important;
+                letter-spacing: 6px !important;
+            }
+            .opening-small {
+                font-size: 10px !important;
+                letter-spacing: 4px !important;
+            }
+            .opening-subtitle {
+                font-size: 12px !important;
+                letter-spacing: 2px !important;
+            }
+            .envelope-wrapper {
+                width: 160px !important;
+                height: 105px !important;
+                margin-top: 20px !important;
+            }
+            .envelope::before {
+                border-left-width: 80px !important;
+                border-right-width: 80px !important;
+                border-top-width: 56px !important;
+            }
+            .envelope::after {
+                border-left-width: 80px !important;
+                border-top-width: 54px !important;
+            }
+            .letter-preview {
+                width: 120px !important;
+                height: 80px !important;
+                left: 20px !important;
+                bottom: 8px !important;
+                padding: 12px 6px !important;
+                font-size: 12px !important;
+            }
+            .preview-sign {
+                font-size: 10px !important;
+            }
+            .seal {
+                width: 28px !important;
+                height: 28px !important;
+                top: 34px !important;
+                font-size: 12px !important;
+            }
+            .open-button {
+                padding: 10px 28px !important;
+                font-size: 12px !important;
+                margin-top: 16px !important;
+            }
+
+            /* 鱼场景缩放 */
+            .fish-scene {
+                --fish-scale: 0.48 !important;
+            }
+
+            /* 倒影缩放 */
+            .reflection {
+                transform: translateX(-50%) scale(0.48) !important;
+            }
+
+            /* 水面光线 */
+            .water-glow {
+                width: 500px !important;
+                height: 20px !important;
+            }
+
+            /* 隐藏部分装饰 */
+            .underwater-light .light:nth-child(3) {
+                display: none !important;
+            }
+        }
+
+        /* =========================================================
+           手机竖屏且屏幕较小（< 500px）进一步缩放
+        ========================================================= */
+        @media screen and (max-width: 500px) and (orientation: portrait) {
+            #global-scale {
+                transform: rotate(90deg) scale(0.42);
+                margin-top: -50vw;
+                margin-left: -50vh;
+            }
+            .fish-scene {
+                --fish-scale: 0.38 !important;
+            }
+            .reflection {
+                transform: translateX(-50%) scale(0.38) !important;
+            }
+            .opening-title {
+                font-size: 30px !important;
+            }
+            .fish-letter {
+                font-size: 10px !important;
+                line-height: 1.4 !important;
+                padding: 4px 20px !important;
+            }
+            .fish-letter h2 {
+                font-size: 16px !important;
+            }
+            .ending {
+                font-size: 11px !important;
+                bottom: 20px !important;
+            }
+        }
+
+        /* =========================================================
+           开场页面
+        ========================================================= */
+        #opening {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background:
+                radial-gradient(circle at 50% 25%, rgba(255, 255, 255, .95), transparent 34%),
+                linear-gradient(135deg, #ffe0eb 0%, #ffc9df 45%, #f3b4d1 100%);
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+        }
+
+        #opening.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .opening-content {
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            animation: openingFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes openingFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .opening-small {
+            font-size: 14px;
+            letter-spacing: 7px;
+            color: rgba(116, 59, 82, .58);
+            margin-bottom: 22px;
+        }
+
+        .opening-title {
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: clamp(52px, 7vw, 92px);
+            font-weight: 500;
+            letter-spacing: 12px;
+            color: #783c55;
+            text-shadow: 0 4px 15px rgba(255, 255, 255, .8);
+        }
+
+        .opening-subtitle {
+            margin-top: 20px;
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: 16px;
+            letter-spacing: 4px;
+            color: rgba(115, 57, 79, .62);
+        }
+
+        /* =========================================================
+           信封
+        ========================================================= */
+        .envelope-wrapper {
+            position: relative;
+            width: 220px;
+            height: 145px;
+            margin: 42px auto 0;
+            cursor: pointer;
+            transition: transform .3s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: translateY(-6px) scale(1.03);
+        }
+
+        .envelope {
+            position: absolute;
+            inset: 0;
+            background: #fff5f9;
+            border-radius: 5px;
+            box-shadow: 0 20px 40px rgba(125, 52, 85, .18);
+            overflow: hidden;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 110px solid transparent;
+            border-right: 110px solid transparent;
+            border-top: 76px solid #f4bed4;
+            z-index: 4;
+            transform-origin: top center;
+            transition: transform .8s ease;
+        }
+
+        .envelope::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            border-left: 110px solid #f8d3e2;
+            border-top: 74px solid transparent;
+            z-index: 5;
+        }
+
+        .envelope-wrapper.open .envelope::before {
+            transform: rotateX(180deg);
+        }
+
+        .letter-preview {
+            position: absolute;
+            width: 170px;
+            height: 112px;
+            left: 25px;
+            bottom: 10px;
+            background: #fffafd;
+            z-index: 2;
+            padding: 20px 10px;
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #a35473;
+            box-shadow: 0 5px 15px rgba(90, 30, 60, .08);
+            transition: transform 1s ease, bottom 1s ease;
+        }
+
+        .preview-sign {
+            margin-top: 8px;
+            margin-right: 10px;
+            padding-right: 4px;
+            text-align: right;
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: 12px;
+            line-height: 1.55;
+            color: #9d536f;
+            letter-spacing: 2px;
+            position: relative;
+            transform: rotate(-2deg) translateX(-4px);
+            transform-origin: right center;
+            opacity: .92;
+        }
+
+        .preview-sign::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: -5px;
+            width: 48px;
+            height: 1px;
+            background: rgba(157, 83, 111, .35);
+        }
+
+        .preview-sign::after {
+            content: "✦";
+            position: absolute;
+            right: -3px;
+            bottom: -8px;
+            font-size: 10px;
+            color: rgba(157, 83, 111, .55);
+        }
+
+        .preview-sign {
+            animation: signAppear 1.8s ease both;
+        }
+
+        @keyframes signAppear {
+            from {
+                opacity: 0;
+                transform: translateY(8px) rotate(-6deg);
+            }
+            to {
+                opacity: .92;
+                transform: translateY(0) rotate(-2deg) translateX(-4px);
+            }
+        }
+
+        .envelope-wrapper.open .letter-preview {
+            bottom: 75px;
+            transform: translateY(-20px);
+        }
+
+        .seal {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            left: 50%;
+            top: 48px;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #d8759a;
+            color: white;
+            font-size: 18px;
+            box-shadow: 0 5px 12px rgba(120, 50, 80, .25);
+            transition: opacity .5s ease, transform .5s ease;
+        }
+
+        .envelope-wrapper.open .seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(.4);
+        }
+
+        .open-button {
+            margin-top: 26px;
+            padding: 13px 40px;
+            border: none;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .72);
+            color: #783d56;
+            font-size: 15px;
+            letter-spacing: 4px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(110, 45, 75, .15);
+            transition: all .3s ease;
+        }
+
+        .open-button:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 13px 30px rgba(110, 45, 75, .2);
+        }
+
+        /* =========================================================
+           信件页面
+        ========================================================= */
+        #letter-page {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.3s ease, visibility 1.3s ease;
+            background:
+                linear-gradient(to bottom,
+                    #ffddea 0%, #ffc9df 34%, #f7b9d4 42%,
+                    #a7d6e1 43%, #8fc8d7 58%, #68b0c5 100%);
+        }
+
+        #letter-page.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* =========================================================
+           粒子
+        ========================================================= */
+        #particleCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 45;
+            pointer-events: none;
+        }
+
+        /* =========================================================
+           水下光线
+        ========================================================= */
+        .underwater-light {
+            position: absolute;
+            inset: 43% 0 0 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .light {
+            position: absolute;
+            width: 220px;
+            height: 700px;
+            top: -100px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .08), transparent);
+            transform: rotate(13deg);
+            animation: lightMove 7s ease-in-out infinite;
+        }
+
+        .light:nth-child(1) {
+            left: 12%;
+        }
+        .light:nth-child(2) {
+            left: 48%;
+            transform: rotate(-10deg);
+            animation-delay: -2s;
+        }
+        .light:nth-child(3) {
+            left: 78%;
+            transform: rotate(8deg);
+            animation-delay: -4s;
+        }
+
+        @keyframes lightMove {
+            0%,
+            100% {
+                opacity: .10;
+                transform: translateX(-30px) rotate(12deg);
+            }
+            50% {
+                opacity: .30;
+                transform: translateX(30px) rotate(12deg);
+            }
+        }
+
+        /* =========================================================
+           鱼整体
+        ========================================================= */
+        .fish-scene {
+            position: absolute;
+            left: 50%;
+            top: 47%;
+            width: 1500px;
+            height: 720px;
+            --fish-scale: 1;
+            transform: translate(-50%, -50%) scale(var(--fish-scale));
+            transform-origin: center center;
+            z-index: 10;
+            animation: none;
+        }
+
+        /* =========================================================
+           鱼游动
+        ========================================================= */
+        @keyframes fishSwimming {
+            0% {
+                transform: translate(calc(-50% - 8px), calc(-50% + 3px)) scale(var(--fish-scale)) rotate(-1deg);
+            }
+            25% {
+                transform: translate(calc(-50% + 15px), calc(-50% - 7px)) scale(var(--fish-scale)) rotate(1deg);
+            }
+            50% {
+                transform: translate(calc(-50% + 25px), calc(-50% + 4px)) scale(var(--fish-scale)) rotate(2deg);
+            }
+            75% {
+                transform: translate(calc(-50% - 5px), calc(-50% + 9px)) scale(var(--fish-scale)) rotate(-1deg);
+            }
+            100% {
+                transform: translate(calc(-50% - 8px), calc(-50% + 3px)) scale(var(--fish-scale)) rotate(-1deg);
+            }
+        }
+
+        /* =========================================================
+           鱼身体
+        ========================================================= */
+        .fish-body {
+            position: absolute;
+            left: 70px;
+            top: 80px;
+            width: 1190px;
+            height: 580px;
+            background:
+                radial-gradient(circle at 23% 28%, rgba(255, 255, 255, .34), transparent 9%),
+                radial-gradient(circle at 65% 60%, rgba(255, 255, 255, .13), transparent 24%),
+                linear-gradient(145deg, #f5a8c4, #ed8db0 50%, #dd719d);
+            border-radius: 58% 53% 48% 55% / 53% 58% 46% 50%;
+            box-shadow: 0 28px 60px rgba(75, 54, 72, .22);
+            animation: fishBreathing 4s ease-in-out infinite, fishBodyWave 3s ease-in-out infinite;
+        }
+
+        @keyframes fishBreathing {
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+            50% {
+                filter: brightness(1.045);
+            }
+        }
+
+        @keyframes fishBodyWave {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(.8deg);
+            }
+        }
+
+        /* =========================================================
+           鱼尾
+        ========================================================= */
+        .fish-tail {
+            position: absolute;
+            left: 1130px;
+            top: 195px;
+            width: 330px;
+            height: 350px;
+            background: linear-gradient(145deg, #ee9bbb, #d76c98);
+            clip-path: polygon(100% 50%, 0 0, 24% 50%, 0 100%);
+            filter: drop-shadow(0 20px 16px rgba(80, 45, 70, .14));
+            transform-origin: left center;
+            animation: tailMove 1.4s ease-in-out infinite;
+        }
+
+        @keyframes tailMove {
+            0%,
+            100% {
+                transform: rotate(4deg);
+            }
+            50% {
+                transform: rotate(-6deg);
+            }
+        }
+
+        /* =========================================================
+           上鳍
+        ========================================================= */
+        .fish-fin-top {
+            position: absolute;
+            left: 475px;
+            top: 20px;
+            width: 230px;
+            height: 170px;
+            background: #e789ad;
+            clip-path: polygon(0 100%, 45% 0, 100% 100%);
+            transform: rotate(-5deg);
+            transform-origin: bottom center;
+            animation: finMove 2.6s ease-in-out infinite;
+        }
+
+        @keyframes finMove {
+            0%,
+            100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(4deg);
+            }
+        }
+
+        /* =========================================================
+           下鳍
+        ========================================================= */
+        .fish-fin-bottom {
+            position: absolute;
+            left: 520px;
+            bottom: 5px;
+            width: 210px;
+            height: 145px;
+            background: #dc779f;
+            clip-path: polygon(0 0, 100% 0, 55% 100%);
+            transform-origin: top center;
+            animation: bottomFinMove 3s ease-in-out infinite;
+        }
+
+        @keyframes bottomFinMove {
+            0%,
+            100% {
+                transform: rotate(2deg);
+            }
+            50% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        /* =========================================================
+           鱼眼
+        ========================================================= */
+        .fish-eye {
+            position: absolute;
+            left: 160px;
+            top: 205px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: inset 0 0 0 8px #f3b0c9;
+            z-index: 15;
+        }
+
+        .fish-eye::after {
+            content: "";
+            position: absolute;
+            left: 16px;
+            top: 16px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #493441;
+            animation: eyeMove 5s ease-in-out infinite;
+        }
+
+        @keyframes eyeMove {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(4px);
+            }
+        }
+
+        /* =========================================================
+           鱼身文字
+        ========================================================= */
+        .fish-letter {
+            position: absolute;
+            z-index: 20;
+            left: 250px;
+            top: 125px;
+            width: 890px;
+            height: 490px;
+            overflow: hidden;
+            padding: 8px 45px 20px 45px;
+            color: rgba(100, 46, 69, .94);
+            font-family: "STKaiti", "KaiTi", "Microsoft YaHei", serif;
+            font-size: 14px;
+            line-height: 1.6;
+            letter-spacing: .5px;
+            text-align: center;
+            filter: none;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, .25);
+        }
+
+        .fish-letter h2 {
+            text-align: center;
+            font-size: 29px;
+            font-weight: normal;
+            letter-spacing: 7px;
+            margin-bottom: 15px;
+            color: rgba(104, 46, 70, .95);
+        }
+
+        .fish-letter p {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .fish-letter .last-line {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 15px;
+            letter-spacing: 2px;
+        }
+
+        /* =========================================================
+           水面
+        ========================================================= */
+        .water-surface {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 43%;
+            height: 100px;
+            z-index: 30;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .water-surface::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 20px;
+            height: 65px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, .18), rgba(255, 255, 255, .02));
+        }
+
+        /* =========================================================
+           水波
+        ========================================================= */
+        .wave {
+            position: absolute;
+            width: 115%;
+            left: -7.5%;
+            top: 14px;
+            height: 40px;
+            border-top: 5px solid rgba(255, 255, 255, .62);
+            border-radius: 50%;
+            animation: waterWave 5s ease-in-out infinite;
+        }
+
+        .wave::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 35px;
+            left: 0;
+            top: 10px;
+            border-top: 3px solid rgba(255, 255, 255, .42);
+            border-radius: 50%;
+        }
+
+        .wave::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 35px;
+            left: 0;
+            top: 22px;
+            border-top: 2px solid rgba(255, 255, 255, .25);
+            border-radius: 50%;
+        }
+
+        @keyframes waterWave {
+            0%,
+            100% {
+                transform: translateX(-1.5%);
+            }
+            50% {
+                transform: translateX(1.5%);
+            }
+        }
+
+        /* =========================================================
+           倒影
+        ========================================================= */
+        .reflection {
+            position: absolute;
+            z-index: 8;
+            left: 50%;
+            top: calc(43% + 60px);
+            width: 950px;
+            height: 470px;
+            transform: translateX(-50%);
+            overflow: hidden;
+            pointer-events: none;
+            opacity: .68;
+            mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, .72) 0%, rgba(0, 0, 0, .48) 35%,
+                    rgba(0, 0, 0, .20) 70%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom,
+                    rgba(0, 0, 0, .72) 0%, rgba(0, 0, 0, .48) 35%,
+                    rgba(0, 0, 0, .20) 70%, transparent 100%);
+            animation: reflectionMove 4s ease-in-out infinite;
+        }
+
+        @keyframes reflectionMove {
+            0%,
+            100% {
+                transform: translateX(-50%) skewX(-1deg);
+            }
+            50% {
+                transform: translateX(-50%) skewX(1deg);
+            }
+        }
+
+        .reflection-content {
+            width: 890px;
+            margin: 0 auto;
+            color: rgba(255, 248, 251, .60);
+            font-family: "STKaiti", "KaiTi", "Microsoft YaHei", serif;
+            font-size: 14px;
+            line-height: 1.55;
+            transform: scaleY(-1);
+            transform-origin: top center;
+            filter: none;
+        }
+
+        .reflection-content h2 {
+            text-align: center;
+            font-size: 29px;
+            font-weight: normal;
+            letter-spacing: 7px;
+            margin-bottom: 15px;
+        }
+
+        .reflection-content p {
+            margin-bottom: 8px;
+        }
+
+        /* =========================================================
+           水面光线
+        ========================================================= */
+        .water-glow {
+            position: absolute;
+            z-index: 35;
+            top: calc(43% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 850px;
+            height: 35px;
+            background: radial-gradient(ellipse, rgba(255, 255, 255, .22), transparent 70%);
+            filter: none;
+            animation: waterGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes waterGlow {
+            0%,
+            100% {
+                opacity: .45;
+            }
+            50% {
+                opacity: .85;
+            }
+        }
+
+        /* =========================================================
+           底部祝福
+        ========================================================= */
+        .ending {
+            position: absolute;
+            z-index: 40;
+            left: 50%;
+            bottom: 70px;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            color: rgba(255, 255, 255, .92);
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: 19px;
+            letter-spacing: 5px;
+            text-shadow: 0 2px 10px rgba(40, 100, 120, .3);
+            animation: endingFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes endingFloat {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* =========================================================
+           鼠标爱心
+        ========================================================= */
+        .heart-trail {
+            position: fixed;
+            z-index: 999;
+            pointer-events: none;
+            user-select: none;
+            font-size: 14px;
+            color: #f38db3;
+            text-shadow: 0 0 8px rgba(255, 255, 255, .8);
+            animation: heartFloat 1.2s ease-out forwards;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: .95;
+                transform: translate(-50%, -50%) scale(.55) rotate(0deg);
+            }
+            35% {
+                opacity: .9;
+                transform: translate(-50%, -65%) scale(1) rotate(-8deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -180%) scale(.7) rotate(15deg);
+            }
+        }
+
+        /* =========================================================
+           音乐按钮
+        ========================================================= */
+        #music-control {
+            position: fixed;
+            z-index: 200;
+            right: 24px;
+            bottom: 24px;
+            width: 52px;
+            height: 52px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .78);
+            color: #744259;
+            font-size: 21px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(50, 80, 90, .18);
+            transition: transform .3s ease;
+        }
+
+        #music-control:hover {
+            transform: scale(1.08);
+        }
+
+        /* =========================================================
+           气泡
+        ========================================================= */
+        .bubble {
+            position: absolute;
+            bottom: -40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .35);
+            border: 1px solid rgba(255, 255, 255, .45);
+            pointer-events: none;
+            z-index: 12;
+            animation: bubbleRise linear forwards;
+        }
+
+        @keyframes bubbleRise {
+            0% {
+                transform: translateY(0) scale(.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: .8;
+            }
+            100% {
+                transform: translateY(-900px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================
+           开场星空与流星
+        ========================================================= */
+        #opening::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle, rgba(255, 255, 255, .9) 1px, transparent 2px),
+                radial-gradient(circle, rgba(255, 255, 255, .7) 1.5px, transparent 3px),
+                radial-gradient(circle, rgba(255, 240, 250, .8) 1px, transparent 2px);
+            background-size: 90px 90px, 160px 160px, 220px 220px;
+            animation: starMove 18s linear infinite;
+            opacity: .75;
+        }
+
+        @keyframes starMove {
+            from {
+                background-position: 0 0, 40px 80px, 120px 30px;
+            }
+            to {
+                background-position: 0 600px, 40px 680px, 120px 630px;
+            }
+        }
+
+        .meteor {
+            position: absolute;
+            width: 3px;
+            height: 140px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+            border-radius: 999px;
+            transform: rotate(-45deg);
+            opacity: 0;
+            filter: drop-shadow(0 0 8px white);
+            pointer-events: none;
+        }
+
+        .meteor.one {
+            right: 20%;
+            top: 5%;
+            animation: meteorMove 5s linear infinite 1s;
+        }
+        .meteor.two {
+            right: 55%;
+            top: 15%;
+            height: 90px;
+            animation: meteorMove 7s linear infinite 3.5s;
+        }
+
+        @keyframes meteorMove {
+            0% {
+                opacity: 0;
+                transform: translate(0, 0) rotate(-45deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            45% {
+                opacity: 0;
+                transform: translate(-420px, 420px) rotate(-45deg);
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================
+           横屏提示（手机竖屏时显示）
+        ========================================================= */
+        #rotate-tip {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: linear-gradient(135deg, #ffe0eb, #8fc8d7);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #754058;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        #rotate-tip .rotate-box {
+            animation: rotateHint 2s ease-in-out infinite;
+            font-size: 18px;
+            letter-spacing: 2px;
+            line-height: 2;
+        }
+
+        #rotate-tip .phone-icon {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        @keyframes rotateHint {
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media screen and (max-width: 900px) and (orientation: portrait) {
+            #rotate-tip {
+                display: flex !important;
+            }
+            /* 在手机竖屏时，opening 和 letter-page 本身隐藏，由 #rotate-tip 接管 */
+            #opening,
+            #letter-page,
+            #music-control {
+                display: none !important;
+            }
+        }
+
+        /* 但在竖屏旋转适配方案中，我们实际上通过 CSS 旋转了 #global-scale，
+           所以 #rotate-tip 在竖屏时会被隐藏（见上面的 @media 规则） */
+        /* 但为了保险，在竖屏旋转方案中我们强制隐藏 #rotate-tip */
+        @media screen and (max-width: 900px) and (orientation: portrait) {
+            #rotate-tip {
+                display: none !important;
+            }
+            /* 恢复显示内容 */
+            #opening,
+            #letter-page,
+            #music-control {
+                display: flex !important;
+            }
+            #opening {
+                display: flex !important;
+            }
+            #letter-page {
+                display: block !important;
+            }
+            #music-control {
+                display: flex !important;
+            }
+        }
+
+        /* 但如果在更小的屏幕上旋转后内容仍然太大，可以进一步缩放 */
+        @media screen and (max-width: 420px) and (orientation: portrait) {
+            #global-scale {
+                transform: rotate(90deg) scale(0.38);
+                margin-top: -50vw;
+                margin-left: -50vh;
+            }
+            .fish-scene {
+                --fish-scale: 0.32 !important;
+            }
+            .reflection {
+                transform: translateX(-50%) scale(0.32) !important;
+            }
+            .opening-title {
+                font-size: 26px !important;
+            }
+            .fish-letter {
+                font-size: 9px !important;
+                line-height: 1.3 !important;
+                padding: 2px 10px !important;
+            }
+            .fish-letter h2 {
+                font-size: 14px !important;
+            }
+            .ending {
+                font-size: 10px !important;
+                bottom: 15px !important;
+            }
+        }
+
+        /* 电脑端隐藏横屏提示 */
+        @media screen and (min-width: 901px) {
+            #rotate-tip {
+                display: none !important;
+            }
+        }
+
+        /* 手机横屏时隐藏横屏提示 */
+        @media screen and (max-width: 900px) and (orientation: landscape) {
+            #rotate-tip {
+                display: none !important;
+            }
+        }
+
+        /* 响应式（电脑端） */
+        @media (max-width: 1500px) {
+            .fish-scene {
+                --fish-scale: .88;
+            }
+            .reflection {
+                transform: translateX(-50%) scale(.88);
+                transform-origin: top center;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .fish-scene {
+                --fish-scale: .68;
+            }
+            .reflection {
+                transform: translateX(-50%) scale(.68);
+            }
+            .ending {
+                bottom: 55px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .opening-title {
+                font-size: 46px;
+                letter-spacing: 5px;
+            }
+            .opening-small {
+                font-size: 10px;
+                letter-spacing: 4px;
+            }
+            .opening-subtitle {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+            .fish-scene {
+                --fish-scale: .43;
+            }
+            .fish-letter {
+                font-size: 16px;
+                line-height: 1.75;
+            }
+            .reflection {
+                transform: translateX(-50%) scale(.43);
+            }
+            .ending {
+                bottom: 65px;
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+            #music-control {
+                width: 46px;
+                height: 46px;
+                right: 15px;
+                bottom: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .fish-letter {
+                left: 250px;
+                top: 150px;
+                width: 780px;
+                height: 430px;
+                padding: 10px 80px 25px 80px;
+                font-size: 12px;
+                line-height: 1.7;
+                letter-spacing: .2px;
+                transform: scale(.95);
+                transform-origin: center center;
+                overflow: hidden;
+            }
+            .fish-letter h2 {
+                font-size: 22px;
+                letter-spacing: 5px;
+                margin-bottom: 10px;
+            }
+            .fish-letter p {
+                margin-bottom: 7px;
+            }
+            .fish-letter .last-line {
+                font-size: 13px;
+                margin-top: 8px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-<div id="rotate-tip">
-  <div class="rotate-box">
-    <div class="phone-icon">📱↻</div>
-    请横屏查看<br>
-    开启自动旋转后<br>
-    将手机横向握持体验完整信件
-  </div>
-</div>
-
-
-<div id="global-scale">
-
-
-<!-- =========================================================
-     开场
-========================================================= -->
-
-<section id="opening">
-
-    <div class="meteor one"></div>
-    <div class="meteor two"></div>
-
-    <div class="opening-content">
-
-        <button id="mobile-mode-btn">📱 手机横屏观看</button>
-
-        <div class="opening-small">
-            FOR MY SPECIAL FRIEND
+    <!-- =========================================================
+    横屏提示（仅在手机竖屏且未启用旋转方案时显示）
+    但因为我们启用了旋转方案，此提示在竖屏时被隐藏
+    ========================================================= -->
+    <div id="rotate-tip">
+        <div class="rotate-box">
+            <div class="phone-icon">📱↻</div>
+            请横屏查看<br>
+            开启自动旋转后<br>
+            将手机横向握持体验完整信件
         </div>
-
-
-        <h1 class="opening-title">
-            致鱼
-        </h1>
-
-
-        <div class="opening-subtitle">
-            写给那个陪我走过春夏秋冬的人
-        </div>
-
-
-        <div
-            class="envelope-wrapper"
-            id="envelope">
-
-            <div class="letter-preview">
-           <br>
-    讨厌猫の鱼
-    <div class="preview-sign">
-        山药<br>
-        2026.8.12
     </div>
-</div>
 
+    <!-- =========================================================
+    全局容器（电脑端正常，手机竖屏旋转）
+    ========================================================= -->
+    <div id="global-scale">
 
-            <div class="envelope">
+        <!-- =========================================================
+             开场
+        ========================================================= -->
+        <section id="opening">
+            <div class="meteor one"></div>
+            <div class="meteor two"></div>
 
-                <div class="seal">
-                    ♡
+            <div class="opening-content">
+                <div class="opening-small">FOR MY SPECIAL FRIEND</div>
+                <h1 class="opening-title">致鱼</h1>
+                <div class="opening-subtitle">写给那个陪我走过春夏秋冬的人</div>
+
+                <div class="envelope-wrapper" id="envelope">
+                    <div class="letter-preview">
+                        <br>讨厌猫の鱼
+                        <div class="preview-sign">山药<br>2026.8.12</div>
+                    </div>
+                    <div class="envelope">
+                        <div class="seal">♡</div>
+                    </div>
                 </div>
 
+                <button class="open-button" id="openButton">拆开信件</button>
             </div>
+        </section>
 
-        </div>
+        <!-- =========================================================
+             信件
+        ========================================================= -->
+        <section id="letter-page">
+            <div class="scene">
 
+                <!-- 粒子 -->
+                <canvas id="particleCanvas"></canvas>
 
-        <button
-            class="open-button"
-            id="openButton">
-
-            拆开信件
-
-        </button>
-
-    </div>
-
-</section>
-
-
-
-<!-- =========================================================
-     信件
-========================================================= -->
-
-<section id="letter-page">
-
-    <div class="scene">
-
-
-        <!-- 粒子 -->
-
-        <canvas
-            id="particleCanvas">
-        </canvas>
-
-
-        <!-- 水下光线 -->
-
-        <div class="underwater-light">
-
-            <div class="light"></div>
-
-            <div class="light"></div>
-
-            <div class="light"></div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             鱼
-        ================================================= -->
-
-        <div class="fish-scene">
-
-
-            <div class="fish-body">
-
-                <div class="fish-eye"></div>
-
-                <div class="fish-fin-top"></div>
-
-                <div class="fish-fin-bottom"></div>
-
-
-                <!-- 鱼身文字 -->
-
-                <div class="fish-letter">
-
-                    <h2>
-                        致我最好的朋友
-                    </h2>
-
-
-                    <p>
-                        不知不觉间又陪你走过了一整年的春夏秋冬，
-                        很开心我的人生中能有你的出现。
-                    </p>
-
-
-                    <p>
-                        友谊的开始太过久远，已经回忆不起最初相识的时刻了，
-                        但我印象里仍然留着那位喜欢玩抓喜房的“讨厌猫の鱼”。
-                    </p>
-
-
-                    <p>
-                        在那之后，我带你认识了很多新朋友，
-                        鹿子、烟雨江南、gv、猪仔，
-                        他们心中一定都有你这位特别讨喜的朋友。
-                    </p>
-
-
-                    <p>
-                        五六年的相处中，我们有过很多美好的回忆，
-                        很开心我们能够真心相待，我相信你与认识的好朋友之间都相互珍惜。
-                    </p>
-
-
-                    <p>
-                        对于你来说，环境的变化可能会让你无所适从，但别给自己太大压力。
-                        在我看来，你一定会很快适应新的同学和环境。
-                    </p>
-
-
-                    <p>
-                        纵使你有很多不足，也做过错一些事，但人无完人，
-                        我相信你会变得更加成熟、更加稳重，
-                        所谓成长就是一个从无知到成熟、从依赖到独立的过程。
-                    </p>
-
-
-                    <p>
-                        虽然我不太会说华丽的话，但真心祝你天天开心、永远安康。
-                    </p>
-
-
-                    <p>
-                        无论未来发生什么，我都陪你碎碎念念，
-                        也陪你岁岁年年。
-                    </p>
-
-
-                    <p class="last-line">
-                        你在我心中，永远都是一位特别的朋友。
-                        生日快乐，我的好朋友。
-                    </p>
-
+                <!-- 水下光线 -->
+                <div class="underwater-light">
+                    <div class="light"></div>
+                    <div class="light"></div>
+                    <div class="light"></div>
                 </div>
 
+                <!-- =================================================
+                     鱼
+                ================================================= -->
+                <div class="fish-scene">
+                    <div class="fish-body">
+                        <div class="fish-eye"></div>
+                        <div class="fish-fin-top"></div>
+                        <div class="fish-fin-bottom"></div>
+
+                        <!-- 鱼身文字 -->
+                        <div class="fish-letter">
+                            <h2>致我最好的朋友</h2>
+                            <p>不知不觉间又陪你走过了一整年的春夏秋冬，<br>很开心我的人生中能有你的出现。</p>
+                            <p>友谊的开始太过久远，已经回忆不起最初相识的时刻了，<br>但我印象里仍然留着那位喜欢玩抓喜房的“讨厌猫の鱼”。</p>
+                            <p>在那之后，我带你认识了很多新朋友，<br>鹿子、烟雨江南、gv、猪仔，<br>他们心中一定都有你这位特别讨喜的朋友。</p>
+                            <p>五六年的相处中，我们有过很多美好的回忆，<br>很开心我们能够真心相待，我相信你与认识的好朋友之间都相互珍惜。</p>
+                            <p>对于你来说，环境的变化可能会让你无所适从，但别给自己太大压力。<br>在我看来，你一定会很快适应新的同学和环境。</p>
+                            <p>纵使你有很多不足，也做过错一些事，但人无完人，<br>我相信你会变得更加成熟、更加稳重，<br>所谓成长就是一个从无知到成熟、从依赖到独立的过程。</p>
+                            <p>虽然我不太会说华丽的话，但真心祝你天天开心、永远安康。</p>
+                            <p>无论未来发生什么，我都陪你碎碎念念，<br>也陪你岁岁年年。</p>
+                            <p class="last-line">你在我心中，永远都是一位特别的朋友。<br>生日快乐，我的好朋友。</p>
+                        </div>
+                    </div>
+
+                    <!-- 鱼尾 -->
+                    <div class="fish-tail"></div>
+                </div>
+
+                <!-- =================================================
+                     水面
+                ================================================= -->
+                <div class="water-surface">
+                    <div class="wave"></div>
+                </div>
+
+                <div class="water-glow"></div>
+
+                <!-- =================================================
+                     底部祝福
+                ================================================= -->
+                <div class="ending">愿你所求皆如愿 所行皆坦途</div>
+
             </div>
+        </section>
 
+        <!-- =========================================================
+             音乐
+        ========================================================= -->
+        <audio id="birthdayMusic" src="夏天的风.mp3" loop></audio>
 
-            <!-- 鱼尾 -->
-
-            <div class="fish-tail"></div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             水面
-        ================================================= -->
-
-        <div class="water-surface">
-
-            <div class="wave"></div>
-
-        </div>
-
-
-        <div class="water-glow"></div>
-
-
-
-        <!-- =================================================
-             底部祝福
-        ================================================= -->
-
-        <div class="ending">
-
-            愿你所求皆如愿 所行皆坦途
-
-        </div>
+        <button id="music-control" title="关闭音乐">♪</button>
 
     </div>
 
-</section>
-
-
-
-<!-- =========================================================
-     音乐
-========================================================= -->
-
-<audio
-    id="birthdayMusic"
-    src="夏天的风.mp3"
-    loop>
-</audio>
-
-
-<button
-    id="music-control"
-    title="关闭音乐">
-
-    ♪
-
-</button>
-
-
-
-<script>
-
-/* =========================================================
-   页面元素
-========================================================= */
-
-const opening =
-    document.getElementById("opening");
-
-const envelope =
-    document.getElementById("envelope");
-
-const openButton =
-    document.getElementById("openButton");
-
-const letterPage =
-    document.getElementById("letter-page");
-
-const music =
-    document.getElementById("birthdayMusic");
-
-const musicControl =
-    document.getElementById("music-control");
-
-const particleCanvas =
-    document.getElementById("particleCanvas");
-
-const particleCtx =
-    particleCanvas.getContext("2d");
-
-const globalScale = document.getElementById("global-scale");
-const mobileModeBtn = document.getElementById("mobile-mode-btn");
-const mobileBackBtn = document.getElementById("mobile-back-btn");
-
-mobileModeBtn.addEventListener("click",()=>{
-    globalScale.classList.add("mobile-rotate-mode");
-});
-
-mobileBackBtn.addEventListener("click",()=>{
-    globalScale.classList.remove("mobile-rotate-mode");
-});
-
-
-let opened = false;
-
-let musicPlaying = false;
-
-
-/* =========================================================
-   打开信件
-========================================================= */
-
-function openLetter() {
-
-    if (opened) {
-        return;
-    }
-
-    opened = true;
-
-
-    /* 信封打开 */
-
-    envelope.classList.add("open");
-
-
-    /* 音乐 */
-
-    music.volume = 0.4;
-
-
-    music.play()
-        .then(() => {
-
-            musicPlaying = true;
-
-            musicControl.innerHTML = "♪";
-
-        })
-        .catch(() => {
-
-            musicPlaying = false;
-            musicControl.innerHTML = "🔇";
-
-        });
-
-
-    /* 页面切换 */
-
-    setTimeout(() => {
-
-        opening.classList.add("hide");
-
-        letterPage.classList.add("show");
-
-        startParticles();
-
-    }, 950);
-
-}
-
-
-envelope.addEventListener(
-    "click",
-    openLetter
-);
-
-
-openButton.addEventListener(
-    "click",
-    openLetter
-);
-
-
-/* =========================================================
-   音乐开关
-========================================================= */
-
-musicControl.addEventListener(
-    "click",
-    () => {
-
-        if (musicPlaying) {
-
-            music.pause();
-
-            musicPlaying = false;
-
-            musicControl.innerHTML =
-                "🔇";
-
-            musicControl.title =
-                "打开音乐";
-
-        } else {
+    <script>
+        /* =========================================================
+           页面元素
+        ========================================================= */
+        const opening = document.getElementById("opening");
+        const envelope = document.getElementById("envelope");
+        const openButton = document.getElementById("openButton");
+        const letterPage = document.getElementById("letter-page");
+        const music = document.getElementById("birthdayMusic");
+        const musicControl = document.getElementById("music-control");
+        const particleCanvas = document.getElementById("particleCanvas");
+        const particleCtx = particleCanvas.getContext("2d");
+
+        let opened = false;
+        let musicPlaying = false;
+
+        /* =========================================================
+           打开信件
+        ========================================================= */
+        function openLetter() {
+            if (opened) return;
+            opened = true;
+
+            envelope.classList.add("open");
 
             music.volume = 0.4;
-
             music.play()
                 .then(() => {
-
                     musicPlaying = true;
-
-                    musicControl.innerHTML =
-                        "♪";
-
-                    musicControl.title =
-                        "关闭音乐";
-
+                    musicControl.innerHTML = "♪";
+                })
+                .catch(() => {
+                    musicPlaying = false;
+                    musicControl.innerHTML = "🔇";
                 });
 
+            setTimeout(() => {
+                opening.classList.add("hide");
+                letterPage.classList.add("show");
+                startParticles();
+            }, 950);
         }
 
-    }
-);
-
-
-/* =========================================================
-   粒子系统
-========================================================= */
-
-let particles = [];
-
-let particleStarted = false;
-
-
-/* =========================================================
-   Canvas 大小
-========================================================= */
-
-function resizeParticleCanvas() {
-
-    const dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
-        );
-
-
-    particleCanvas.width =
-        window.innerWidth * dpr;
-
-    particleCanvas.height =
-        window.innerHeight * dpr;
-
-
-    particleCanvas.style.width =
-        window.innerWidth + "px";
-
-    particleCanvas.style.height =
-        window.innerHeight + "px";
-
-
-    particleCtx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-    );
-}
-
-
-resizeParticleCanvas();
-
-
-window.addEventListener(
-    "resize",
-    resizeParticleCanvas
-);
-
-
-/* =========================================================
-   创建粒子
-========================================================= */
-
-function createParticle() {
-
-    const x =
-        Math.random() *
-        window.innerWidth;
-
-
-    const waterTop =
-        window.innerHeight *
-        0.40;
-
-
-    const y =
-        waterTop +
-        Math.random() *
-        window.innerHeight *
-        0.55;
-
-
-    particles.push({
-
-        x: x,
-
-        y: y,
-
-        size:
-            Math.random() *
-            2.5 +
-            .7,
-
-        speed:
-            Math.random() *
-            .35 +
-            .12,
-
-        drift:
-            (Math.random() - .5) *
-            .3,
-
-        opacity:
-            Math.random() *
-            .5 +
-            .25,
-
-        life:
-            Math.random() *
-            300 +
-            180,
-
-        phase:
-            Math.random() *
-            Math.PI *
-            2
-
-    });
-
-}
-
-
-/* =========================================================
-   启动粒子
-========================================================= */
-
-function startParticles() {
-
-    if (particleStarted) {
-        return;
-    }
-
-    particleStarted = true;
-
-
-    for (
-        let i = 0;
-        i < 75;
-        i++
-    ) {
-
-        createParticle();
-
-    }
-
-
-    animateParticles();
-
-}
-
-
-/* =========================================================
-   粒子动画
-========================================================= */
-
-function animateParticles() {
-
-    particleCtx.clearRect(
-        0,
-        0,
-        particleCanvas.width,
-        particleCanvas.height
-    );
-
-    // 重置 Canvas 绘制状态
-    particleCtx.shadowBlur = 0;
-
-
-    if (
-        Math.random() < .18 &&
-        particles.length < 110
-    ) {
-
-        createParticle();
-
-    }
-
-
-    particles.forEach(
-        particle => {
-
-            particle.y -=
-                particle.speed;
-
-            particle.x +=
-                particle.drift;
-
-            particle.phase += .02;
-
-            particle.x +=
-                Math.sin(
-                    particle.phase
-                ) * .15;
-
-            particle.life--;
-
-
-            let alpha =
-                particle.opacity;
-
-
-            if (
-                particle.life < 70
-            ) {
-
-                alpha *=
-                    particle.life / 70;
-
+        envelope.addEventListener("click", openLetter);
+        openButton.addEventListener("click", openLetter);
+
+        /* =========================================================
+           音乐开关
+        ========================================================= */
+        musicControl.addEventListener("click", () => {
+            if (musicPlaying) {
+                music.pause();
+                musicPlaying = false;
+                musicControl.innerHTML = "🔇";
+                musicControl.title = "打开音乐";
+            } else {
+                music.volume = 0.4;
+                music.play()
+                    .then(() => {
+                        musicPlaying = true;
+                        musicControl.innerHTML = "♪";
+                        musicControl.title = "关闭音乐";
+                    });
             }
+        });
 
+        /* =========================================================
+           粒子系统
+        ========================================================= */
+        let particles = [];
+        let particleStarted = false;
 
-            particleCtx.beginPath();
-
-
-            particleCtx.arc(
-                particle.x,
-                particle.y,
-                particle.size,
-                0,
-                Math.PI * 2
-            );
-
-
-            particleCtx.fillStyle =
-                `rgba(255,255,255,${alpha})`;
-
-
-            particleCtx.shadowBlur =
-                8;
-
-            particleCtx.shadowColor =
-                "rgba(255,255,255,.7)";
-
-
-            particleCtx.fill();
-
-        }
-    );
-
-
-    particles =
-        particles.filter(
-            particle =>
-                particle.life > 0 &&
-                particle.y > -20
-        );
-
-
-    requestAnimationFrame(
-        animateParticles
-    );
-
-}
-
-
-/* =========================================================
-   鼠标爱心拖尾
-========================================================= */
-
-let lastHeartTime = 0;
-
-
-document.addEventListener(
-    "mousemove",
-    event => {
-
-        const now =
-            Date.now();
-
-
-        if (
-            now - lastHeartTime < 55
-        ) {
-
-            return;
+        function resizeParticleCanvas() {
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            particleCanvas.width = window.innerWidth * dpr;
+            particleCanvas.height = window.innerHeight * dpr;
+            particleCanvas.style.width = window.innerWidth + "px";
+            particleCanvas.style.height = window.innerHeight + "px";
+            particleCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
 
+        resizeParticleCanvas();
+        window.addEventListener("resize", resizeParticleCanvas);
 
-        lastHeartTime =
-            now;
+        function createParticle() {
+            const x = Math.random() * window.innerWidth;
+            const waterTop = window.innerHeight * 0.40;
+            const y = waterTop + Math.random() * window.innerHeight * 0.55;
+            particles.push({
+                x: x,
+                y: y,
+                size: Math.random() * 2.5 + .7,
+                speed: Math.random() * .35 + .12,
+                drift: (Math.random() - .5) * .3,
+                opacity: Math.random() * .5 + .25,
+                life: Math.random() * 300 + 180,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
 
+        function startParticles() {
+            if (particleStarted) return;
+            particleStarted = true;
+            for (let i = 0; i < 75; i++) createParticle();
+            animateParticles();
+        }
 
-        createHeart(
-            event.clientX,
-            event.clientY
-        );
+        function animateParticles() {
+            particleCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+            particleCtx.shadowBlur = 0;
 
-    }
-);
+            if (Math.random() < .18 && particles.length < 110) createParticle();
 
+            particles.forEach(particle => {
+                particle.y -= particle.speed;
+                particle.x += particle.drift;
+                particle.phase += .02;
+                particle.x += Math.sin(particle.phase) * .15;
+                particle.life--;
 
-/* =========================================================
-   创建爱心
-========================================================= */
+                let alpha = particle.opacity;
+                if (particle.life < 70) alpha *= particle.life / 70;
 
-function createHeart(
-    x,
-    y
-) {
+                particleCtx.beginPath();
+                particleCtx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                particleCtx.fillStyle = `rgba(255,255,255,${alpha})`;
+                particleCtx.shadowBlur = 8;
+                particleCtx.shadowColor = "rgba(255,255,255,.7)";
+                particleCtx.fill();
+            });
 
-    // 限制同时存在的爱心数量，避免高速移动导致性能下降
-    if (document.querySelectorAll(".heart-trail").length > 35) {
-        return;
-    }
+            particles = particles.filter(particle => particle.life > 0 && particle.y > -20);
+            requestAnimationFrame(animateParticles);
+        }
 
-    const heart =
-        document.createElement("div");
+        /* =========================================================
+           鼠标爱心拖尾（仅电脑端生效）
+        ========================================================= */
+        let lastHeartTime = 0;
 
+        function isMobile() {
+            return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
 
-    heart.className =
-        "heart-trail";
+        document.addEventListener("mousemove", event => {
+            if (isMobile()) return;
+            const now = Date.now();
+            if (now - lastHeartTime < 55) return;
+            lastHeartTime = now;
+            createHeart(event.clientX, event.clientY);
+        });
 
+        function createHeart(x, y) {
+            if (document.querySelectorAll(".heart-trail").length > 35) return;
+            const heart = document.createElement("div");
+            heart.className = "heart-trail";
+            const hearts = ["♡", "♥", "♡", "♥"];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            const offsetX = (Math.random() - .5) * 18;
+            const offsetY = (Math.random() - .5) * 18;
+            heart.style.left = (x + offsetX) + "px";
+            heart.style.top = (y + offsetY) + "px";
+            const size = Math.random() * 8 + 10;
+            heart.style.fontSize = size + "px";
+            const colors = ["#f38db3", "#ee7fa9", "#ffabc9", "#ffffff"];
+            heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1300);
+        }
 
-    const hearts = [
-        "♡",
-        "♥",
-        "♡",
-        "♥"
-    ];
+        document.addEventListener("mouseleave", () => { lastHeartTime = Date.now(); });
 
+        /* =========================================================
+           音乐预加载
+        ========================================================= */
+        music.load();
 
-    heart.innerHTML =
-        hearts[
-            Math.floor(
-                Math.random() *
-                hearts.length
-            )
-        ];
+        /* =========================================================
+           气泡（仅在信件页面显示）
+        ========================================================= */
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 18 + 8;
+            bubble.style.width = size + 'px';
+            bubble.style.height = size + 'px';
+            bubble.style.left = (Math.random() * 100) + '%';
+            bubble.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            const page = document.getElementById('letter-page');
+            if (page.classList.contains('show')) {
+                page.appendChild(bubble);
+                setTimeout(() => bubble.remove(), 10000);
+            }
+        }
 
+        setInterval(() => {
+            if (document.getElementById('letter-page').classList.contains('show')) {
+                createBubble();
+            }
+        }, 450);
 
-    const offsetX =
-        (Math.random() - .5) *
-        18;
+        /* =========================================================
+           手机竖屏时，检测并应用旋转适配（已经通过 CSS 实现）
+           这里额外处理一些交互细节
+        ========================================================= */
+        function handleOrientation() {
+            const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+            const isMobileDevice = window.innerWidth < 900 || isMobile();
+            if (isPortrait && isMobileDevice) {
+                // 手机竖屏时，确保 #global-scale 的 transform 生效（已由 CSS 控制）
+                // 但需要确保 #rotate-tip 隐藏（已由 CSS 控制）
+                // 额外的处理：调整一些元素
+            } else {
+                // 非手机竖屏，正常显示
+            }
+        }
 
+        window.addEventListener("resize", handleOrientation);
+        window.addEventListener("orientationchange", () => {
+            setTimeout(handleOrientation, 300);
+        });
+        handleOrientation();
 
-    const offsetY =
-        (Math.random() - .5) *
-        18;
+        /* =========================================================
+           防止手机竖屏时页面滚动
+        ========================================================= */
+        document.addEventListener('touchmove', function(e) {
+            if (window.innerWidth < 900 && window.matchMedia("(orientation: portrait)").matches) {
+                e.preventDefault();
+            }
+        }, { passive: false });
 
-
-    heart.style.left =
-        (x + offsetX) +
-        "px";
-
-
-    heart.style.top =
-        (y + offsetY) +
-        "px";
-
-
-    const size =
-        Math.random() *
-        8 +
-        10;
-
-
-    heart.style.fontSize =
-        size +
-        "px";
-
-
-    const colors = [
-        "#f38db3",
-        "#ee7fa9",
-        "#ffabc9",
-        "#ffffff"
-    ];
-
-
-    heart.style.color =
-        colors[
-            Math.floor(
-                Math.random() *
-                colors.length
-            )
-        ];
-
-
-    document.body.appendChild(
-        heart
-    );
-
-
-    setTimeout(
-        () => {
-
-            heart.remove();
-
-        },
-        1300
-    );
-
-}
-
-
-/* =========================================================
-   鼠标离开
-========================================================= */
-
-document.addEventListener(
-    "mouseleave",
-    () => {
-
-        lastHeartTime =
-            Date.now();
-
-    }
-);
-
-
-/* =========================================================
-   音乐预加载
-========================================================= */
-
-music.load();
-
-
-
-/* ====== 升级效果脚本 ====== */
-
-function createBubble(){
-    const bubble=document.createElement('div');
-    bubble.className='bubble';
-
-    const size=Math.random()*18+8;
-    bubble.style.width=size+'px';
-    bubble.style.height=size+'px';
-    bubble.style.left=(Math.random()*100)+'%';
-    bubble.style.animationDuration=(Math.random()*5+5)+'s';
-
-    const page=document.getElementById('letter-page');
-    page.appendChild(bubble);
-
-    setTimeout(()=>bubble.remove(),10000);
-}
-
-setInterval(()=>{
-    if(document.getElementById('letter-page').classList.contains('show')){
-        createBubble();
-    }
-},450);
-
-// 鱼尾动画交由 CSS 控制，避免 JS transform 覆盖动画状态
-
-</script>
-
-</div>
+        console.log("✅ 页面已加载，手机竖屏时自动旋转90°适配");
+        console.log("📱 当前设备:", isMobile() ? "手机" : "电脑");
+        console.log("🔄 当前方向:", window.matchMedia("(orientation: portrait)").matches ? "竖屏" : "横屏");
+    </script>
 
 </body>
+
 </html>
