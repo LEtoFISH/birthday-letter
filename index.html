@@ -1908,11 +1908,53 @@ body {
         display:none;
     }
 }
+
+/* 微信竖屏提示优化 */
+#rotate-tip{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:linear-gradient(135deg,#ffe0eb,#8fc8d7);
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#754058;
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+}
+#rotate-tip .rotate-box{
+    animation:rotateHint 2s ease-in-out infinite;
+    font-size:18px;
+    letter-spacing:2px;
+    line-height:2;
+}
+#rotate-tip .phone-icon{
+    font-size:55px;
+    margin-bottom:20px;
+}
+@keyframes rotateHint{
+    50%{transform:translateY(-8px);}
+}
+@media screen and (max-width:900px) and (orientation:portrait){
+    #rotate-tip{display:flex;}
+    #opening,#letter-page,#music-control{display:none!important;}
+}
+
 </style>
 </head>
 
 
 <body>
+
+<div id="rotate-tip">
+  <div class="rotate-box">
+    <div class="phone-icon">📱↻</div>
+    请横屏查看<br>
+    开启自动旋转后<br>
+    将手机横向握持体验完整信件
+  </div>
+</div>
+
 <div id="rotate-tip">
     <div class="rotate-tip-inner">
         <div class="rotate-icon">↻</div>
